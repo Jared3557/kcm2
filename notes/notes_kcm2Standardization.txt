@@ -1,0 +1,27 @@
+Notes - kcm2 standardization
+
+kcm-gateway - done - schedule is not standard look as it's kcm1 include code
+gateway-stafflist - excellent- (1) should highlight/disable current page button (or change to tabs)
+gateway-schoollist - excellent - (1) should make similar flow as staff list - all schools, Schools I'm at today, school list report
+gateway-links - excellent - (1) colors are odd
+*** gateway-myevents - Not at all complete, but good start
+
+roster-results-chess  - almost barely acceptable
+roster-results-game-edit.inc  - almost barely acceptable
+roster-results-game-history  - almost barely acceptable
+roster-results-game-bughouse - usable, major flow problem, major cosmetic problems  
+roster-results-points-history. flow not working - major style issues
+roster-results-game-history - working except for bughouse
+
+roster-home.php -works (major work remains on report - cosmetic, need to add sorts, report, etc, need button to return to gateway)
+kcm-roster/roster-results-set-period - not working
+roster-results-set-classDate - not sure
+roster-setup-kidData - good
+roster-setup-gradeGroups - not working
+roster-setup-pointCategories - working - needs explanation text for what's going on
+
+ 
+
+notes:
+
+\$chain, (?!\$scriptData)

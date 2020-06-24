@@ -1,0 +1,216 @@
+Payroll ToDo:
+
+HP:
+===
+do not override if override same as previous record
+Ledger cosmetics
+Edit cosmetics and validations
+Home page cosmetics
+Test edits, overrides, individual overrides, etc
+Testing of individual entries
+Test event time setting
+Test Closing flow
+
+MP:
+===
+View previous periods
+event changes calendar changes - Sync error flags
+detect time/date duplicates on tasks
+8. CSS styling
+
+LP:
+7. Save only pay columns - not schedule colums ???
+2. Historical reporting 
+
+Review: (done - but could be better or needs review, etc)
+6. calculating hours for non-class events
+4. Many synchronization issues that Ratana is unlikely to catch, until scheduling changes schedules (not as likely in test system, can warn Ratana not to do this yet),  is mostly coded except for the error catching. 
+
+Do last
+5. Printing reports 
+9. Raccoon and KCM changes
+Add site manager approval capability (part of racoon SM report changes later)
+Raccoon and KCM changes
+
+
+==============================================================
+Questions:
+
+Consider:
+ consider listing holiday status items on ledger
+
+When schedule and overrides
+   1. change in event
+   2. change in task
+   
+payInteractions
+1. staff changed
+2. program changed
+3. job-event changed
+4. job-task changed   
+
+======================================================
+
+Review Default Time calcs
+Review pay period logic
+Review all calcs
+Review all cosmetics
+Review and code site manager reporting
+
+
+   Auto-generation of salaried transactions
+
+Home
+   @@@  add deleting transactions
+@@@    viewing previous periods, one employee, etc   
+   
+   
+   review approval flag usage
+
+Synchronization:
+    1. Refresh of group 
+        (1) must determine if calendar and/or event has changed or been deleted 
+        (2) muat determine if valid program date range - if not what to do (delete task/events or set error flag)
+        (3) must set error codes for inconsistent/changed schedule/event info
+        (4) should check event to see if change is major or minor
+        (5) must set/clear approved flag as appropiate
+    (2) Synchonization
+        (1) major testing and review
+        (2) need to code delete action (except for final action should be working)    
+        (3) how often to sync
+        (4) set triggers when tables have changed - several ways of doing this
+        (5) import of event and tasks need major review - especially change detection 
+        (6) debugging messages, etc
+    (3) Travel    
+        (1) Synchronization
+        (2) calculations   
+        (3) Validate for overlapping times, etc
+        
+      
+Other
+@@@    (1) history
+    
+    
+System
+@@@    Save only pay columns - not schedule colums ???
+    
+Do last
+@@@    (1) encryption    
+   Allowing directors special view privledges?
+   Site manager reporting
+    
+    
+    
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+And then to get full benefit of payroll, Rachel will need to work on Raccoon for the additional features:
+1. Office scheduling
+2. Scheduling a person for any time desired (so arrive late, leave early can be scheduled)
+3. Scheduling a person for vacation, sick, etc 
+4. Scheduling Paid in Full
+5 Scheduling one person multiple times at one event (such as the office)
+6. Site manager reporting needs to be consistent with changes
+7. Schedule reports need to be consistent with changes.
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+
+
+Setting of periodId:
+
+1. Scheduling
+    close date <> NULL: disallow changes (already paid)
+    new jobitem: set periodId to 0 
+    edit existing job item (date unchanged): leave alone 
+    edit existing job item (date changed):  set periodId to 0 - period ID needs to be determined (or use payroll function to get period of scheduled date)
+    For all the above, if scheduling is integrated with payroll, 
+       instead of periodId of zero use payroll function to get period of scheduled date, 
+       can still be zero if period does not exist yet 
+       when jobitem is published chances are period will exist, but likely not when schedule is generated months in advance - but nothing preventing months of advance period records 
+ 
+2. Home
+    Add job
+       if date > period end date set periodid of zero (only allow PM to set future dates!!)
+       If special period set periodId to specialperiod ID
+       otherwise set current periodId (date doesn't matter)
+    Override job
+        Disallow overrides if periodId<>0 and not current period ????  (need to consider if current period is Open/Staff/PM/Special period) 
+        If special period (prevent overrides) but if so then set periodId to specialperiod ID 
+        otherwise set current periodId
+        maybe tricky if date is changed
+    Edit job
+    
+ 
+3. Print ledger
+   for non-closed periods set zero period Id to current period   
+
+=================================================
+
+pay-define-rateClasses - EXCELLENT
+pay-define-jobs - EXCELLENT
+pay-define-staffRates - sortof rateclass
+pay-define-payPeriods
+
+Travel time between assignments from headquarters to field is at the admin rate. 
+ Their field rate applies when they arrive at the scheduled time for the field event.
+
+Field rates end with the departure from a field event at its designated end time. 
+ If they are going directly to another field event, field rate applies between the two. 
+ If they are going to headquarters, their admin rate applies. 
+ If they are not going directly from one event to another, time stops at the departure from the early event, and starts upon arrival at the later event. 
+ (If the amount of time between the two events exceeds the amount of time to get there, then travel time is not covered, 
+                     as they are not going directly to the next event.) 
+ (If the amount of time between the two events is "less" than the amount of time to get there, 
+             they are paid the actual travel time between scheduled departure and scheduled arrival times. 
+              This would mean they are actually arriving late for the second event, but currently are not docked for that late arrival. 
+ If the system can accurately account for all time, we would no longer use SPUs for events.)
+
+Thanks,
+
+Ratana
+
+Jareds notes:
+   lower of the two rates apply
+   travel does not apply if plenty of time between events
+   not docked for late arrival
+
+
+styles:
+
+tx-B  // bold
+tx-S  // strike
+tx-l  
+tx-2  
+tx-3  
+tx-4  
+tx-5
+tx-C
+tx-R
+tx-L  
+
+mx-
+
+px-
+
+bx-a-
+bx-l-
+bx-r-
+bx-t-
+bx-b-
+bx-tb-
+bx-lr-
+
+cx 
+
+=========================================================================================
+=========================================================================================
+=========================================================================================
+Eliminating calendar tables
+
+kcm-libKcmFunctions.inc.php
+    one function
+    
+kcm-schedule-engine

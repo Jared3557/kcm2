@@ -1,0 +1,63 @@
+
+include
+
+all - review original field value mechanism
+
+===========================================================================================
+==========
+==========
+Gateway
+==========
+==========
+===========================================================================================
+schoolList - EXCELLENT
+staffList - EXCELLENT
+usefulLinks - EXCELLENT
+setProxy - EXCELLENT - need to test reset, maybe add clear button
+start - GOOD - excellent once these things are done: 
+   1. test security testing including creating test plan
+   2. Need kcm1 to come back to this page, handle security using KCM2 result, etc
+   3. Need to test with different users/dates, etc
+schedule - EXCELLENT
+allEvents - MAJOR PROBLEMS - filters need much testing/fixing - other problems
+===========================================================================================
+   
+
+
+==========
+==========
+KCM2
+==========
+==========
+===========================================================================================
+===========================================================================================
+results-set-period - EXCELLENT - should add period description to status message
+results-set-class-date - EXCELLENT  - should add date description to status message
+setup-kidData - EXCELLENT 
+mainMenu - GOOD-FAIR except 
+   1. kcm2-zLib-data-scores.inc.php - need to put back code to filter results
+   2. report needs to moved to class and away from step class
+   3. Need to add report heading with class date, period, etc
+   4. bug in period column
+--------------------------------------
+setup-pointCategories - ugly - doesn't save (or read) - existing errors - not at all intuative what purpose is, what to do, etc. 
+--------------------------------------
+setup-gradeGroups - errors - doesn't save grade groups - some of code makes no sense - maybe wasn't working before
+results-chess - many problems but many serious errors eliminated - menu expansion not working
+results-points - many problems but page is showing (some controls missing)
+results-bughouse - first two pages working - needs much work for last page(s) and saving
+results-tally - got 1st step grid working, no filters showing, getting to 2nd step with serious (expected) errors 
+results-points-history - 1st page looks decent, filters (if used) not showing, rsmStep_processPostedData not started for step 1
+results-gameHistory - 1st page looks decent, filters (if used) not showing, rsmStep_processPostedData not started for step 1
+
+results-points-edit . inc - include - need to test - add include common object !!!!!
+results-game-edit . inc  - include - need to test - add include common object !!!!!
+
+
+Kcm1 reports
+
+kcm1
+    authorization via KCM2 code
+    return to gateway
+
+

@@ -1,0 +1,26 @@
+// SQL to read current programs and who is using notes    $field = array();
+ 
+SELECT
+   `pSc:NameShort`
+  ,`pPr:SchoolNameUniquifier`
+  ,`pPe:PeriodName`
+  ,`rKPe:KcmClassSubGroup`
+  ,`pPr:ProgramId`
+  ,`pPe:PeriodId`
+  ,`rKPr:KidProgramId`
+  ,`rKPe:KidPeriodId`
+  ,`rKPr:@ProgramId`
+  ,`rKPe:KcmPerPointValues`
+  ,`rKPe:KidPeriodId`
+  ,`rKPe:@PeriodId`
+  ,`rKPe:@KidProgramId`
+FROM `ro:kid_period`
+JOIN `ro:kid_program` ON `rKPr:KidProgramId` = `rKPe:@KidProgramId`
+JOIN `pr:period` ON `pPe:PeriodId` = `rKPe:@PeriodId` 
+JOIN `pr:program` ON `pPr:ProgramId` = `rKPr:@ProgramId` 
+JOIN `pr:school` ON `pSc:SchoolId` = `pPr:@SchoolId`
+WHERE (`pPr:ProgramType` = '1')
+      AND (`pPr:DateClassFirst` <= '2018-05-05')
+      AND (`pPr:DateClassLast` >= '2018-01-01')
+      AND (`rKPe:KcmClassSubGroup` <> '')
+ORDER BY `pPr:ProgramId`,`rKPe:KidPeriodId`,`rKPe:KidPeriodId`

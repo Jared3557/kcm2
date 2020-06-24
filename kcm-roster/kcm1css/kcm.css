@@ -1,0 +1,230 @@
+/*.........END-OF-REPORT-STYLES SECTION --- DO NOT CHANGE THIS LINE........*/   
+/* All report styles (for printer/pdf/excel) must go above this line       */   
+/* All non-report styles (not for printer/pdf/excel) must go below         */   
+/* All report styles MUST use a subset of css compatible with the kcm code */   
+/* Custom report styles are 1-line comments starting with '/*@'            */   
+
+button.sem_curButton {
+    background-color:#DDFFFF;
+}
+button.progList_button {
+    font-size:12px;
+    font-weight: bold;
+    padding-left:4px;
+    padding-right:4px;
+    padding-top:5px;
+    padding-bottom:5px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+.progList_list {
+    border-style-none;
+    font-size:11pt;
+    font-weight:bold;
+    width:560px;
+}
+.strListheader {
+    font-size:18px;
+    font-weight: bold;
+    padding-bottom: 4px;
+    padding-left: 14px;
+}
+.sem_button {
+    font-size:12px;
+    font-weight:bold;
+    padding-bottom:4px;
+    padding-top:4px;
+    padding-left:10px;
+    padding-rignt:10px;
+    margin-bottom:4px;
+    margin-top:4px;
+    margin-left:4px;
+    margin-rignt:4px;
+    text-align:center;
+}
+td.sem_prev {
+    font-size:12px;
+    font-weight: normal;
+    border-style:none;
+    padding-left:2px;
+    padding-right:12px;
+    padding-top:10px;
+    padding-bottom:10px;
+   	vertical-align: bottom;
+}
+td.sem_current {
+    font-size:12px;
+    font-weight: normal;
+    border:1px solid black;
+    padding-left:10px;
+    padding-right:10px;
+    padding-top:10px;
+    padding-bottom:10px;
+   	text-align:center; 
+}
+td.sem_next {
+    font-size:12px;
+    font-weight: normal;
+    border-style:none;
+    padding-left:20px;
+    padding-right:20px;
+    padding-top:10px;
+    padding-bottom:10px;
+   	vertical-align: bottom;
+}
+
+table.scHead_table {
+    width: 900px;
+    border-collapse:collapse;
+    border-spacing:0;
+    empty-cells:show;
+    border-style:none;
+    table-layout:fixed;
+    margin-top: -35pt;
+    margin-bottom: 12pt;
+}
+td.scHead_help {
+    text-align: right;
+    border-style:none;
+    padding-bottom: 15px;
+    padding-right: 28px;
+}
+
+td.scHead_heading {
+   font-size: 1.2em;
+   font-weight: bold;
+   border: 1px solid #999999;
+   padding-top: 12px;
+   padding-bottom: 8px;
+}
+table.schTable {
+}
+
+td.sch {
+    font-size:12px;
+    font-weight: normal;
+    border:1px solid black;
+    padding-left:4px;
+    padding-right:4px;
+    padding-top:2px;
+    padding-bottom:2px;
+   	text-align:left; 
+}
+a.sch_button {
+  width: 42pt; 
+  display: inline; 
+  font-weight: bold;
+  text-decoration: none;
+  background-color: #EEEEEE;
+  color: #333333;
+  padding-left: 0.7em;
+  padding-right: 0.7em;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+  border-radius: 12px;
+}
+
+table.select_table {
+    border-collapse:collapse;
+    border-spacing:0;
+    empty-cells:show;
+    border-style: none;
+    table-layout:fixed;
+    margin-top: 8pt;
+}
+td.select_prog_title {
+    border:2px solid black;
+    font-size: 12 pt;
+    font-weight: bold;
+    padding-left: 20px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+td.select_sm_title {
+    width: 400px;
+    font-size: 12 pt;
+    font-weight: bold;
+    border:2px solid black;
+    padding-left: 20px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+td.select_prog_body {
+    border:1px solid #999999;
+    padding-left: 12pt;
+    padding-right: 12pt;
+    padding-top: 12pt;
+    padding-bottom: 12pt;
+}
+td.select_blank {
+    width: 40px;
+    border-style: none;
+    table-layout:fixed;
+    margin-top: 8pt;
+}
+td.select_sm_body {
+    border:1px solid #999999;
+    padding-left: 12pt;
+    padding-right: 12pt;
+    padding-top: 6pt;
+    padding-bottom: 0pt;
+}
+
+
+/*---------- System Manager Reporting -----------------*/
+
+a.smReport_link {
+  display: block; 
+  font: bold 1.0em Arial;
+  text-decoration: none;
+  background-color: #EEEEEE;
+  color: #333333;
+  margin-left: 0pt;
+  margin-right: 30pt;
+  margin-top: 8pt;
+  margin-bottom: 8pt;
+  padding-top: 4pt;
+  padding-bottom: 3pt;
+  padding-left: 12pt;
+  padding-right: 8pt;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+  border-radius: 12px;
+}
+a.officeSchedLink {
+  display: inline; 
+  font: bold 1.0em Arial;
+  text-decoration: none;
+  background-color: #EEEEEE;
+  color: #333333;
+  margin-left: 0pt;
+  margin-right: 30pt;
+  margin-top: 6pt;
+  margin-bottom: 6pt;
+  padding-top: 3pt;
+  padding-bottom: 3pt;
+  padding-left: 8pt;
+  padding-right: 8pt;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+  border-radius: 12px;
+}
+a.smReport_done {
+    background-color:#ccffcc;
+}
+a.smReport_due {
+    background-color:#ffcccc;
+}
+td.titleColor {
+    background-color: #f0f0ff;
+}
+
+

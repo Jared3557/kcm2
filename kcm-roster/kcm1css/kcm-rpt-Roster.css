@@ -1,0 +1,170 @@
+   
+/*========================================*/
+/*=   Top Table                          =*/
+/*========================================*/
+
+table.rstTopTable {
+    border-collapse:separate;
+    border-spacing:0;
+    empty-cells:show;
+    border-collapse:separate;
+    border-spacing:0;
+    font-size:10px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+td.rstInfo {
+    width: 150px;
+    padding-left: 16px;
+    padding-right: 6px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    font-size:10px;
+    font-weight:normal;
+}
+td.rstEndRow {
+    font-size:8px;
+    font-weight:normal;
+    border-style:none;
+}
+
+td.rstInfoTop {
+    padding-left: 6px;
+    border-left:1px solid black;
+    border-right:1px solid black;
+    border-top:1px solid black;
+    border-bottom:0px solid black;
+    padding-top: 2px;
+    padding-bottom: 0px;
+    font-weight:bold;
+}
+td.rstInfoMiddle {
+    border-left:1px solid black;
+    border-right:1px solid black;
+    border-top:0px solid black;
+    border-bottom:0px solid black;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+td.rstInfoBottom {
+    border-left:1px solid black;
+    border-right:1px solid black;
+    border-top:0px solid black;
+    border-bottom:2px solid black;
+    padding-top: 0px;
+    padding-bottom: 3px;
+}
+td.rstTopDesc {
+    width:100px;
+    border-style:none;
+    font-size:10px;
+    font-weight:bold;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 24px;
+    padding-right: 6px;
+}
+td.rstTopNotes {
+    width:1000px;
+    border-style:none;
+    font-size:10px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 24px;
+    padding-right: 6px;
+}
+
+
+table.rstTable {
+    margin-top:12px;
+    border-collapse:separate;
+    border-spacing:0;
+    empty-cells:show;
+    border-collapse:separate;
+    border-spacing:0;
+    padding-top: 1pt;
+    padding-bottom: 1pt;
+    padding-left: 1pt;
+    padding-right: 1pt;
+    font-size:12px;
+}
+
+/*========================================*/
+/*=     (Data Table) Odd Even Styles     =*/
+/*=          (some overrides)            =*/
+/*========================================*/
+
+td {
+    border-left:0px solid black;
+    border-right:0px solid black;
+    border-top:0px solid black;
+    border-bottom:0px solid black;
+    font-size: 10px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
+td.rstTopNotes {
+    padding-left: 18pt;
+    border-style:none;
+}    
+
+/*======================================*/
+/*=     Data Table Column Styles       =*/
+/*= (these come last - some overrides) =*/
+/*======================================*/
+
+td.rstFirstName {
+    width: 90pt;
+    border-style:none;
+}    
+td.rstLastName {
+    width: 93pt;
+    border-style:none;
+}    
+td.rstGrade {
+    width: 42pt;
+    border-style:none;
+}
+td.rstPeriod {
+    width: 45pt;
+    border-style:none;
+}    
+td.rstRookie {
+    width: 42pt;
+    border-style:none;
+}    
+td.rstHome {
+    width: 69pt;
+    border-style:none;
+}    
+td.rstCell {
+    width: 69pt;
+    border-style:none;
+}    
+td.rstBusiness {
+    width: 69pt;
+    border-style:none;
+}    
+td.rstEmergency {
+    width: 69pt;
+    border-style:none;
+}    
+td.rstAsp {
+    width: 30pt;
+    border-style:none;
+}    
+td.rstTeacher {
+    width: 75pt;
+    border-style:none;
+}    
+td.rstPickupNote {
+    width: 140pt;
+    border-style:none;
+}    
+
+/*.........END-OF-REPORT-STYLES SECTION --- DO NOT CHANGE THIS LINE........*/   
+/* All report styles (for printer/pdf/excel) must go above this line       */   
+/* All non-report styles (not for printer/pdf/excel) must go below         */   
+/* All report styles MUST use a subset of css compatible with the kcm code */   
+/* Custom report styles are 1-line comments starting with '/*@'            */   

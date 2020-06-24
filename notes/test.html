@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+
+
+<?php
+ 
+ 
+// $a = new  krn_array;
+// 
+// $a['a'] = 'AAA';
+// $a['b'] = 'BBB';
+// $a['c'] = 'CCC';
+
+//foreach ($a as $value) {
+   print '<br>' . 'xxx'.'<br>';
+   print '<br>' . 'xxx'.'<br>';
+   print '<br>' . 'xxx'.'<br>';
+//}
+
+// foreach ($a as $key=>$value) {
+//    print '<br>' . $key . ' , ' . $value;
+// }
+
+exit;
+
+class krn_array implements ArrayAccess {  
+public $container = array();  
+public $properties = array();  
+
+public function offsetSet($offset, $value) {  // required abstract function - $offset is in braces
+    if (is_null($offset)) {
+        $this->container[] = $value;
+    }
+    else {
+        $this->container[$offset] = $value;
+    }
+}
+
+public function offsetExists($offset) {  // required abstract function - $offset is in braces
+    return isset($this->container[$offset]);
+}
+
+public function offsetUnset($offset) {  // required abstract function - $offset is in braces
+    unset($this->container[$offset]);
+}
+
+public function offsetGet($offset) {  // required abstract function - $offset is in braces
+    return isset($this->container[$offset]) ? $this->container[$offset] : null;
+}
+
+public function set_property($index,$propName,$value) {
+    $key = $index.'-'.$propName;
+    $this->properties[$key] = $value;
+}
+
+public function get_property($index,$propName)  {
+    $key = $index.'-'.$propName;
+    return isset($this->properties[$key]) ? $this->properties[$key] : null;
+}
+
+}  // end class
+
+?>
+
+</body>
+</html>
+

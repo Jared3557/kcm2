@@ -1,0 +1,382 @@
+/* styles starting with phm are for the Program Home Page */   
+
+/*===============================*/
+/*=    Overrides to Common css  =*/
+/*===============================*/
+
+td {
+    font-size:11pt;
+    /*@  kcm-min-font-size:8pt;  */
+    padding-top: 1pt;
+    padding-bottom: 2pt;
+    padding-left: 4pt;
+    padding-right: 1pt;
+    white-space:nowrap; 
+    height: 16pt;
+    border-left:1px solid black;
+    border-right:1px solid black;
+}    
+
+/*===============================*/
+.phmHead {
+    font-size: 9pt;
+    font-weight:bold;
+    padding-left: 1pt;
+    padding-right: 1pt;
+    border-left:1px solid black;
+    border-right:1px solid black;
+    border-top:1px solid #C0C0C0;
+    border-bottom:1px solid black;
+    background-color: #EEEEFF;
+}    
+
+
+.phmNumber {
+    width: 23pt;
+    text-align:right;
+    font-size:10pt;
+    font-weight:normal;
+    vertical-align:text-top;
+    padding-left:5pt;
+    padding-right:2pt;
+    border-right:1px solid #D0D0D0;
+    border-left:1px solid black;
+}    
+.phmPeriod {
+    width: 20pt;
+    text-align:left;
+    vertical-align:text-top;
+    font-size:10pt;
+    font-weight:normal;
+    padding-left:5pt;
+    padding-right:2pt;
+    border-right:1px solid #D0D0D0;
+    border-left:1px solid black;
+}    
+.phmFirstName {
+    width: 80pt;
+    text-align:left;
+    font-size:10pt;
+    vertical-align:text-top;
+    padding-left:5pt;
+    padding-right:2pt;
+    border-right:1px solid #D0D0D0;
+    border-left:1px solid black;
+}    
+.phmLastName {
+    width: 80pt;
+    text-align:left;
+    font-size:10pt;
+    vertical-align:text-top;
+    padding-left:5pt;
+    padding-right:2pt;
+    border-right:1px solid #D0D0D0;
+    border-left:1px solid black;
+}    
+.phmGrade {
+    width: 26pt;
+    text-align:left;
+    font-size:10pt;
+    font-weight:bold;
+    vertical-align:text-top;
+    padding-left:5pt;
+    padding-right:2pt;
+    border-right:1px solid #D0D0D0;
+    border-left:1px solid black;
+}    
+.phmGradeGroup {
+    width: 24pt;
+    text-align:left;
+    font-size:10pt;
+    font-weight:bold;
+    vertical-align:text-top;
+    padding-left:5pt;
+    padding-right:2pt;
+    border-right:1px solid #D0D0D0;
+    border-left:1px solid black;
+}    
+.phmSubGroup {
+    width: 43pt;
+    text-align:left;
+    font-size:9pt;
+    vertical-align:text-top;
+    padding-left:5pt;
+    padding-right:2pt;
+    border-right:1px solid #D0D0D0;
+    border-left:1px solid black;
+}    
+.phmCatGroupHead {
+    width: 53pt;
+    font-size:10pt;
+    text-align:center;
+    vertical-align:text-top;
+    padding-left:5pt;
+    padding-right:2px;
+    border-right:1px solid #D0D0D0;
+    border-left:1px solid black;
+}    
+.phmCatColHead {
+    width: 53pt;
+    font-size:7pt;
+    font-weight:norma1;
+    text-align:right;
+    vertical-align:text-top;
+    padding-left:5pt;
+    padding-right:2px;
+    border-right:1px solid #D0D0D0;
+    border-left:1px solid black;
+}    
+.phmCatColumn {
+    width:23pt;
+    font-size:8pt;
+    text-align:right;
+    font-weight:normal;
+    vertical-align:text-top;
+    padding-left:5pt;
+    padding-right:2pt;
+    border-right:1px solid #D0D0D0;
+    border-left:1px solid black;
+}    
+.phmRookie {
+    width: 16pt;
+    text-align:center;
+    vertical-align:text-top;
+    font-size:10pt;
+    border-left:1px solid gray;
+    border-right:1px solid black;
+}
+.phmPoints {
+    width: 27pt;
+    font-size:9pt;
+    text-align:right;
+    vertical-align:text-top;
+    padding-left:5pt;
+    padding-right:2px;
+    border-right:1px solid black;
+    border-left:1px solid black;
+}    
+.colPointHead {
+    width: 100pt;
+    text-align:left;
+    font-size:9pt;
+    font-weight:bold;
+    vertical-align:text-top;
+    padding-left:5pt;
+    padding-right:2pt;
+    border-right:1px solid #D0D0D0;
+    border-left:1px solid black;
+}    
+.phmChessHeading {
+/* width comes from subheadings (Wins, Losses, Draws, Percent) */
+    width: 53pt;
+    text-align:center;
+    font-size:10pt;
+    font-weight:bold;
+    vertical-align:bottom;
+    border-right:1px solid #D0D0D0;
+    border-left:1px solid black;
+}    
+.phmBlitzHeading {
+/* width comes from subheadings (Wins, Losses, Draws, Percent) */
+    width: 63pt;
+    text-align:center;
+    font-size:10pt;
+    font-weight:bold;
+    vertical-align:bottom;
+    border-right:1px solid #D0D0D0;
+    border-left:1px solid black;
+}    
+.phmBugHeading {
+/* width comes from subheadings (Wins, Losses, Draws, Percent) */
+    width: 63pt;
+    text-align:right;
+    font-size:10pt;
+    font-weight:bold;
+    text-align:center;
+    vertical-align:bottom;
+    border-right:1px solid #D0D0D0;
+    border-left:1px solid black;
+}    
+.phmGames {
+    width: 14pt;
+    text-align:right;
+    vertical-align:text-top;
+    font-size:9pt;
+    border-left:1px solid black;
+    border-right:1px solid #C0C0C0;
+    padding-left:1pt;
+    padding-right:1pt;
+    border-right:1px solid #D0D0D0;
+    border-left:1px solid black;
+}    
+.phmWon {
+    width: 14pt;
+    text-align:right;
+    vertical-align:text-top;
+    font-size:9pt;
+    border-left:1px solid black;
+    border-right:1px solid #C0C0C0;
+    padding-left:1pt;
+    padding-right:1pt;
+    border-right:1px solid #D0D0D0;
+    border-left:1px solid black;
+}    
+.phmLost  {
+    width: 14pt;
+    text-align:right;
+    vertical-align:text-top;
+    font-size:9pt;
+    border-left:1px solid #C0C0C0;
+    border-right:1px solid #C0C0C0;
+    padding-left:1pt;
+    padding-right:1pt;
+}    
+.phmDraw {
+    width: 16pt;
+    text-align:center;
+    vertical-align:text-top;
+    font-size:9pt;
+    border-left:1px solid #C0C0C0;
+    border-right:1px solid #C0C0C0;
+    padding-left:1pt;
+    padding-right:1pt;
+    border-right:1px solid #D0D0D0;
+    border-left:1px solid black;
+}    
+.phmPercent {
+    width: 28pt;
+    text-align:right;
+    vertical-align:text-top;
+    font-size:9pt;
+    font-weight:normal;
+    padding-left:5pt;
+    padding-right:2pt;
+    border-right:1px solid #D0D0D0;
+    border-left:1px solid black;
+}    
+    
+    
+/*.........END-OF-REPORT-STYLES SECTION --- DO NOT CHANGE THIS LINE........*/   
+/* All report styles (for printer/pdf/excel) must go above this line       */   
+/* All non-report styles (not for printer/pdf/excel) must go below         */   
+/* All report styles MUST use a subset of css compatible with the kcm code */   
+/* Custom report styles are 1-line comments starting with '/*@'            */   
+
+.phmGUIOptionsForm {
+    display:inline;
+    margin:0;
+    padding:0;
+}
+.phmGUIDataForm {
+    display:inline;
+    margin:0;
+    padding:0;
+}
+.phmGUIKidGroupError {
+    color:red;
+}
+
+.phmGUICokBoxHeader {
+    border-style-none;
+    font-size:11pt;
+    font-weight:bold;
+    vertical-align:text-top;
+}
+
+.phmGUICokBoxButtons {
+    border-style-none;
+    font-size:11pt;
+    font-weight:bold;
+    text-align:center;
+    vertical-align:text-top;
+}    
+.phmGUIEmptyCell {
+    border-style-none;
+    font-size:11pt;
+    font-weight:bold;
+}    
+.phmGUISaveCell {
+    border-style-none;
+    font-size:11pt;
+    font-weight:bold;
+}    
+
+.phmGUIguiListBox {
+    border-style-none;
+    font-size:11pt;
+    font-weight:bold;
+}
+
+.phmGuiOpColumn1 {
+    width: 120px;
+    font-size:12pt;
+    font-weight:normal;
+    vertical-align:text-top;
+}
+.phmGuiOpColumn2 {
+    width: 120px;
+    font-size:12pt;
+    font-weight:normal;
+    width:160px;
+    vertical-align:text-top;
+}
+.phmGuiOpColumn3 {
+    width: 120px;
+    font-size:12pt;
+    font-weight:normal;
+    width:190px;
+    vertical-align:text-top;
+}
+.phmGuiOpColumn4 {
+    width: 120px;
+    font-size:12pt;
+    font-weight:normal;
+    width:190px;
+    vertical-align:text-top;
+}
+.phmButtonSubmit {
+    font-size:10px;
+    font-weight:bold;
+    padding-bottom:1px;
+    padding-top:1px;
+    padding-left:2px;
+    padding-right:4px;
+    height:24px;
+    margin-bottom:2px;
+    margin-top:2px;
+    margin-right:4px;
+    margin-left:20px;
+    width:120px
+}
+.phmGuiExportCell {
+    width: 150px; 
+	font-size: 12pt;
+    font-weight:bold;
+    text-align:left;
+    vertical-align:middle;
+}
+.phmGuiExportButton {
+   margin-left:5px;
+   margin-right:5px;
+   margin-top:5px;
+   margin-bottom:5px;
+}
+
+button.PhmOkgSave {
+    width: 120px;
+    margin-left:10px;
+    margin-right:30px;
+    margin-top:5px;
+	display: inline;
+    font-size:20px;
+    font-weight:bold;
+}
+button.PhmOkgBack {
+    width: 120px;
+    margin-left:30px;
+    margin-top:5px;
+	display: inline;
+    font-size:10px;
+    font-weight:bold;
+    margin-right:30px;
+}

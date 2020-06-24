@@ -1,0 +1,263 @@
+<NotepadPlus>
+    <Session activeView="0">
+        <mainView activeIndex="59">
+            <File firstVisibleLine="341" xOffset="0" scrollWidth="6180" startPos="15290" endPos="15290" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\rsm\rsm-emitter.inc.php" backupFilePath="" originalFileLastModifTimestamp="1584369756" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no">
+                <Mark line="155" />
+                <Mark line="499" />
+                <Mark line="518" />
+                <Mark line="528" />
+                <Mark line="679" />
+                <Mark line="695" />
+                <Mark line="713" />
+                <Mark line="730" />
+                <Mark line="734" />
+                <Mark line="745" />
+                <Mark line="764" />
+                <Mark line="787" />
+            </File>
+            <File firstVisibleLine="24" xOffset="0" scrollWidth="2983" startPos="2124" endPos="2124" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-kernel\kernel-emitter.inc.php" backupFilePath="" originalFileLastModifTimestamp="1584226327" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no">
+                <Mark line="143" />
+                <Mark line="187" />
+                <Mark line="190" />
+            </File>
+            <File firstVisibleLine="42" xOffset="0" scrollWidth="4218" startPos="1474" endPos="1474" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\rsm\rsm-form.inc.php" backupFilePath="" originalFileLastModifTimestamp="1583628213" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="3014698" mapWrapIndentMode="-1" mapIsWrap="no">
+                <Mark line="40" />
+                <Mark line="61" />
+                <Mark line="63" />
+                <Mark line="170" />
+                <Mark line="259" />
+                <Mark line="330" />
+                <Mark line="458" />
+                <Mark line="461" />
+                <Mark line="467" />
+                <Mark line="508" />
+            </File>
+            <File firstVisibleLine="404" xOffset="0" scrollWidth="4921" startPos="14977" endPos="15028" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\rsm\rsm-functions.inc.php" backupFilePath="" originalFileLastModifTimestamp="1585447156" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="512" mapWrapIndentMode="-1" mapIsWrap="no">
+                <Mark line="234" />
+                <Mark line="294" />
+                <Mark line="303" />
+                <Mark line="342" />
+                <Mark line="359" />
+                <Mark line="365" />
+                <Mark line="398" />
+                <Mark line="422" />
+            </File>
+            <File firstVisibleLine="180" xOffset="0" scrollWidth="3192" startPos="8964" endPos="8972" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-roster\roster-setup-gradeGroups.php" backupFilePath="" originalFileLastModifTimestamp="1585446120" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="3014698" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="2431" startPos="222" endPos="222" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-utilities\utilities-system-emitter.inc.php" backupFilePath="" originalFileLastModifTimestamp="1583333219" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="221" xOffset="0" scrollWidth="3876" startPos="8329" endPos="8329" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-roster\roster-system-functions.inc.php" backupFilePath="" originalFileLastModifTimestamp="1585407827" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no">
+                <Mark line="139" />
+                <Mark line="227" />
+                <Mark line="228" />
+                <Mark line="242" />
+                <Mark line="244" />
+            </File>
+            <File firstVisibleLine="20" xOffset="0" scrollWidth="1564" startPos="1378" endPos="1386" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-utilities\utilities-system-globals.inc.php" backupFilePath="" originalFileLastModifTimestamp="1575162222" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="429" xOffset="0" scrollWidth="4104" startPos="23330" endPos="23392" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-payroll\pay-home.php" backupFilePath="" originalFileLastModifTimestamp="1584067719" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="64" xOffset="0" scrollWidth="1222" startPos="3216" endPos="3237" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-payroll\pay-report-checkRegister.inc.php" backupFilePath="" originalFileLastModifTimestamp="1584062144" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="2451" startPos="471" endPos="471" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-payroll\pay-report-checkRegister.php" backupFilePath="" originalFileLastModifTimestamp="1584067719" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="160696808" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="629" xOffset="0" scrollWidth="2896" startPos="26959" endPos="26959" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-payroll\pay-report-ledger.inc.php" backupFilePath="" originalFileLastModifTimestamp="1584062145" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="2375" startPos="496" endPos="496" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-payroll\pay-report-ledger.php" backupFilePath="" originalFileLastModifTimestamp="1584067719" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="132" xOffset="0" scrollWidth="2831" startPos="6718" endPos="6733" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-payroll\pay-setup-employee.php" backupFilePath="" originalFileLastModifTimestamp="1584067719" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="3059" startPos="625" endPos="625" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-payroll\pay-setup-payPeriods.php" backupFilePath="" originalFileLastModifTimestamp="1584067719" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="2015" startPos="809" endPos="824" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-payroll\pay-system-emitter.inc.php" backupFilePath="" originalFileLastModifTimestamp="1584062146" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no">
+                <Mark line="9" />
+                <Mark line="59" />
+            </File>
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="2704" startPos="926" endPos="941" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-roster\roster-system-data-points.inc.php" backupFilePath="" originalFileLastModifTimestamp="1584369756" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no">
+                <Mark line="14" />
+                <Mark line="170" />
+            </File>
+            <File firstVisibleLine="1013" xOffset="0" scrollWidth="1846" startPos="48875" endPos="48875" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-payroll\pay-system-payData.inc.php" backupFilePath="" originalFileLastModifTimestamp="1574898439" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="410" xOffset="0" scrollWidth="3648" startPos="20857" endPos="20866" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-payroll\pay-system-synchronizer.inc.php" backupFilePath="" originalFileLastModifTimestamp="1574898407" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="47" xOffset="0" scrollWidth="2109" startPos="3249" endPos="3249" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-payroll\pay-setup-proxy.php" backupFilePath="" originalFileLastModifTimestamp="1584462276" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="61" xOffset="0" scrollWidth="1885" startPos="6772" endPos="6774" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-payroll\pay-util-createFakeData.php" backupFilePath="" originalFileLastModifTimestamp="1584067719" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="2160" startPos="437" endPos="437" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-admin\admin-system-emitter.inc.php" backupFilePath="" originalFileLastModifTimestamp="1573052190" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="162892928" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="2071" startPos="794" endPos="794" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-admin\admin-system-globals.inc.php" backupFilePath="" originalFileLastModifTimestamp="1583688546" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="214" xOffset="0" scrollWidth="2185" startPos="12269" endPos="12269" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-payroll\pay-system-globals.inc.php" backupFilePath="" originalFileLastModifTimestamp="1574895972" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="51" xOffset="0" scrollWidth="2176" startPos="3668" endPos="3668" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-roster\roster-home.php" backupFilePath="" originalFileLastModifTimestamp="1585446120" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="23" xOffset="0" scrollWidth="2223" startPos="1628" endPos="1636" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-gateway\gateway-system-globals.inc.php" backupFilePath="" originalFileLastModifTimestamp="1584657224" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="254" xOffset="0" scrollWidth="4267" startPos="12898" endPos="12906" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-gateway\gateway-system-kcm1-conversion.inc.php" backupFilePath="" originalFileLastModifTimestamp="1582512298" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="47" xOffset="0" scrollWidth="2717" startPos="1058" endPos="1058" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-roster\roster-setup-pointCategories.php" backupFilePath="" originalFileLastModifTimestamp="1585446120" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="123" xOffset="0" scrollWidth="1360" startPos="3745" endPos="3750" selMode="0" lang="CSS" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-roster\kcm1css\kcm-rpt-PointTally.css" backupFilePath="" originalFileLastModifTimestamp="1582513069" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="1149173760" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="549" xOffset="0" scrollWidth="2227" startPos="19923" endPos="19931" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm-game_objects.inc.php" backupFilePath="" originalFileLastModifTimestamp="1575564496" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="1149173760" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="69" xOffset="0" scrollWidth="1547" startPos="3291" endPos="3291" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-roster\kcm1\kcm-page-ColumnDef.inc.php" backupFilePath="" originalFileLastModifTimestamp="1573581967" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="57" xOffset="0" scrollWidth="2635" startPos="2736" endPos="2847" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-kernel\kernel-kcm1-kcm2-common.inc.php" backupFilePath="" originalFileLastModifTimestamp="1575033297" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="38" xOffset="0" scrollWidth="5111" startPos="3002" endPos="3032" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-roster\roster-system-globals.inc.php" backupFilePath="" originalFileLastModifTimestamp="1585446121" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no">
+                <Mark line="57" />
+                <Mark line="59" />
+                <Mark line="65" />
+                <Mark line="107" />
+                <Mark line="134" />
+                <Mark line="252" />
+            </File>
+            <File firstVisibleLine="164" xOffset="0" scrollWidth="1308" startPos="8566" endPos="8566" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_current\kcm-periodHome.php" backupFilePath="" originalFileLastModifTimestamp="1577724882" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="1144258560" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="7" xOffset="0" scrollWidth="1053" startPos="774" endPos="774" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_current\kcm-libSelectProgram.php" backupFilePath="" originalFileLastModifTimestamp="1577724590" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="997094005" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="54" xOffset="0" scrollWidth="2451" startPos="4192" endPos="4207" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-roster\roster-results-set-classDate.php" backupFilePath="" originalFileLastModifTimestamp="1585446121" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="3014698" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="24" xOffset="0" scrollWidth="4693" startPos="1278" endPos="1278" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-gateway\gateway-setup-proxy.php" backupFilePath="" originalFileLastModifTimestamp="1584490935" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="98" xOffset="0" scrollWidth="2356" startPos="4899" endPos="4899" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-roster\roster-results-set-period.php" backupFilePath="" originalFileLastModifTimestamp="1585446121" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="164073152" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="117" xOffset="0" scrollWidth="2635" startPos="6055" endPos="6055" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-roster\roster-report-pairingLabels.php" backupFilePath="" originalFileLastModifTimestamp="1585446121" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="3014698" mapWrapIndentMode="-1" mapIsWrap="no">
+                <Mark line="63" />
+                <Mark line="74" />
+            </File>
+            <File firstVisibleLine="432" xOffset="0" scrollWidth="876" startPos="15814" endPos="15814" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_current\kcm-game_entry.inc.php" backupFilePath="" originalFileLastModifTimestamp="1537235956" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="145728204" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="101" xOffset="0" scrollWidth="2635" startPos="5357" endPos="5372" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-roster\roster-report-signOutSheet.php" backupFilePath="" originalFileLastModifTimestamp="1585446121" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="2159" startPos="51" endPos="178" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-roster\roster-report-tallySheet.php" backupFilePath="" originalFileLastModifTimestamp="1585446122" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="1149698048" mapWrapIndentMode="-1" mapIsWrap="no">
+                <Mark line="197" />
+                <Mark line="406" />
+            </File>
+            <File firstVisibleLine="534" xOffset="0" scrollWidth="1788" startPos="18753" endPos="18753" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_current\krLib-schedule-engine.inc.php" backupFilePath="" originalFileLastModifTimestamp="1533931354" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="157941760" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="120" xOffset="0" scrollWidth="1118" startPos="4267" endPos="4271" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_current\kcm-libKcmState.inc.php" backupFilePath="" originalFileLastModifTimestamp="1449971657" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="1144258560" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="71" xOffset="0" scrollWidth="2015" startPos="4127" endPos="4127" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-roster\roster-report-resultsSheet.php" backupFilePath="" originalFileLastModifTimestamp="1585446121" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="32" xOffset="0" scrollWidth="1536" startPos="358" endPos="358" selMode="0" lang="CSS" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-kernel\kernel-styleSheet.css" backupFilePath="" originalFileLastModifTimestamp="1584222296" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="3014688" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="621" xOffset="0" scrollWidth="3708" startPos="28491" endPos="28507" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-roster\roster-system-data-roster.inc.php" backupFilePath="" originalFileLastModifTimestamp="1586833812" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no">
+                <Mark line="43" />
+                <Mark line="171" />
+                <Mark line="183" />
+                <Mark line="243" />
+                <Mark line="253" />
+                <Mark line="311" />
+                <Mark line="404" />
+                <Mark line="996" />
+                <Mark line="1457" />
+                <Mark line="1610" />
+                <Mark line="1618" />
+                <Mark line="1620" />
+                <Mark line="1631" />
+            </File>
+            <File firstVisibleLine="482" xOffset="0" scrollWidth="2669" startPos="19464" endPos="19464" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-roster\roster-report-adminLists.php" backupFilePath="" originalFileLastModifTimestamp="1585446122" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="144031208" mapWrapIndentMode="-1" mapIsWrap="no">
+                <Mark line="203" />
+                <Mark line="207" />
+                <Mark line="221" />
+            </File>
+            <File firstVisibleLine="91" xOffset="0" scrollWidth="3740" startPos="4788" endPos="4858" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-gateway\gateway-selectEvent.php" backupFilePath="" originalFileLastModifTimestamp="1586615090" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no">
+                <Mark line="46" />
+                <Mark line="179" />
+                <Mark line="186" />
+                <Mark line="207" />
+                <Mark line="266" />
+                <Mark line="268" />
+                <Mark line="275" />
+                <Mark line="330" />
+                <Mark line="332" />
+                <Mark line="406" />
+                <Mark line="559" />
+                <Mark line="655" />
+                <Mark line="849" />
+                <Mark line="858" />
+            </File>
+            <File firstVisibleLine="63" xOffset="0" scrollWidth="1128" startPos="2706" endPos="2706" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_current\krLib-schedule-data.inc.php" backupFilePath="" originalFileLastModifTimestamp="1585879535" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="1144258560" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="101" xOffset="0" scrollWidth="1560" startPos="3109" endPos="3109" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_current\rc2_rpt-programDropList.php" backupFilePath="" originalFileLastModifTimestamp="1584836995" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="145686528" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="38" xOffset="0" scrollWidth="3173" startPos="3273" endPos="3273" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\rsm\rsm-objects.inc.php" backupFilePath="" originalFileLastModifTimestamp="1587820496" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="1144258560" mapWrapIndentMode="-1" mapIsWrap="no">
+                <Mark line="140" />
+                <Mark line="173" />
+                <Mark line="354" />
+            </File>
+            <File firstVisibleLine="128" xOffset="0" scrollWidth="1443" startPos="4405" endPos="4405" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_current\rc2_rpt-programPhotoRelease.php" backupFilePath="" originalFileLastModifTimestamp="1497406613" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="512" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="225" xOffset="0" scrollWidth="2896" startPos="11466" endPos="11466" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-roster\roster-results-tally.php" backupFilePath="" originalFileLastModifTimestamp="1585446122" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no">
+                <Mark line="76" />
+                <Mark line="161" />
+                <Mark line="165" />
+                <Mark line="215" />
+                <Mark line="309" />
+                <Mark line="325" />
+                <Mark line="463" />
+                <Mark line="507" />
+                <Mark line="511" />
+                <Mark line="527" />
+                <Mark line="535" />
+                <Mark line="536" />
+            </File>
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="2015" startPos="0" endPos="7" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-roster\roster-report-nameLabels.php" backupFilePath="" originalFileLastModifTimestamp="1585446122" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="157526652" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="139" xOffset="0" scrollWidth="3268" startPos="6710" endPos="6723" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-gateway\gateway.php" backupFilePath="" originalFileLastModifTimestamp="1584417877" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="167551176" mapWrapIndentMode="-1" mapIsWrap="no">
+                <Mark line="31" />
+                <Mark line="56" />
+                <Mark line="144" />
+            </File>
+            <File firstVisibleLine="27" xOffset="0" scrollWidth="2622" startPos="2024" endPos="2043" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-kernel\kernel-globals.inc.php" backupFilePath="" originalFileLastModifTimestamp="1585064157" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="3014698" mapWrapIndentMode="-1" mapIsWrap="no">
+                <Mark line="33" />
+                <Mark line="60" />
+                <Mark line="77" />
+                <Mark line="151" />
+                <Mark line="161" />
+            </File>
+            <File firstVisibleLine="193" xOffset="0" scrollWidth="4352" startPos="9418" endPos="9418" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-admin\admin-set-security.php" backupFilePath="" originalFileLastModifTimestamp="1586740769" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no">
+                <Mark line="193" />
+                <Mark line="479" />
+                <Mark line="643" />
+            </File>
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="3328" startPos="566" endPos="593" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-kernel\kernel-commonForm-setProxy.inc.php" backupFilePath="" originalFileLastModifTimestamp="1584543590" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="1145241600" mapWrapIndentMode="-1" mapIsWrap="no">
+                <Mark line="16" />
+                <Mark line="41" />
+            </File>
+            <File firstVisibleLine="391" xOffset="0" scrollWidth="20709" startPos="16721" endPos="16720" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-kernel\kernel-functions.inc.php" backupFilePath="" originalFileLastModifTimestamp="1587859479" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no">
+                <Mark line="283" />
+            </File>
+            <File firstVisibleLine="117" xOffset="200" scrollWidth="3078" startPos="7393" endPos="7393" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-gateway\gateway-links.php" backupFilePath="" originalFileLastModifTimestamp="1584543590" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no">
+                <Mark line="82" />
+            </File>
+            <File firstVisibleLine="107" xOffset="0" scrollWidth="2091" startPos="5308" endPos="5308" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-roster\roster-report-roster.php" backupFilePath="" originalFileLastModifTimestamp="1585446123" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="3" mapWrapIndentMode="-1" mapIsWrap="no">
+                <Mark line="172" />
+                <Mark line="527" />
+            </File>
+            <File firstVisibleLine="102" xOffset="0" scrollWidth="2888" startPos="23249" endPos="23249" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-roster\roster-results-points.php" backupFilePath="" originalFileLastModifTimestamp="1585446123" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no">
+                <Mark line="192" />
+                <Mark line="196" />
+                <Mark line="636" />
+                <Mark line="644" />
+            </File>
+            <File firstVisibleLine="513" xOffset="0" scrollWidth="2470" startPos="22668" endPos="22687" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-kernel\kernel-schedule.inc.php" backupFilePath="" originalFileLastModifTimestamp="1586833743" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="6422573" mapWrapIndentMode="-1" mapIsWrap="no">
+                <Mark line="303" />
+                <Mark line="358" />
+                <Mark line="422" />
+                <Mark line="496" />
+                <Mark line="500" />
+                <Mark line="514" />
+                <Mark line="537" />
+                <Mark line="538" />
+                <Mark line="586" />
+            </File>
+            <File firstVisibleLine="1446" xOffset="0" scrollWidth="5130" startPos="70565" endPos="70565" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-roster\roster-results-games.php" backupFilePath="" originalFileLastModifTimestamp="1585446123" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no">
+                <Mark line="210" />
+                <Mark line="2049" />
+            </File>
+            <File firstVisibleLine="237" xOffset="0" scrollWidth="2600" startPos="16071" endPos="16071" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-roster\roster-setup-kidData.php" backupFilePath="" originalFileLastModifTimestamp="1585446123" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="270" xOffset="0" scrollWidth="1008" startPos="9728" endPos="9732" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_current\rc_admin-report.inc.php" backupFilePath="" originalFileLastModifTimestamp="1428362348" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="1144258560" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="20" xOffset="0" scrollWidth="4123" startPos="2166" endPos="2166" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-kernel\kernel-debug.php" backupFilePath="" originalFileLastModifTimestamp="1584462019" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="148" xOffset="0" scrollWidth="1853" startPos="3009" endPos="3009" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-gateway\gateway-schoolList.php" backupFilePath="" originalFileLastModifTimestamp="1584405991" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="66" xOffset="0" scrollWidth="4427" startPos="3630" endPos="3660" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\kcm-gateway\gateway-staffList.php" backupFilePath="" originalFileLastModifTimestamp="1586615091" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no">
+                <Mark line="121" />
+                <Mark line="237" />
+                <Mark line="433" />
+                <Mark line="460" />
+                <Mark line="471" />
+            </File>
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1937" startPos="1540" endPos="1551" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_current\kcm-gradeGroups_edit.php" backupFilePath="" originalFileLastModifTimestamp="1444359686" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="673215087" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="3819" startPos="25091" endPos="25091" selMode="0" lang="PHP" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\rsm\rsm-chain.inc.php" backupFilePath="" originalFileLastModifTimestamp="1584880002" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="1868784481" mapWrapIndentMode="-1" mapIsWrap="no">
+                <Mark line="24" />
+                <Mark line="64" />
+                <Mark line="86" />
+                <Mark line="138" />
+                <Mark line="153" />
+                <Mark line="180" />
+                <Mark line="188" />
+                <Mark line="202" />
+                <Mark line="248" />
+                <Mark line="259" />
+                <Mark line="270" />
+                <Mark line="277" />
+                <Mark line="281" />
+                <Mark line="298" />
+                <Mark line="439" />
+                <Mark line="467" />
+                <Mark line="515" />
+                <Mark line="694" />
+            </File>
+            <File firstVisibleLine="93" xOffset="0" scrollWidth="2664" startPos="3413" endPos="3413" selMode="0" lang="CSS" encoding="-1" filename="J:\Web_Data\root\kidchess\public_html\raccoon_jared_future\kcm\rsm\rsm-styleSheet.css" backupFilePath="" originalFileLastModifTimestamp="1586617589" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no">
+                <Mark line="105" />
+                <Mark line="324" />
+                <Mark line="839" />
+            </File>
+        </mainView>
+        <subView activeIndex="0" />
+    </Session>
+</NotepadPlus>

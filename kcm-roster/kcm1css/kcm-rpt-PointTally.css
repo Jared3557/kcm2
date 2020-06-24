@@ -1,0 +1,184 @@
+/* kcm-rpt-PointTally */
+/* Also used by kcm for formatting reports (PDF and Excel) */
+/* for reports only a small subset of css is valid */
+/* comments must not continue to other lines */
+/* comments must be whole line or end of line */
+/* comments with /*@ are directives for report formatting */
+
+/*===============================*/
+/*=    Overrides to Common css  =*/
+/*===============================*/
+
+td {
+    font-size:11pt;
+    /*@  kcm-min-font-size:8pt;  */
+    padding-top: 1pt;
+    padding-bottom: 2pt;
+    padding-left: 4pt;
+    padding-right: 1pt;
+    white-space:nowrap; 
+    height: 16pt;
+}    
+
+
+/*======================================*/
+/*= Specific Styles                    =*/
+/*= (these come last - some overrides) =*/
+/*======================================*/
+
+th.ptyPeriod {
+    font-size:12pt;
+    border-top:1px;
+}
+.ptyPeriod {
+    font-size:10pt;
+    width: 26pt;
+    border-right:1px solid #D0D0D0;
+    border-left:1px;
+}    
+th.ptyFirstName {
+    border-top:1px;
+    border-left:1px;
+    border-right:1px solid #C0C0C0;
+}
+.ptyFirstName {
+    font-size:12pt;
+    width: 60pt;
+    border-left:1px solid #D0D0D0;
+    border-right:1px solid #C0C0C0;
+    padding-top: 1pt;
+    padding-left: 2pt;
+    width: 50pt;
+}    
+.ptyStudentCount {
+    font-size:12pt;
+    width: 200pt;
+    border-styke:none;
+    padding-top: 1pt;
+    padding-left: 2pt;
+}    
+th.ptyLastName {
+    border-top:1px;
+    border-left:1px solid #C0C0C0;
+    border-right:1px solid #D0D0D0;
+}
+.ptyLastName {
+    font-size:12pt;
+    width: 66pt;
+    border-left:1px solid #C0C0C0;
+    border-right:1px solid #D0D0D0;
+    padding-top: 2pt;
+    width: 50pt;
+}    
+th.ptyGrade {
+    border-top:1px;
+    font-size:10pt;
+}
+.ptyGrade {
+    font-size:10pt;
+    width:24pt;
+    border-left:1px solid #D0D0D0;
+    border-right:1px solid #D0D0D0;
+    padding-top: 2pt;
+}    
+th.ptyRookie {
+    border-top:1px;
+}
+.ptyRookie {
+    font-size:10pt;
+    width: 18pt;
+    border-left:1px solid #D0D0D0;
+    border-right:1px solid #D0D0D0;
+    padding-left: 2pt;
+    padding-top: 2pt;
+}    
+th.ptyTotal {
+    width: 34pt;
+    border-top:1px;
+}
+.ptyTotal {
+    text-align:center;
+    border-left:1px solid #D0D0D0;
+}    
+th.ptyPoints {
+    border-top:1px;
+}
+.ptyPoints {
+    width: 51pt;
+    text-align:center;
+    border-left:1px;
+}    
+th.ptyChessGroup {
+    text-align:center;
+    border-top:1px;
+    border-bottom:1px solid #D0D0D0;
+}    
+th.ptyBlitzGroup {
+    text-align:center;
+    border-top:1px;
+    border-bottom:1px solid #D0D0D0;
+}    
+th.ptyBugGroup {
+    text-align:center;
+    border-top:1px;
+    border-bottom:1px solid #D0D0D0;
+}    
+th.ptyWon {
+    width: 46pt;
+    text-align:center;
+    border-top:1px solid #D0D0D0;
+    border-right:1px solid #C0C0C0;
+    border-left:1px;
+}    
+td.ptyWon {
+    text-align:center;
+    border-right:1px solid #C0C0C0;
+    border-left:1px;
+}    
+th.ptyLost {
+    width: 46pt;
+    text-align:center;
+    border-top:1px solid #D0D0D0;
+    border-left:1px solid #C0C0C0;
+    border-right:1px solid #C0C0C0;
+}    
+td.ptyLost  {
+    text-align:center;
+    border-left:1px solid #C0C0C0;
+    border-right:1px solid #C0C0C0;
+}    
+th.ptyDraw {
+    width: 25pt;
+    text-align:center;
+    border-top:1px solid #D0D0D0;
+    border-left:1px solid #C0C0C0;
+    border-right:1px;
+}    
+td.ptyDraw {
+    text-align:center;
+    border-left:1px solid #C0C0C0;
+    border-right:1px solid;
+}    
+td.ptyNogrid {
+    border-style: none;
+}
+
+.ptyHead {
+    font-size: 9pt;
+    font-weight:bold;
+    padding-left: 1pt;
+    padding-right: 1pt;
+    border-left:1px solid black;
+    border-right:1px solid black;
+    border-top:1px solid #C0C0C0;
+    border-bottom:1px solid black;
+    background-color: #EEEEFF;
+}    
+
+/*.........END-OF-REPORT-STYLES SECTION --- DO NOT CHANGE THIS LINE........*/   
+/* All report styles (for printer/pdf/excel) must go above this line       */   
+/* All non-report styles (not for printer/pdf/excel) must go below         */   
+/* All report styles MUST use a subset of css compatible with the kcm code */   
+/* Custom report styles are 1-line comments starting with '/*@'            */   
+
+ 

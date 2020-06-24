@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="fd9039a7-232e-4b98-b88a-04b5aed0ec03" name="Local-Apache" url="http://localhost/kidchess/public_html/raccoon_jared_future/kcm">
+        <fileTransfer mountedRoot="J:\Web_Data\root" accessType="MOUNT" port="0" />
+      </webServer>
+    </option>
+  </component>
+</project>

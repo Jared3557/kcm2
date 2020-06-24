@@ -1,0 +1,71 @@
+/* kcm-rpt-Sign-Out-Sheet */
+/* Also used by kcm for formatting reports (PDF and Excel) */
+/* for reports only a small subset of css is valid */
+/* comments must not continue to other lines */
+/* comments must be whole line or end of line */
+/* comments with /*@ are directives for report formatting */
+
+/*===============================*/
+/*=    Overrides to Common css  =*/
+/*===============================*/
+
+td {
+    font-size:11pt;
+    /*@  kcm-min-font-size:8pt;  */
+    padding-top: 1pt;
+    padding-bottom: 2pt;
+    padding-left: 4pt;
+    padding-right: 1pt;
+    white-space:nowrap; 
+    height: 24pt;
+    vertical-align: bottom;
+    border-style: none;
+}    
+
+
+/*======================================*/
+/*= Specific Styles                    =*/
+/*= (these come last - some overrides) =*/
+/*======================================*/
+
+td.sosFirst {
+    font-size:12pt;
+    width: 90pt;
+    padding-top: 1pt;
+    padding-left: 2pt;
+    vertical-align: bottom;
+}    
+td.sosLast {
+    font-size:12pt;
+    width: 90pt;
+    padding-top: 2pt;
+}    
+td.sosASP {
+    font-size:12pt;
+    width: 30pt;
+    padding-top: 2pt;
+}    
+td.sosSig {
+    font-size:12pt;
+    width: 160pt;
+    padding-top: 2pt;
+    border-bottom: 1px solid black;
+}    
+td.sosNotes {
+    font-size:8pt;
+    padding-top: 2pt;
+    width: 200pt;
+}    
+td.sosHead {
+    font-weight: bold;
+    border-style: none;     
+    border-bottom: 0px solid;
+}
+
+/*.........END-OF-REPORT-STYLES SECTION --- DO NOT CHANGE THIS LINE........*/   
+/* All report styles (for printer/pdf/excel) must go above this line       */   
+/* All non-report styles (not for printer/pdf/excel) must go below         */   
+/* All report styles MUST use a subset of css compatible with the kcm code */   
+/* Custom report styles are 1-line comments starting with '/*@'            */   
+
+ 

@@ -1,0 +1,160 @@
+/* Ignored by export: overflow: ; */
+/* Ignored by export: text-overflow: ; */
+
+
+table.nlbTable {
+    border-collapse:separate;
+    border-spacing:0;
+    empty-cells:show;
+    border-style:none;
+    border-collapse:separate;
+    border-spacing:0;
+    padding-top: 1pt;
+    padding-bottom: 1pt;
+    padding-left: 1pt;
+    padding-right: 1pt;
+    margin-top: 24pt;
+    font-size:12px;
+    font-weight:normal;
+    vertical-align:text-top;
+}
+td.nlbTopCell {
+    width: 302pt;
+    height: 28pt;
+    padding-top: 0;
+    padding-bottom: 8;
+    font-size:8pt;
+    border-style:none;
+}    
+td.nlbLabelCell {
+    width: 302pt;
+    height: 143pt;
+    padding-top: 12;
+    padding-bottom: 12;
+    font-size:24pt;
+    border-left:0px solid black;
+    border-right:0px solid black;
+    border-top:0px solid black;
+    border-bottom:0px solid black;
+    padding-left: 4px;
+    padding-right: 5px;
+    padding-top: 2pt;
+    padding-bottom: 2pt;
+    vertical-align:text-top;
+    font-size:10pt;
+    text-align:left;
+}    
+div.nlbLabelDiv {
+   position: relative;
+   left: 0pt;
+   top:  -10pt;
+   width: 302pt;
+   height: 148pt;
+}
+
+/*======================================*/
+/*=     Data Table Column Styles       =*/
+/*= (these come last - some overrides) =*/
+/*======================================*/
+
+div.nlbSubGroup {
+   position: absolute;
+   left: 120pt;
+   top:  24pt;
+   font-size:14pt;
+   white-space:nowrap;
+   overflow: hidden;
+   text-overflow: clip;
+/*@  kcm-min-font-size:10pt;  */
+}
+div.nlbFirstName {
+   position: absolute;
+   left: 100pt;  
+   width: 165pt;
+   top: 34pt;
+   font-size:44pt;
+   white-space:nowrap;
+   overflow: hidden;
+   text-overflow: clip;
+/*@  kcm-min-font-size:24pt;  */
+}
+
+div.nlbLastName {
+   display: block;
+   position: absolute;
+   left: 100pt;
+   top:  76pt;
+   width: 165pt;
+   font-size:28pt;
+   white-space:nowrap;
+   overflow: hidden;
+   text-overflow: clip;
+/*@  kcm-min-font-size:20pt;  */
+}
+
+div.nlbGrade {
+   position: absolute;
+   left: 0pt;
+   top:  105pt;
+   font-size:22pt;
+   white-space:nowrap;
+   overflow: hidden;
+   text-overflow: clip;
+/*@  kcm-min-font-size:20pt;  */
+}
+div.nlbPeriod {
+   position: absolute;
+   left: 142pt;
+   top:  105pt;
+   font-size:18pt;
+   white-space:nowrap;
+   overflow: hidden;
+   text-overflow: clip;
+/*@  kcm-min-font-size:16pt;  */
+}
+div.nlbNote {
+   position: absolute;
+   left: 155pt;
+   top:  125pt;
+   font-size:14pt;
+   white-space:nowrap;
+   overflow: hidden;
+   text-overflow: clip;
+/*@  kcm-min-font-size:10pt;  */
+}
+div.nlbTeacher {
+   position: absolute;
+   left: 50pt;
+   top:  125pt;
+   font-size:14pt;
+   white-space:nowrap;
+   overflow: hidden;
+   text-overflow: clip;
+/*@  kcm-min-font-size:10pt;  */
+}
+img.nlbLogo {
+    position: absolute;
+    left: 10pt;
+    top:  25pt;
+    height: 80pt;
+}
+img.nlbAspImg {
+    position: absolute;
+    left: 165pt;
+    top:  130pt;
+    height: 25pt;
+}
+img.nlbCameraImg {
+    position: absolute;
+    left: 15pt;
+    top:  130pt;
+    height: 10pt;
+}
+
+/*.........END-OF-REPORT-STYLES SECTION --- DO NOT CHANGE THIS LINE........*/   
+/* All report styles (for printer/pdf/excel) must go above this line       */   
+/* All non-report styles (not for printer/pdf/excel) must go below         */   
+/* All report styles MUST use a subset of css compatible with the kcm code */   
+/* Custom report styles are 1-line comments starting with '/*@'            */   
+
+

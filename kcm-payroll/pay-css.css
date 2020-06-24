@@ -1,0 +1,129 @@
+/* kcmI2-lib-css.css */
+
+
+/*         @@@@@@@@@@@             */
+/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+/*@@           Banner            @@*/
+/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+/*         @@@@@@@@@@@             */
+
+
+/*         @@@@@@@@@@@             */
+/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+/*@@           Options           @@*/
+/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+/*         @@@@@@@@@@@             */
+
+
+#kgs-filter-container {
+    display: none;  /* is toggled via javascript */
+    position: absolute;
+    z-index: 999;
+    top: 0pt;
+    left: 0pt;
+    right: 0pt; /* fill entire width */
+    bottom: 0pt; /* fill entire height */
+    margin: 0pt;
+}
+
+div.kgs-filter-container {
+    margin-top: 10pt;
+    display: inline-block;
+    width: 100%;
+    border: 1pt solid black;
+    background-color: #8888ff; /* header and rpt-row-footer color */
+}
+div.kgs-filter-rpt-row-footer,
+div.kgs-filter-header {
+    text-align: left;
+    font-size: 14pt;
+    font-weight: bold;
+    margin: 0pt;
+    padding: 1pt 5pt 1pt 5pt;
+    border-bottom: 1pt solid #8888ff;
+}
+
+div.kgs-filter-body {
+   background-color:#aaaaff; 
+   padding: 3pt 8pt 3pt 8pt;
+   font-size: 18pt;
+}     
+div.kgs-filter-element {
+   display: inline;
+   white-space:nowrap;
+   padding-left: 10pt;
+   font-size: 18pt;
+   margin: 2pt 10pt 2pt 0pt;
+   padding: 1pt 3pt 1pt 3pt;
+   border: 1pt solid #aaaaff;
+   background-color: #ccccff;
+}     
+button.kgs-filter-button {
+    display: inline-block;
+    min-height: 18pt;
+    margin: 2pt 26pt 2pt 16pt;
+    text-align: center;
+    vertical-align: middle;
+    padding: 1pt 16pt 1pt 16pt;
+    min-width: 80pt;
+    font-size: 14pt;
+    font-weight: bold;
+	border-radius: 12pt;
+    border: 1pt solid gray;
+}     
+span.kgs-filter-desc {
+    display: inline-block;
+    text-align: center;
+    padding: 2pt 6pt 2pt 6pt;
+    margin: 3pt 6pt 3pt 8pt;
+    font-size: 12pt;
+	border-radius: 0pt;
+    border: 1pt solid #8888ff;
+    white-space:nowrap;  /*???*/
+} 
+
+button#filter-button {
+    background-color:#cccccc;
+}    
+
+/***********************************/
+/***********************************/
+/***********************************/
+
+button.kgs-button-2Lines { /* add to other class */
+   height: 42pt;
+}     
+
+/*****************************************/
+/*    font class attributes (for adding) */
+/*****************************************/
+
+.kc-colLeft { /* only used in tally */
+    border-left: 3px solid black;
+}
+.kgs-kcm1-zone-content {
+    border-right: 3px solid black;
+}
+.kc-colTop { /* only used in tally */
+    border-top: 3px solid black;
+}
+
+
+/* Copied from a web site h ttps ://codepen.io/tjvantoll/pen/JEKIu  */
+
+span.kgs-abort-line {
+    font-size: 20pt;
+    font-weight: bold;
+    color: black;
+    background-color: #ffaaaa;
+}
+
+div.kgs-kcm1-zone-content {
+    position: relative;
+}
+
+/* restore height from rc_common for password - this is a kludge - probably there is a better fix */
+input[type=password] {
+	height: 6pt;
+}
+

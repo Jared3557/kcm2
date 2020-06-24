@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+ body {
+  line-height: 1;
+  height: 100%;
+  width: 100%;
+  background-color:gray;
+  margin: 0;
+  padding: 0;
+}
+div.flex-container {
+  display: flex;
+  flex-direction: column;
+  background-color: DodgerBlue;
+  height: 100%;
+}
+
+div.small {
+  background-color: #f1f1f1;
+  margin: 0;
+  text-align: center;
+  line-height: 75px;
+  font-size: 30px;
+  border: 1px solid red;
+}
+div.outer {
+  margin: 0;
+  text-align: center;
+  line-height: 75px;
+  font-size: 30px;
+  border: 2px solid green;
+}
+div.large {
+  flex-grow: 1;
+   overflow: auto; /* to scroll just the "main" div */
+   height: 100%;
+   overflow-y: auto;
+  background-color: #f1f1f1;
+  width: 100%;
+  margin: 0;
+  text-align: center;
+  line-height: 75px;
+  font-size: 30px;
+}
+</style>
+</head>
+<body>
+<div class="flex-container">
+  <div class="outer">
+  <div class="small">1A</div>
+  <div class="small">1B</div>
+  </div>
+  <div class="large">2<br>2<br>2<br>2<br>2<br>2<br>2<br>2<br>2<br>2<br>2<br></div>  
+  <div class="small">3</div>
+</div>
+
+</body>
+</html>

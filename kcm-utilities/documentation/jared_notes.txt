@@ -1,0 +1,523 @@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@  To-Do                                    @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+Fix or Review:
+   How to handle schedule changes - after approve, etc - should schedule change propogate to schedule record and overrides ????
+   How to hadle additional time - don't have # periods but do have time.
+
+
+Fix if time:
+    better sql for getting final record in transactions
+    proxy still not perfect
+    review sched changed code- also error/status/explanation message when this happens ????
+
+Ratana Questions (check emails):
+   1. max travel time
+   2. max travel gap
+   3. Other than scheduled items, what is eligible for travel
+   4. reports
+
+kcm-gateway:
+
+security - need to decide on date range, both for security and all the schedules
+change pending not to list schools if lots of them - and more than a few days distant
+security/schedule: more options/variables/"constants" for days to allow, display, etc.
+mySchedule - fewer future days - maybe just holidays and not pending except for a few future days
+all events - events type combo  - clarify and simplify
+test and review code for camps, tournaments, etc
+review security
+review globals
+review sys-form
+security - (done differently,  but done) add more types (leader, staff, parent, viewer) - and maybe one security level variable (if securityLevel>=parent)
+security - events at hidden schools
+get correct name for camps, tournaments, etc (not just school)
+for future sm reports - look at time of class, not only date
+use school uniquifier - maybe in sql - multiple places ?? 
+was ok - in globals get both staff id, login Id, and name ?
+show events at hidden schools?
+proxy - better defaults, more testing, wording, etc, clear ??
+globals and proxy - validate proxy data including dates
+proxy - test cancel with proxy, etc (are url parametes maintained)
+proxy - for date/time override validate dates (disallow feb 31)
+eliminate duplicate user code from gateway-include (moved to globals)
+
+ ***** BUG - some schedule date periods don't have times - also bug in KCM and KCM1  ???? admin_cal.inc.php line 1072  if ( is_null( $info['starttime'] )) {
+
+improve banner
+save current raccoon data and code and make runnable on hostgator (did some of this)
+(optional) when live - need kcm1 return to be to kcm2
+
+test !!!!
+
+-- do later
+auto-start event if within time frame based on coaches schedule
+allow all staff to login during class time
+
+Done==== 
+eliminate rpt-fixed from css
+be able to look at previous classes (so can update points)
+add site manager report to classes (or at end for future)
+some filters (such as all events) apply only to admin
+detect live system - if so disallow conversion to kcm2
+(was ok) schedule details - is date override possible passed along to KCM1?
+better global implementation of date, time, user override, security level, historical - in globals and then all code (save in session?)
+pass along to program chain
+filter - overlay screen area
+on add kcm1-kcm2 symbol
+table border not showing on right
+Cancel problems - make fsys form do the work
+on schoollist add link to map
+login - password box too large
+add defines to database sql conversion and convert recent data
+if multiple semesters list semester with event - also does this effect filter title?
+if no programs then disable submit
+ on useful links - make sure can click links with finger and links look good on phone
+filter - simplify type options (or use checkboxes?)
+ -- date range does not work for short events !!!!!! - need to have look ahead and behind range(s), probably not part of filter
+filter - add option for date-range?
+event list should include a few additional days - more for short events
+filter and all-events page cosmetic issues
+bug(s) in all events filters - 
+ use entity for kcm2 vs kcm1 in event list
+bug - need to test for zero event results
+  move overrides for today, time to globals and use them
+ all events - show/hide filter
+ fix table css so columns are reasonable size (make 100% and min-width)
+bug: myschedule - class time should be time of arrival
+ improve menu favorites
+ finish useful links
+ filter class - add show/hide button and code in this class
+ rename include code files
+bug - show Filters should change to Hide filters when visible
+ add games, positions, lesson ideas to links
+
+
+
+
+Do First 
+@@decide on home page for kcm - blank or current home page - fix menu to get there
+Kcm1-Kcm2 point compatibility - save points in both
+kid-period (indication if both periods)
+
+Main Menu:
+     move system css border overrides to local program
+    have "standard" report class for report 
+     
+SERIOUS BUGS:
+  @@  game history name filter - should not filter out other players of same game (possible solution - use opponents field or gap in this case)
+    after entering new game, editing game, and back (cancel, submit, etc), type of game is unknown
+     ===Bug: Tally - points not being saved correctly in many cases - and need to improve interface
+
+ 
+ ?? debug options - fake date, fake user for testing (or filters/url params for these when testing the few things that need this option)
+ 
+name label - label captions (maybe make special task, not on period home report)
+   
+Need to complete (barely usable):
+ @  default point categories?   
+move some roster code from globals to roster 
+ after changing class date go back to same - or menu options for next/prev week
+@   instead of "tally" title,  do weekly/daily Results (tally and/or class)
+  mechanism to change class date on a temporary basis (in tally results especially)
+  @  point tally - for kid edit - submit and go to next kid
+  @  point tally - add direct editing of class games and points ?
+
+add refresh button for home - especially for phone
+on home, when just one tournament list opponents
+on score sort, keep track of opponent transformations - i.e. opponent row/rank
+
+Do first: mostly easy or important - not all are high priority
+@css- a few more styles to move to sy- center, etc or local
+ 
+ name label input 
+  @ more obvious class date for result pages
+   need to be able to change class date for point and game edit
+  after switching period/date come back to previous page
+
+   
+Low-Priority:
+  in tally option to show all weeks for a kid? (problem - need date column so takes up more width on phone)
+
+
+   make sure there is class to handle display of result totals such as for period home page 
+All scripts: getKid may return NULL if kid has withdrawn - need to take care of this - also how to edit games/points for kid if wd kid shows
+ @@clear rc log-in error rsm-message-error - or add to Kcm2 rsm-message-error
+
+ 
+ 
+ clean-up enhancments
+ @@add emit:Field functions for types other than Button
+ @@emit::emLine( $kcmGlobals->gb_form->getHtml_Button(array('gaMode','Bug2'))); - replace with emit:FieldButton
+ 
+  maybe add function BlockStart combining all the standard starting functions (head, banner, rsm-message-error)
+@@Change - ?? - emitKcm_banner::kebEmitBanner($kcmGlobals,'Update Kid Information'); - title is already in header structure 
+  
+ Is kidLabelGroup best name ?????????????????????
+ 
+on crosstable add tie-break/rating, etc to indicate strength of opponents, certaintly, consistency of result, etc. 
+
+   
+                 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+          @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+     @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@  Major Problems  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+          @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+                 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+                @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+          @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+     @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@  Kcm1-kcm2 compatibility  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+          @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+                 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+                 
+ KCM2 - save points also in Kcm1 data
+
+ KCM1 changes - after database change
+ --- do points both for Kcm1 and Kcm2
+ --- if KCM2 make some records/tasks read-only ??????
+ 
+ make sure all points in kcm1 and kcm2 are saved in both
+
+ KCM1-KCM2-CONVERSION 
+  Need to use KCM points and categories in KCM2
+
+KCM1-KCM2-COMPATIBILITY 
+  New: select KCM or KCM2 depending on date/conversions status etc
+kcm1: database changes - eliminate point cats, change label group, disallow most changes (such as group) -
+ save kcm2 points also in Kcm1 ????
+ save kcm2 nameLabelNote also in Kcm1 
+
+SERIOUS To-Dos - possible, but minimal side-effects:
+decide whether to start in kcm1 or kcm2
+kcm.php - other kcm programs must not return here even if no program or period ID 
+
+***** need to fix point saving for kcm1-kcm2 before testing points and tally
+
+ +++ === KCM1 changes to make compatible - Need new code for label groups
+ 
+                 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+          @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+     @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@  Standardization  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+          @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+                 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+ 
+ CLEAN-UP:
+ @@change: instead of emit::emLine('<td>'), etc use specific functions
+  add session functions (probaby kcm2 and not sys functions)
+  @@standardize variable name - formSession, guiUnit (not widget), etc
+ @@maybe: besides guiUnit have guiPage and guiContent
+ 
+
+Code-Review, etc:
+   review all programs
+   review all includes, data and emit
+   review all CSS
+   review strat/conversion procedures   
+
+ 
+                 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+          @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+     @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@  Review and Test  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+          @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+                 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+    Bughouse: need to test crazy house and all possibilities
+
+Tricky Testing:
+ Point categories - changing them after in point record (must allow current one to remain) 
+ 
+ Consistency:
+ Schedule Pending (KCM2) vs Schedule Not Released (KCM1) 
+ 
+                 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+          @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+     @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@  Do Later  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+          @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+                 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+DO AFTER ALL IS WORKING - Optional but important priority enhancements (also minimal side effects):
+   implement pairing-card ids
+   filter zone - need to turn on/off and set title based on current filters
+    New page: change results by group
+    New filter/page: points by group
+    check period vs actual time to "force" correct period
+    New page: office request to change something about kid, etc
+    security: save kcm2 authorization status for program
+    @@roster - sort by unique name
+    gasteway - remember previous programId ?
+ 
+                 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+          @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+     @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@  Far-Future Enhancements  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+          @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+                 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+for points, games allow math on input ('2+3' instead of '5')   
+
+ 
+                 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+          @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+     @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@  Programs  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+          @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+                 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@  pay              @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+262 +++@@ pay-home.php                             standardized
+377 ++++@ pay-report-check-register.php        
+377 ++++@ pay-report-ledger.php                    standardized
+377 ++++@ pay-setup-employee.php                      standardized
+377 ++++@ pay-setup-pay-periods.php                standardized
+377 ++++@ pay-setup-proxy.php                      standardized
+262 +++@@ pay-ladger-reports.inc.php               standardized        
+284 ++@@@ pay-system-emit.inc.php          
+284 ++@@@ pay-system-payData.inc.php          
+284 ++@@@ pay-system-globals.inc.php          
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@  kcmI2-lib  -  Include code               @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+262 +++@@ kcmI2-lib-emit.inc.php             
+377 ++++@ kcmI2-lib-functions.inc.php        
+284 ++@@@ kcmI2-lib-globals.inc.php          
+191 ++++@ kcm-roster-system-css.css                  
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@  kcmI2-sys  -  Include code               @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+500 ++++@ kcmI2-sys-emit.inc.php             
+359 ++++@ kcmI2-sys-functions.inc.php        
+175 +++@@ kcmI2-sys-report.inc.php           
+554 ++++@ kcmI2-sys-css.css                  
+962 ????? kcmI2-sys-form.inc.php             
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@  KCM2 - gateway code (8)                  @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+751 ++++@ gateway-home.php                   good - still some major problems
+483 +++@@ gateway-allEvents.php              ????    nothing shows except banner
+217 +++@@ gateway-setup-proxy.php            ????    missing menu ption
+104 ++++@ gateway-include.inc.php            good
+143 +++@@ gateway-schedule.php               good - used old kcm2 code for page so not standard colors, etc (ugly)
+167 +++++ gateway-schoolList.php             good ++
+164 +++++ gateway-staffList.php              good ++
+161 +++++ gateway-links.php                  good ++
+====
+2190 Total
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@  KCM2 - Main code (6)                    @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+192 ++@@@ kcm-roster-home.php                    fair  many css problems - and menu problem             
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@  KCM2 - results (10)                      @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+603 +++++ kcm-roster-results-bughouse.php            ++ almost good (testing, edit not working) 
+261 !!!!! kcm-roster-results-chess.php               ++ excellent (needs more testing) 
+207 +++++ kcm-roster-results-game-edit.inc.php         excellent (needs more testing)  - ???? validation bug
+244 ++++@ kcm-roster-results-game-history.php        ++excellent (needs more testing) - optional feature: filters
+273 +++++ kcm-roster-results-points.php              ++works (needs more testing)
+137 +++++ kcm-roster-results-points-edit.inc.php     ++works (needs more testing)
+202 +++++ kcm-roster-results-points-history.php      ++ works (needs more testing) - needs styling
+672 ++@@@ kcm-roster-results-tally.php               ?? still a few bugs left
+095 +++++ kcm-roster-results-set-classDate.php  
+114 +++++ kcm-roster-results-set-period.php          works
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@  KCM2 - Setup (3)                         @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+195 +++@@ kcm-roster-setup-gradeGroups.php         
+306 +++@@ kcm-roster-setup-kidData.php             
+152 ++@@@ kcm-roster-setup-pointCategories.php     good
+000 @@@@@ name-label note                    not started                   
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@  kcmI2-data  -  Include code              @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+289 +++__ kcmI2-data-convert-version2.inc.php
+834 ++++_ kcmI2-data-games.inc.php           
+274 ++++_ kcmI2-data-points.inc.php           
+462 ++??? kcmI2-data-roster.inc.php          
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@  KCM2 - Other                             @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+kcm2_read_me_documentation.txt
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@  KCM1 - Main code                         @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+kcm.php
+kcm1-game_entry.inc.php
+kcm1-gradeGroups_edit.php
+kcm1-roster.inc.php
+kcm1-roster_objects.inc.php
+kcm1-rpt-adminReports.php
+kcm1-rpt-NameLabels.php
+kcm1-rpt-PairingLabels.php
+kcm1-rpt-PointTally.php
+kcm1-rpt-Roster.php
+kcm1-rpt-Sign-Out-Sheet.php
+kcm1-schedule-SmReporting.php
+kcm1x-rpt-PointTally.php
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@  KCM1 - Include code                      @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+kcm1-libAsString.inc.php
+kcm1-libKcmFunctions.inc.php
+kcm1-libKcmState.inc.php
+kcm1-libNavigate.inc.php
+kcm1-page-ColumnDef.inc.php
+kcm1-page-DOM.inc.php
+kcm1-page-Engine.inc.php
+kcm1-page-Export.inc.php
+kcm1-page-Styles.inc.php
+kcm1-periodHome.php
+kcm1_lib-form.inc.php
+kcm1_lib-functions.inc.php
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@  KCM2 and Kcm1 - css                      @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+kcm-roster-system-css.css
+//kcmI2-lib-report-css.css
+kcm1-2_css_common.css
+
+zone
+editgrid
+rsm-message-error
+menu
+
+filter
+modifiers ??
+
+banner
+
+
+Can do after code is released (minimal side effects):
+
+ ===Add=== group change
+
+validate games/points
+  1. standardize header, make prettier, easier corrections, more options, etc.
+  2. game points checking
+  3. when is totals record but no details acceptable vs. error
+  4. make compatible with both Kcm1 and Kcm2 - if necessary - (point categories in kcm0 vs none in Kcm2)
+
+Fixed:
+ ===Needed === Add validate games/points
+===Bug - change point categories not changing data
+ ===Bug: Game History error - invalid opponents ???? (need to fix hidden kid problem)
+  ===Bug - grade groups not working - incomplete - mostly standardized - overly complicated - kcm has grade group class in roster object - maybe should make changes in kcm2 (or maybe not?)
+add unique name function which takes care of withdrawn kids - (did not do-also "include" withdrawn kids in roster for name only)
+ roster: eliminate event naming of variables - change to ro, not ev ????
+change class file names from kcms-*.inc. to kcm2i_*. - also kcm2a, kcm2s, kcm2g, etc
+    Need to start Kcm1 or Kcm2 if so indicated
+select kcm or kcm2 for each event
+choose navigation structure (with or without tabset) - decided to keep as-is
+@@change - add sys_emit unit (move code from sys-functions)
+@@change - reorganize kcmGlobal incude ???? (not to include multiple classes?) - or move header to emit
+@@Change ?? - $webPageHeader->wph_emit_html_head('') - parameter usage - also would emit::BlockHtmlHead($kcmGlobals) be more consistent
+ clear form session where appropiate
+ @@ Chess and Bughouse: formSession defined in include code - probably better if local (also chess and bughouse usage is different except for game)
+use - in all file names, not _
+@ always have toggle javascript available (move from menu to web-page head)
+1-19
+ @  need phone link function to print phone numbers
+ font size issues
+ css - review all
+image files - change gif to png and names to have hypens and in image folder
+@    banner: maybe redesign to be two lines and use left side more (since menu no longer there)
+     @  New page (or in kid info): get phone number of specified kid (so can call directly after logging in)
+ checkbox - include caption on clickable area and standard funcion including div (if not already done)
+      Security-schedule class needed  
+   start - allEvents   Select event (all)
+    Start - Site-manager reporting not working - not saving, going to next program, passing correct arg?, etc
+  need Report class  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! (and report styles in html head, not css - also work with emit???)
+ In kcm-roster-results-tally.php is there a way of using existing data functions instead of the new ones ??
+sorting of scores
+
+Travel time between assignments from headquarters to field is at the admin rate. 
+ Their field rate applies when they arrive at the scheduled time for the field event.
+
+Field rates end with the departure from a field event at its designated end time. 
+ If they are going directly to another field event, field rate applies between the two. 
+ If they are going to headquarters, their admin rate applies. 
+ If they are not going directly from one event to another, time stops at the departure from the early event, and starts upon arrival at the later event. 
+ (If the amount of time between the two events exceeds the amount of time to get there, then travel time is not covered, 
+                     as they are not going directly to the next event.) 
+ (If the amount of time between the two events is "less" than the amount of time to get there, 
+             they are paid the actual travel time between scheduled departure and scheduled arrival times. 
+              This would mean they are actually arriving late for the second event, but currently are not docked for that late arrival. 
+ If the system can accurately account for all time, we would no longer use SPUs for events.)
+
+Thanks,
+
+Ratana
+
+temp query work area
+====================
+
+temp query work area
+====================
+
+
+
+Benchmarks:
+
+SELECT *
+FROM `pay:transaction`
+JOIN `pay:transactionitem` ON `jTsk:JobTaskId`=`jTsk:JobTaskId`
+WHERE `jTsk:@PayPeriodId`= '3'
+-- .009
+
+SELECT *
+FROM `st:staff`
+LEFT JOIN `job:employee` ON `jEmp:@StaffId` = `sSt:StaffId`
+-- .008
+
+
+
+SELECT *
+FROM `pay:transaction`
+JOIN `pay:transactionitem` ON `jTsk:JobTaskId`=`jTsk:JobTaskId`
+LEFT JOIN `st:staff` ON `sSt:StaffId` = `jTsk:@StaffId`
+LEFT JOIN `job:employee`   ON `jEmp:@StaffId` = `sSt:StaffId`
+WHERE `jTsk:@PayPeriodId`= '3'
+-- .013
+
+
+// === read transactions
+    SELECT *";
+    FROM `pay:transaction`";
+    WHERE (`jTsk:@PayPeriodId`= '{$payPeriod->prd_payPeriodId}')";
+WHERE (`sSt:HiddenStatus`= '0') OR (`sSt:ModWhen`>'2018-01-01')
+GROUP BY `sSt:StaffId`
+
+
+temp query work area
+====================
+
+SELECT `sSt:StaffId`,`jEmp:@StaffId` 
+FROM `st:staff`
+LEFT JOIN `job:employee` ON `jEmp:@StaffId`=`sSt:StaffId`
+WHERE (`jEmp:@StaffId` IS NULL) AND ((`sSt:HiddenStatus`='0') OR (`sSt:ModWhen`>'2018-12-01'))
+

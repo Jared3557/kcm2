@@ -1,0 +1,1127 @@
+/* draff-styleSheet.css */
+
+:root{
+    --table-border-color: green;
+    --table-border-width: 1;
+    --border-normal-color: blue;
+    --border-normal-width: 1;
+    --header-background-color: gray;
+    --header-border-color: black;
+    --header-border-width: 2px;
+    --footer-background-color: gray;  /* different for reports, forms? */
+    --footer-border-color: black;
+    --footer-border-width: 2px;
+    --background-edit-caption: white;  /* for editing data in form and table (cells for description) */
+    --background-edit-field: white;    /* for editing data in form and table (cells with input field) */
+    /* a group is a vertical set of column(s) in a table that  */
+    /*     * the left column of a group is initiated by a <td class="table-group-start"> */ 
+    /*     * the right column of a group is initiated by a <td class="table-group-end"> */ 
+    /*     * a single column group is initiated by a <td class="table-group-both"> */ 
+    --group-border-color: yellow;
+    --group-border-width: 1;
+    /* a section is a horizontal set of row(s) in a table that  */
+    /*     * is initiated by a <tbody class="table-section"> */ 
+    /*     * only the top and bottom borders of each section/tbody are affected */
+    /*     * rows in sections alternate colors (frequently each tbody is several row for the same school, etc) */
+    --section-row-alt1: #ffffff;
+    --section-row-alt2: #faf8f8;
+    --section-border-color: black;
+    --section-border-width: 5px;
+    --section-border-style: double;
+}
+
+/*------------------------------------------------------------------------------*/
+/*=================================================
+====                                              
+==== css reset                                                               
+====  http://meyerweb.com/eric/tools/css/reset/ 
+====     v2.0 | 20110126
+====     License: none (public domain)
+====     A few modifications by Jared
+====
+==================================================*/
+
+/* @noExport-start@ */
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 1em;  /* jpr-changed from % */
+    font-weight: normal; /* jpr-added */
+	font: inherit;
+	vertical-align: baseline;
+}
+
+h1 {font-size: 1.6em;} 
+h2 {font-size: 1.4em;} 
+h3 {font-size: 1.2em;} 
+h4 {font-size: 1.0em;} 
+h5 {font-size: 0.8em;} 
+h6 {font-size: 0.6em;} 
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+
+ol, ul {
+	list-style: none;
+}
+
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+ul { /* jpr-added */
+    margin-top: 0.0em; 
+    margin-bottom: 0.2em; 
+    text-align:left;
+}
+
+body {
+  line-height: 1;
+  height: 100%;
+  width: 100%;
+  background-color:gray;
+}
+
+tr, th, td { /* jpr-added */
+    border: 1pt solid var(--border-normal-color);
+    padding: 0.4rem 0.8rem
+    vertical-align: top;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+    empty-cells:show;  /* jpr-added */
+    border: 1pt solid; /* jpr-added */
+    margin: 0px;  /* jpr-added */
+    box-sizing: border-box; /* jpr-added */
+}
+
+
+/*=======*/
+/*==============*/
+/*============================*/
+/*===============================================================*/
+/*=  Borders                                                    =*/
+/*===============================================================*/
+/*============================*/
+/*==============*/
+/*=======*/
+
+
+/*---- None ---*/
+td.border-none-all {
+    border: none  !important;
+}
+td.border-none-left {
+    border-left: none  !important;
+}
+td.border-none-right {
+    border-right: none  !important;
+}
+td.border-none-top {
+    border-top: none  !important;
+}
+td.border-none-bottom {
+    border-bottom: none  !important;
+}
+
+/*---- Normal ---*/
+td.border-normal-all { 
+    border: 1px solid;
+}
+td.border-normal-left { /* only used in tally */
+    border-left: 1px solid;
+}
+td.border-normal-right {
+    border-right: 1px solid;
+}
+td.border-normal-top { 
+    border-top: 1px solid;
+}
+td.border-normal-bottom { 
+    border-bottom: 1px solid;
+}
+
+/*---- Heavy ---*/
+td.border-group-all { 
+    border: 3px solid;
+}
+td.border-group-left { /* only used in tally */
+    border-left: var(--group-border-width) solid var(--group-border-color);
+}
+td.border-group-right {
+    border-right: var(--group-border-width) solid var(--group-border-color);
+}
+td.border-group-top { 
+    border-top: var(--group-border-width) solid var(--group-border-color);
+}
+td.border-group-bottom { 
+    border-bottom: var(--group-border-width) solid var(--group-border-color);
+}
+
+/*---- Double ---*/
+td.border-section-all {
+    border: 3px double var(--section-border-color);
+}
+td.border-section-left {
+    border-left: 3px double var(--section-border-color);
+}
+td.border-section-right {
+    border-right: 3px double var(--section-border-color);
+}
+td.border-section-top {
+    border-top: 3px double var(--section-border-color);
+}
+td.border-section-bottom {
+    border-bottom: 3px double var(--section-border-color);
+}
+tbody.table-section tr:first-child td {
+    border-top: var(--section-border-width) var(--section-border-style) var(--section-border-color);
+}
+tbody.table-section tr:last-child td {
+    border-bottom: var(--section-border-width) var(--section-border-style) var(--section-border-color);
+}
+tbody:nth-child(odd) {
+    background: var(--section-row-alt1);  
+    }
+tbody:nth-child(even) { 
+    background: var(--section-row-alt2);  
+}
+td.columnGroup-start {
+    border-left:  3px double;
+    border-right: 1px solid;
+}
+td.columnGroup-end {
+    border-left:  1px solid;
+    border-right: 3px double;
+}
+td.columnGroup-both {
+    border-left:  3px double;
+    border-right: 3px double;
+}
+td.columnGroup-middle {
+    border-left:  1px solid;
+    border-right: 1px solid;
+}
+td.rowGroup-start {
+    border-top:  3px double;
+    border-bottom: 1px solid;
+}
+td.rowGroup-end {
+    border-top:  1px solid;
+    border-bottom: 3px double;
+}
+td.rowGroup-both {
+    border-top:  3px double;
+    border-bottom: 3px double;
+}
+td.rowGroup-middle {
+    border-top:  1px solid;
+    border-right: 1px solid;
+}
+*/
+@media print {
+    td.border-color,th.border-color: green;
+}
+
+/*=======*/
+/*==============*/
+/*============================*/
+/*===============================================================*/
+/*=  Buttons                                                    =*/
+/*===============================================================*/
+/*============================*/
+/*==============*/
+/*=======*/
+
+button {
+    background-color: #cccccc;
+    font-size: 1.4em;
+    margin: 0.2em 0.2em 0.2em 0.8em;
+}
+button.draff-button-smaller {
+}
+button.draff-button-special {
+}
+
+button.draff-button-icon {
+    height: 0.6em;  /*?????????????*/
+    width: 0.6em;   /*?????????????*/
+    min-height: 1.8em;
+    min-width: 5.2em;
+ 	border-radius: 0.6em;
+}
+
+button.draff-button-editIcon {
+    height: 1.8em;
+    width: 4.2em;
+    padding: 0.5em 0.7em 0.2em 0.4em;  /* squeeze in button more so than text */
+ 	border-radius: 0.8em;
+    margin: 0.2em;   /* icon buttons are closer together than text icons (and frequently one icon in table column) */
+}
+img.draff-button-editIcon {
+    height: 10.6em;
+    width: 3.2em;
+    margin: 0.2em;  
+}
+
+img.draff-button-icon {
+    height: 3.2 em;
+    width: 3.2em;
+    margin: 0.0em;
+}
+
+button.draff-button-asLink {  /* a link that looks like a button */
+    background:none!important;  /* ??????????????? */
+    color:inheritedStatusAndStyle;
+    border:none; 
+    padding:0!important;
+    font: inheritedStatusAndStyle;
+	border-radius: 0.0em;
+    /*border is optional*/
+    text-decoration: underline;
+    text-decoration-color: #0000EE;
+    /* border-bottom:1px solid #0000EE;  */ 
+    cursor: pointer;
+}
+
+a.draff-link-as-button {
+    background-color: #ddddff;
+    display: inline-block;
+    border: 1px solid blue;
+    text-align: center;
+    padding: 0.5em 10.5em 0.5em 10.5em;
+	border-radius: 1.8em;
+    margin: 0.3em 0.3em 0.3em 0.3em;
+}
+
+form.draff-form-button {
+    margin: 0.0em 0.8em 0.0em 0.8em;
+    display: inline;
+}
+
+/*=======*/
+/*==============*/
+/*============================*/
+/*===============================================================*/
+/*=  Input                                                      =*/
+/*===============================================================*/
+/*============================*/
+/*==============*/
+/*=======*/
+
+select {  /* try to get same height, position as input */
+    height: 1.0em;  /*?????????????*/
+    margin: 0.4em 0.0em 0.0em 0.4em;
+}    
+
+input {
+    padding: 0.2rem 0.2rem 0.2rem 0.2rem;
+    margin: 0.3rem 1.0rem 0.3rem 1.0rem;
+    font-size: 1.2rem;
+    vertical-align: middle;
+    height: 1.8rem;
+}
+
+input[type='text'] {
+    vertical-align: top;
+}
+input[type='time'] {
+    vertical-align: top;
+}
+input[type='date'] {
+}
+
+input.draff-radio-norm {
+    vertical-align: middle;
+}
+
+input[type='checkbox'] {
+    vertical-align: middle;
+    height: 1.0rem;
+    width: 1.0rem;
+}
+
+div.draff-checkbox-select {  
+/*
+    display: table-cell;
+    margin: 0.5rem 0.4rem;
+    background-color: #ffffee;
+    border: 1pt solid red;
+    padding: 0;
+    vertical-align: middle;
+    border: 1px solid blue;
+    */
+}    
+
+input.draff-checkbox-select {
+    display: table-cell;
+    vertical-align: middle;
+    font-weight: bold; */
+    border: 1px solid green;
+    background-color: #ffffee;
+    margin: 6px 8px 6px 8px;
+}
+
+label:hover {
+   background-color:#eee;
+   cursor:pointer;
+}
+
+label {  /* style for label which encloses checkboxes */
+display: inline-block;
+   border: 1px solid gray;
+    padding: 0px 6px;
+    background-color: #ffffee;
+    margin: 4px 8px;
+    font-size: 1.2em;
+}  
+
+div.draff-fieldErr {
+    display: inline-block;
+    background-color: #ffbbbb;
+    padding: 8px;
+    border: 1px solid;
+    font-size: 1.2em;
+    min-width: 200pt;
+    width: min-content;
+}
+select.draff-fieldErr,
+input.draff-fieldErr {
+    background-color: #ffcccc;
+    font-weight: bold;
+    color: black;
+}
+
+/*=======*/
+/*==============*/
+/*============================*/
+/*===============================================================*/
+/*=  Misc                                                       =*/
+/*===============================================================*/
+/*============================*/
+/*==============*/
+/*=======*/
+
+div.draff-toggled-div {
+    display: none;  /* is toggled via javascript */
+    margin: 0.0em 0.0em 0.0em 0.0em;
+    padding: 1pt 0.0em 1pt 0.0em;
+    background-color: #dddddd;
+    border: solid 1pt;
+}
+
+/*=======*/
+/*==============*/
+/*============================*/
+/*===============================================================*/
+/*=  Media Classes and Queries                                  =*/
+/*===============================================================*/
+/*============================*/
+/*==============*/
+/*=======*/
+
+p.draff-show-inline-ifSmallDevice { 
+    display: inline;
+}
+span.draff-show-ifSmallDevice {  
+    display: none;  /* only applies to small devices */
+}
+span.draff-hide-ifSmallDevice { 
+  /* no changes if large device */
+ }
+
+@media only screen and (max-width: 400px) { 
+p.draff-show-inline-ifSmallDevice { 
+    display: inline;  /* paragraphs are inline when small devices */
+}
+span.draff-show-ifSmallDevice { 
+    display: inline;  /* only applies to small devices */
+}
+span.draff-hide-ifSmallDevice { 
+    display: none;  /* only applies to small devices */
+}
+
+
+}  /* end media query */
+
+/*=======*/
+/*==============*/
+/*============================*/
+/*===============================================================*/
+/*=  Text output                                                =*/
+/*===============================================================*/
+/*============================*/
+/*==============*/
+/*=======*/
+
+.text-align-center { /* only used in tally */
+    text-align: center;
+}
+
+.text-align-left {
+    text-align:left;
+}
+
+.text-align-right {
+    text-align:left;
+}
+
+/*=======*/
+/*==============*/
+/*============================*/
+/*===============================================================*/
+/*=  Font                                                =*/
+/*===============================================================*/
+/*============================*/
+/*==============*/
+/*=======*/
+
+.font-weight-bold { /* used twice in kcmI2-lib-emit for login */
+    font-weight: bold;
+}
+.font-weight-big { /* font for normal but important instructions - such as "Who won the chess game?"*/
+    font-size: 1.2em;  
+    color: #555555;
+}
+.font-weight-bigBold { /* font for normal but important instructions - or to heavilly highlight words */
+    font-size: 1.4em;
+    font-weight: bold;
+    color: black;
+    text-shadow: 1px 1px white, -1px 1px white,1px -1px white,-1px -1px white;
+}
+
+/* These text styles are used by a function which sets the text size*/
+/*     based on the characters in a string                          */
+/*     (these styles should not be used outside this function)      */
+.font-autoSize-90 {  
+    font-size: 0.9em;
+}
+.font-autoSize-80 { 
+    font-size: 0.8em;
+}
+.font-autoSize-70 { 
+    font-size: 0.7em
+}
+.font-autoSize-60 { 
+    font-size: 0.6em;
+}
+.font-autoSize-50 { 
+    font-size: 0.5em;
+}
+.font-autoSize-40 { 
+    font-size: 0.4pt;
+}
+
+/*=======*/
+/*==============*/
+/*============================*/
+/*===============================================================*/
+/*=  Misc - Zone ??????                                         =*/
+/*===============================================================*/
+/*============================*/
+/*==============*/
+/*=======*/
+
+
+form.draff-zone-form-normal,
+div.draff-zone-noForm {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+    margin: 0pt;
+    padding: 0pt;
+}
+
+html.draff-zone-html-normal {
+   height: 100%;
+   width: 100%;
+   overflow: hidden;
+   font-size: 1.0rem;
+}
+
+/* @noExport-start@ */
+
+body.draff-zone-body-normal {
+	line-height: 1;
+    height: 100%;
+    width: 100%;
+    background-color:gray;
+    margin: 0pt;
+    padding: 0pt;
+}
+
+/* @noExport-end@ */
+
+/*------------------------------------------------------------------------------*/
+/*-   Zone Form  (normally (maybe always) the form occupies the entire body    -*/
+/*------------------------------------------------------------------------------*/
+
+form.draff-zone-form-normal,
+div.draff-zone-noForm {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+    margin: 0pt;
+    padding: 0pt;
+}
+
+
+/*=======*/
+/*==============*/
+/*============================*/
+/*=====================================================================*/
+/*=  Zones and Themes                                                =>*/
+/*=  * Zone determines div layout and scrolling                      =>*/
+/*=  * Theme determines cosmetics (color, borders, padding, etc)     =>*/
+/*=  * When used in HTML, each time a zone is used as class,         =>*/        
+/*=    a theme must also be used:  Example:                          =>*/
+/*=    <div class ="zone-container-scrollable theme-report">         =>*/
+/*=  * Zones/themes declared last so theme can override other tags   =>*/
+/*=====================================================================*/
+/*============================*/
+/*==============*/
+/*=======*/
+
+
+
+/*=======*/
+/*==============*/
+/*============================*/
+/*=====================================================================*/
+/*=  Zones                                                           =>*/
+/*=====================================================================*/
+/*============================*/
+/*==============*/
+/*=======*/
+
+div.zone-ribbon-group {
+/* zone that never prints (on printer) */
+/* used for banner, menu, messages */
+   margin: 0px;
+    padding: 0px;
+}
+
+div.zone-ribbon {
+    margin: 0px;
+    padding: 0px;
+    box-sizing:border-box;
+}
+
+div.zone-content-scrollable {
+/* zone for main scrollable content */
+/* only one allowed per web page */
+   flex: 1; /* takes the remaining height of the "container" div */
+    box-sizing:border-box;
+   overflow: auto; /* to scroll just the "main" div */
+   height: 100%;
+   overflow-y: auto;
+   background-color: red;
+}
+div.zone-content-header {
+/* zone that never prints (on printer) */
+/* used for header and footer of main content */
+/* multiple allowed */
+    display: flex;
+    flex-flow: row nowrap;
+    box-sizing:border-box;
+    margin: 0em;
+    padding: 0.0rem 0.5rem;
+    box-sizing: border-box;
+    background-color: #cfc;
+}
+
+div.zone-content-footer {
+/* zone that never prints (on printer) */
+/* used for header and footer of main content */
+/* multiple allowed */
+    display: flex;
+    flex-flow: row nowrap;
+    margin: 0em;
+    padding: 0.2rem 0.5rem;
+    box-sizing: border-box;
+    background-color: #cfc;
+}
+
+/*=======*/
+/*==============*/
+/*============================*/
+/*===============================================================*/
+/*=  Themes                                                     =*/
+/*===============================================================*/
+/*============================*/
+/*==============*/
+/*=======*/
+
+/*================== theme-banner ========================*/ 
+
+div.theme-banner {  
+}
+div.theme-banner table {  
+    font-size: 1.0rem;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border-style: none;
+    border: 0 solid gray;
+}
+div.theme-banner td {
+    background-color: Yellow;
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    padding: 0;
+    margin: 0;
+    border-style: none;
+    border: 0 solid gray;
+    border-left: 1px solid #cb8; /* barely visible - for testing */
+    border-right: 1px solid #cb8; /* barely visible - for testing */
+}
+
+div.theme-menu {  
+    display: inline-block;
+    font-size: 1.0rem;
+    width: 100%;
+    margin: 0px;
+    background-color: #AA8800;
+}
+
+#draff-menu-item-more,
+div.draff-menu-item {
+    display:table-cell;
+     padding: 1pt 0.2em 0.1em 0.2em;
+    margin: 0.2em 0.6em 0.2em 0.6em;
+    float:left;
+   background-color: #feb;
+    font-size: 0.7em;
+    line-height:1.2em;
+    height: 3.0em;/* necessary for when error and rest of html does not get executed - or maybe could set menu zone height*/
+    font-weight: bold;
+    vertical-align: middle;
+    text-align: center;
+    border: 1px solid;
+    color: purple;
+}
+
+a.draff-menu-item { 
+    display: table-cell;
+}
+
+a.draff-menu-item-curent { /* modifies draff-menu-item */  /* ??? probably should not be a link since it's the current page */
+    background-color: purple;
+    color: white;
+    font-weight: bold;
+}
+
+div.draff-menu-banner-extension {
+    display: table-cell;
+    float:left;
+    font-size: 1.2em;
+    background-color:#dc9;
+    padding:2pt 3pt;
+    font-size:1.0em;
+    font-weight:heavy;
+    vertical-align:middle;
+}
+    
+div.draff-menu-line-block { 
+    background-color: #999999;
+    border: 1px solid blue;
+    width: 100%;
+    margin: 0.2em 0.2em 0.2em 1pt;
+    padding: 1pt 1pt 1pt 1pt;
+    display:inline-block;
+}
+
+div.draff-menu-line-title { /* optional title for draff-menu-line-block */
+    color: white;
+    font-size: 0.6em;  /*?????????????*/
+    line-height:1.2em;
+    height: 1.8em;
+    display:inline-block;
+    font-weight: bold;
+    padding: 1.0em 0.6em 1pt 0.6em;
+    float:left;
+    vertical-align: middle;
+    text-align: center;
+}
+
+div.draff-menu-item-curent { /* modifies draff-menu-item */
+    color: purple;
+    font-weight: bold;
+    background-color:#6a6;
+    height: 3.3em;
+    padding: 0px 2px;
+    margin: 0px;
+    margin-top: 4px;
+    border: 1px solid #6a6; 
+}
+
+div.draff-menu-item-curent a { /* modifies draff-menu-item */
+    background-color: #6a6;
+    color: yellow;
+    padding: 0px 2px;
+    margin: 0px;
+}
+    
+
+/*================== theme-select ========================*/ 
+
+body.theme-select {
+    /* select record to edit/view */
+}
+div.theme-select.zone-content-header {  
+    background-color: #8d8;
+    padding: 2px 10px 2px 10px;
+}
+div.theme-select.zone-content-header button {  
+   margin: 0.1rem 1.0rem;
+}
+div.theme-select.zone-content-scrollable {  
+   background-color: #6a6;
+   padding: 1.0rem 1.0rem;
+}
+div.theme-select.zone-content-scrollable button {  
+   margin: 0.5rem 1.0rem;
+   font-size: 1.3em;
+}
+
+button.draff-button-select {  
+    padding: 0.2em 0.2em 0.2em 0.2em;
+    font-size: 1.0rem;
+    margin: 0.5rem  0.5rem 0.5rem  0.5rem;
+}
+
+/*================== theme-report ========================*/ 
+
+body.theme-report {
+    /* a printed report - can also have editing capabilities */
+}
+div.theme-report.zone-content-header {  
+    background-color: #777;
+    border-bottom: 2px solid black;
+    padding: 2px 10px 2px 10px;
+}
+div.theme-report.zone-content-header button {  
+   margin: 0.1rem 1.0rem;
+}
+div.theme-report.zone-content-scrollable {  
+   background-color: #ccc;
+   padding: 2px 4px 2px 4px;
+}
+div.theme-report table {
+    border: 2px solid black;
+    box-shadow: 0 0 0 10px white;
+}
+div.theme-report td {
+   background-color: white; 
+    border: 1px solid black;
+   padding: 2px 0.6em 0.2em 1.5em;
+}
+
+div.theme-report thead td {
+	 background-color: #fffff0;
+	 border: 2px solid black;  //???? 1 does not work - need to find declartion of why 1 does not work */
+	 font-weight: bold;
+}
+
+div.theme-report tbody tr:nth-child(even) td {
+	 background-color: #fafafa;  /* for view */
+     /* border-top: 1px solid black; for print */
+}
+
+table div.theme-report.zone-content-header {
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 20pt;
+    border-collapse:collapse;
+    border-spacing:0;
+    empty-cells:show;
+    background-color: white;  /* default td color */
+    table-layout:fixed; 
+    max-width: 95%;
+    margin: 1.0em;
+    outline:  white solid 1.4rem;
+	 
+   margin: 2.0rem 2.0rem;
+   max-width: 1900px; 
+   min-width:  600px; 
+   background-color: #eeffee; 
+   font-size: 1.0rem;
+   border: 6px solid red;
+}     
+
+table.draff-report tfoot {
+	 background-color: white;
+	 border: 2px solid;
+	 font-weight: bold;
+}
+
+/* class needs to be specified - ?? should be for all divs, report or not ??? */
+div.draff-report-top-left {
+    display: inline-block;
+    float:left;
+    text-align: left;
+    font-size: 0.6em;
+    padding-top: 0.4em;
+}
+
+div.draff-report-top-middle {
+    display: inline-block;
+    text-align: center;
+}
+
+div.draff-report-top-right {
+    display: inline-block;
+    float:right;
+    text-align: right;
+    font-size: 0.6em;
+    padding-top: 0.4em;
+}
+
+/*================== theme-panel ========================*/ 
+
+body.theme-panel {
+    /* edit a database record(s) */
+}
+div.theme-panel.zone-content-header {  
+    background-color: #777;
+    border-bottom: 2px solid black;
+    padding: 2px 10px 2px 10px;
+}
+div.theme-panel.zone-content-header button {  
+   margin: 0.1rem 1.0rem;
+}
+div.theme-panel.zone-content-scrollable {  
+   background-color: #cfc;
+   padding: 2.0rem 2.0rem;
+}
+div.theme-panel.zone-content-scrollable td {
+    background-color: white;
+    padding: 2px 4px;
+    border: 1px solid black;
+   font-size: 1.5em;
+}
+
+thead.draff-edit-head {
+   background-color: #ddddff; 
+   border: 1px solid #aaaaaa;
+   font-size: 1.2em;  /*?????????????*/
+   font-weight: bold;
+   text-align: center;
+}   
+tbody.rpt-panel-body {
+   background-color: #eeffee; 
+   border: 1px solid #aaaaaa;
+   font-size: 1.0em;  /*?????????????*/
+   font-weight: bold;
+   text-align: center;
+}   
+/* @export-end@ */
+table {border-color: red}
+
+
+table.draff-edit {
+   background-color: #eeffee; 
+   margin: 1.0em 0.5em 1.0em 1.0em;
+   text-align: center;
+   font-size: 1.8em;
+   border: 3px solid;
+    outline:  #88cc88 solid 8px;
+   font-size: 1.0rem;
+}     
+
+table.draff-edit thead {
+	 background-color: white;
+	 border: 2px solid;
+	 font-weight: bold;
+}
+
+table.draff-edit thead td {
+	 border: 2px solid;
+}
+/*
+table.draff-edit thead {
+	 background-color: #eeeeff;
+	 border: 2px solid;
+} */
+
+table.draff-edit tbody {
+	 background-color: white;
+}
+
+table.draff-edit tfoot {
+	 background-color: #eeffee;
+}
+
+table.draff-edit td {
+	 padding: 0.4rem 0.8rem;
+}
+
+
+tr.rpt-panel-row {
+   text-align: left;
+   padding: 0.4em 0.4em 0.4em 0.4em;
+}   
+td.draff-edit-top {
+	border: 3px solid white !important;
+	border-bottom: 2px solid !important;
+    padding: 0px 0px 12px 0px  !important;
+    text-align: center;
+    width: 10rem;
+}
+
+/*================== theme-boxes ========================*/ 
+/*= boxes of information                                =*/ 
+
+div.theme-boxes.zone-content-scrollable {
+   background-color: #6a6;
+}
+div.theme-boxes.zone-content-scrollable > div {  
+   background-color: #a66;
+   margin: 10pt 10pt 10pt 10pt;
+   padding: 0px 5px 5px 5px;
+   display:inline-block;
+   border:1px solid black;
+   background-color:#eeeeff;
+   float: left;
+}
+span.theme-boxes-title {  
+    display:inline-block;
+    box-sizing: border-box; /* jpr-added */
+    width:100%; 
+    border:1px solid black; 
+    background-color:#ffffff;
+    margin: 0px -5px 4px 0px;
+    padding: 2px 5px;
+    font-size: 1.2em;
+}
+
+/*------------------------------------------------------------------------------------------*/
+/*-   Grid - generally used in reports, or a list of things to edit (and/or delete, etc)    */ 
+/*------------------------------------------------------------------------------------------*/
+
+tr.rpt-grid-row {
+   text-align: left;
+   padding: 0.4em 0.4em 0.4em 0.4em;
+}   
+
+
+td.draff-edit-fieldDesc,
+td.draff-edit-fieldData {
+   border-style: none;
+   padding: 0.6em 1.0em 0.6em 0.2em;
+   border: 1px solid #aaaaaa;
+   vertical-align: middle;
+}
+td.draff-edit-fieldData {
+   background-color: #ffc; 
+   font-size: 1.8em;
+   text-align: left;
+   padding-left: 1.0em;
+}
+td.draff-edit-fieldDesc {
+   background-color: #ff9; 
+   font-size: 1.1em;
+   text-align: right;
+   padding-right: 1.0em;
+}
+td.draff-edit-head {
+   background-color: #dd8; 
+   border: 1px solid #aaaaaa;
+   font-size: 1.2em;  /*?????????????*/
+   font-weight: bold;
+   text-align: center;
+}   
+ 
+td.draff-edit-top {
+   background-color: #dd8; 
+   border: 3px solid #dd8;
+}
+
+
+/*================== theme-default ========================*/ 
+
+/*================== theme-legacy ========================*/ 
+/*= old php code - zones work differently - old banner, etc are part of the main zone and scrollable */
+
+div.theme-legacy.zone-content-scrollable {   
+    padding: 15px 5px 5px 5px;
+    background-color: #dd8; 
+}
+
+/* body.draff-zone-body-legacy {    /* ??? */
+   overflow: scroll;
+} */
+
+/*================== theme-messages ========================*/ 
+
+div.draff-zone-messages-default {
+}
+
+div.draff-theme-message-error.zone-container {   
+    display: flex;
+    flex-flow: row nowrap;
+    margin: 0;
+    padding: 2px 1em;
+    display: inline-block;
+    border: 2px solid #f33;
+    background-color:#fdd; 
+    font-size: 1.1em;
+}
+div.theme-message-abort {
+    background-color: #ffcccc;
+    font-size: 1.6em;  /*?????????????*/
+    font-weight: normal;
+    color: black;
+    padding: 1.2em;
+    margin: 1.2em;
+    border: 0.4em solid red;
+}
+div.theme-message-error-error {
+   font-size: 1.2em;
+   margin: 4px; 
+   font-weight: bold;
+   padding: 4px;
+}     
+div.theme-message-status {
+}     
+div.draff-theme-message-error.zone-container button {
+    margin-left: 1.0em;
+    height: 1.6em;
+    font-size: 1.0em;
+    padding: 0.1em 0.8;
+    background-color: #fcc;
+}
+
+td.draff-large-title {
+   background-color: #dd8; 
+   border: 3px solid #dd8;
+   font-size: 1.8rem;
+   font-weight: bold;
+   padding: 0.3rem 0.6rem;
+}

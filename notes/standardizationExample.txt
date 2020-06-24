@@ -1,0 +1,40 @@
+Notes - kcm2 standardization
+
+kcm-gateway - done
+kcm-gateway-myevents - do latter - need to standardize and MAYBE move many things in common elsewhere
+kcm-gateway-homo - do later - not sure if using this
+kcm-gateway-links
+kcm-gateway-schoollist - cannot standardize reports (unless new way) as reports need to add css and later output
+kcm-gateway-stafflist - needs review 
+
+ ===========================================================function rsmStep_submit_process ($chain, $common, $gwyGlobals, $submit) {
+
+function rsmStep_submit_process ($chain, $common, $gwyGlobals, $submit) {
+   kernel_processBannerSubmits($chain,$submit);
+}
+
+function rsmStep_submit_accept($chain, $common, $gwyGlobals) { 
+}
+
+function rsmStep_submit_validate($chain, $common, $gwyGlobals) { 
+}
+
+function rsmStep_init_form($chain, $common, $form, $gwyGlobals) { 
+}
+
+function rsmStep_init_output($chain, $common, $emitter, $form, $gwyGlobals) {
+    $emitter->krnEmit_set_title('');
+    $emitter->krnEmit_webPageInit_Menu( $chain, $gwyGlobals);
+}
+
+function rsmStep_output_options ($chain, $emitter, $form, $gwyGlobals) {
+}
+
+function rsmStep_output_header ($chain, $emitter, $form, $gwyGlobals) {
+}
+
+function rsmStep_output_content ($chain, $emitter, $form, $gwyGlobals) {
+}
+
+
+

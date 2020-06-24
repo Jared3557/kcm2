@@ -1,0 +1,122 @@
+/* Ignored by export: overflow: ; */
+/* Ignored by export: text-overflow: ; */
+
+table.plbTable {
+    border-collapse:separate;
+    border-spacing:0;
+    empty-cells:show;
+    border-style:none;
+    border-collapse:separate;
+    border-spacing:0;
+    padding-top: 1pt;
+    padding-bottom: 1pt;
+    padding-left: 1pt;
+    padding-right: 1pt;
+    margin-top: 14pt;
+    margin-left: 22pt;
+    font-size:12px;
+    font-weight:normal;
+    vertical-align:text-top;
+}
+td.plbTopCell {
+    width: 280pt;
+    height: 42pt;
+    padding-top: 0;
+    padding-bottom: 5pt;
+    padding-left: 30pt;
+    font-size:8pt;
+    vertical-align:text-top;
+    border-left:0px solid black;
+    border-right:0px solid black;
+    border-top:0px solid black;
+    border-bottom:0px solid black;
+}    
+
+td.plbLabelCell {
+    width: 280pt;
+    height: 48pt;
+    font-size:20pt;
+    border-top:0px solid black;
+    border-bottom:0px solid black;
+    border-left:0px solid black;
+    border-right:0px solid black;
+    padding-left: 24pt;
+    padding-right: 5px;
+    padding-top: 2pt;
+    padding-bottom: 10pt;
+}    
+div.plbLabelDiv {
+   position: relative;
+   left: 0pt;
+   top:  -10pt;
+   width: 300pt;
+   height: 46pt;
+}
+
+/*======================================*/
+/*=     Data Table Column Styles       =*/
+/*= (these come last - some overrides) =*/
+/*======================================*/
+
+div.plbFullName {
+   position: absolute;
+   left: 10pt;  
+   width: 150pt;
+   top: 2pt;
+   font-size:20pt;
+   white-space:nowrap;
+   overflow: hidden;
+   text-overflow: clip;
+/*@  kcm-min-font-size:12pt;  */
+}
+
+
+div.plbGrade {
+   position: absolute;
+   left: 170pt;
+   top:  2pt;
+   font-size:18pt;
+   white-space:nowrap;
+   overflow: hidden;
+   text-overflow: clip;
+/*@  kcm-min-font-size:20pt;  */
+}
+div.plbPeriod {
+   position: absolute;
+   left: 170pt;
+   top:  25pt;
+   font-size:12pt;
+   white-space:nowrap;
+   overflow: hidden;
+   text-overflow: clip;
+/*@  kcm-min-font-size:16pt;  */
+}
+div.plbTeam {
+   position: absolute;
+   left: 50pt;
+   top:  25pt;
+   font-size:12pt;
+   white-space:nowrap;
+   overflow: hidden;
+   text-overflow: clip;
+/*@  kcm-min-font-size:10pt;  */
+}
+div.plbNumber {
+   position: absolute;
+   left: 22pt;  
+   width: 80pt;
+   top: 21pt;
+   font-size:18pt;
+   white-space:nowrap;
+   overflow: hidden;
+   text-overflow: clip;
+   font-weight:bold;
+}
+
+
+/*.........END-OF-REPORT-STYLES SECTION --- DO NOT CHANGE THIS LINE........*/   
+/* All report styles (for printer/pdf/excel) must go above this line       */   
+/* All non-report styles (not for printer/pdf/excel) must go below         */   
+/* All report styles MUST use a subset of css compatible with the kcm code */   
+/* Custom report styles are 1-line comments starting with '/*@'            */   
+

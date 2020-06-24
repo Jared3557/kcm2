@@ -1,0 +1,84 @@
+/* kernel-styleSheet.css */
+
+/*=========*/
+/*=================*/
+/*==============================*/
+/*=  Banner Styles              */
+/*==============================*/
+/*=================*/
+/*=========*/
+
+td.kcmKrn-banner-icon {  /* used for system icon and kidchess icon */
+    text-align:center; 
+    vertical-align:middle;
+    padding: 0px;
+    max-width: 4em;
+    padding: 0px 0px;
+}
+
+td.kcmKrn-banner-icon img {  /* used for system icon and kidchess icon */
+    width:  2em;
+    height: 2em;
+    margin: 2px 2px;
+}
+
+td.kcmKrn-banner-title {
+    min-width:9em;  /* if text is longer, login cell may not be visible */
+}
+
+td.kcmKrn-banner-proxy {
+    background-color: #ffaaaa;
+    width: 160pt;
+    min-width:160pt;
+    font-size: 1.0em;
+}
+div.kcmKrn-banner-proxy-title {
+    background-color: #ff4444;
+    border-bottom: 1px;
+    text-align: center;
+}
+td.kcmKrn-banner-login {  
+    font-size: 1.5em;
+    min-width:10em;
+    max-width:12em;
+    color: red;
+}
+
+td.kcmKrn-banner-login button {
+    font-size: 0.7em;
+    padding: 0.2em 0.5em;
+    text-align: center;
+    margin: 0.2em;
+    color: black;
+}
+/*
+@media only screen and (max-width: 600px) { 
+ table.kcmKrn-banner-table {  
+   font-size: 0.5em;
+ }
+} */
+
+div.kcmkrn-question-div {
+    margin: 5px;
+    background-color:#ffb;
+    padding:5px 14px;
+    border-radius: 1.3em;
+}
+
+div.kcmkrn-question-div button {
+    margin-left: 8px;
+    margin-right: 5px;
+}
+
+button.kcmKrn-button-editLink {  
+    font-size: 1.5em;
+  background: none!important;
+  border: none;
+  padding: 0!important;
+  margin: 2pt 4pt 2pt 4pt;
+  /*optional*/
+  font-family: arial, sans-serif;
+  /*input has OS specific font-family*/
+  color: #069;
+  text-decoration: underline;
+  cursor: pointer;}

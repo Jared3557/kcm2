@@ -1,0 +1,203 @@
+/* styles starting with phm are for the Program Home Page */   
+
+.phmNumber {
+    text-align:right;
+    font-size:10pt;
+    font-weight:normal;
+    vertical-align:text-top;
+    padding-left:5pt;
+    padding-right:2pt;
+}    
+.phmPercent {
+    text-align:right;
+    vertical-align:text-top;
+    font-size:10pt;
+    font-weight:normal;
+    padding-left:5pt;
+    padding-right:2pt;
+}    
+    
+.phmPeriod {
+    width: 20pt;
+    text-align:left;
+    vertical-align:text-top;
+    font-size:10pt;
+    font-weight:normal;
+    padding-left:5pt;
+    padding-right:2pt;
+}    
+.phmFirstName {
+    width: 120pt;
+    text-align:left;
+    font-size:10pt;
+    vertical-align:text-top;
+    padding-left:5pt;
+    padding-right:2pt;
+}    
+.phmLastName {
+    width: 120pt;
+    text-align:left;
+    font-size:10pt;
+    vertical-align:text-top;
+    padding-left:5pt;
+    padding-right:2pt;
+}    
+.phmGrade {
+    width: 24pt;
+    text-align:left;
+    font-size:10pt;
+    font-weight:bold;
+    vertical-align:text-top;
+    padding-left:5pt;
+    padding-right:2pt;
+}    
+.phmGradeGroup {
+    width: 24pt;
+    text-align:left;
+    font-size:10pt;
+    font-weight:bold;
+    vertical-align:text-top;
+    padding-left:5pt;
+    padding-right:2pt;
+}    
+.phmSubGroup {
+    width: 32pt;
+    text-align:left;
+    font-size:10pt;
+    vertical-align:text-top;
+    padding-left:5pt;
+    padding-right:2pt;
+}    
+.phmCatGroupHead {
+    font-size:10pt;
+    text-align:center;
+    vertical-align:text-top;
+    padding-left:5pt;
+    padding-right:2px;
+}    
+.phmCatColHead {
+    font-size:7pt;
+    font-weight:norma1;
+    text-align:right;
+    vertical-align:text-top;
+    padding-left:5pt;
+    padding-right:2px;
+}    
+.phmCatColumn {
+    width:8px;
+    font-size:8pt;
+    text-align:right;
+    font-weight:normal;
+    vertical-align:text-top;
+    padding-left:5pt;
+    padding-right:2pt;
+}    
+.phmPoints {
+    font-size:10pt;
+    text-align:right;
+    vertical-align:text-top;
+    padding-left:5pt;
+    padding-right:2px;
+}    
+.colPointHead {
+    width: 100pt;
+    text-align:left;
+    font-size:10pt;
+    font-weight:bold;
+    vertical-align:text-top;
+    padding-left:5pt;
+    padding-right:2pt;
+}    
+.phmBlitzHeading {
+/* width comes from subheadings (Wins, Losses, Draws, Percent) */
+    text-align:center;
+    font-size:10pt;
+    font-weight:bold;
+    vertical-align:text-top;
+}    
+.phmBugHeading {
+/* width comes from subheadings (Wins, Losses, Draws, Percent) */
+    text-align:right;
+    font-size:10pt;
+    font-weight:bold;
+    text-align:center;
+    vertical-align:text-top;
+}    
+.phmWon {
+    text-align:right;
+    vertical-align:text-top;
+    font-size:10pt;
+    border-left:1px solid black;
+    border-right:1px solid #C0C0C0;
+    padding-left:5pt;
+    padding-right:2pt;
+}    
+.phmLost  {
+    text-align:right;
+    vertical-align:text-top;
+    font-size:10pt;
+    border-left:1px solid #C0C0C0;
+    border-right:1px solid #C0C0C0;
+    padding-left:5pt;
+    padding-right:2pt;
+}    
+.phmDraw {
+    text-align:right;
+    vertical-align:text-top;
+    font-size:10pt;
+    border-left:1px solid #C0C0C0;
+    border-right:1px solid #C0C0C0;
+    padding-left:5pt;
+    padding-right:2pt;
+}    
+.phmRookie {
+    width: 16pt;
+    text-align:left;
+    vertical-align:text-top;
+    font-size:10pt;
+    border-left:1px solid gray;
+    border-right:1px solid black;
+}
+    
+/*.........END-OF-REPORT-STYLES SECTION --- DO NOT CHANGE THIS LINE........*/   
+/* All report styles (for printer/pdf/excel) must go above this line       */   
+/* All non-report styles (not for printer/pdf/excel) must go below         */   
+/* All report styles MUST use a subset of css compatible with the kcm code */   
+/* Custom report styles are 1-line comments starting with '/*@'            */   
+
+.phmGuiOpColumn {
+    width: 120px;
+    font-size:12pt;
+    font-weight:normal;
+}
+.phmButtonSubmit {
+    font-size:10px;
+    font-weight:bold;
+    padding-bottom:1px;
+    padding-top:1px;
+    padding-left:2px;
+    padding-right:4px;
+    height:24px;
+    margin-bottom:2px;
+    margin-top:2px;
+    margin-left:8px;
+    margin-right:4px;
+}
+
+button.PhmOkgSave {
+    width: 120px;
+    margin-left:10px;
+    margin-right:30px;
+    margin-top:5px;
+	display: inline;
+    font-size:20px;
+    font-weight:bold;
+}
+button.PhmOkgBack {
+    width: 120px;
+    margin-left:30px;
+    margin-top:5px;
+	display: inline;
+    font-size:10px;
+    font-weight:normal;
+}

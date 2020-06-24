@@ -1,0 +1,9 @@
+/* rsm-stylePrint.css */
+
+.td,
+.span,
+.th,
+.div {
+    background-color: transparent !important;
+}
+

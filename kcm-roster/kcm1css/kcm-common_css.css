@@ -1,0 +1,667 @@
+/* kcm-rpt-common */
+/* Also used by kcm for formatting reports (PDF and Excel) */
+/* for reports only a small subset of css is valid */
+/* comments must not continue to other lines */
+/* comments must be whole line or end of line */
+/* comments with /*@ are directives for report formatting */
+
+.kcmHeader {
+    width:300pt;
+    font-size:16pt;
+    /*@  kcm-min-font-size:8pt;  */
+    padding-top: 1pt;
+    padding-bottom: 2pt;
+    padding-left: 4pt;
+    padding-right: 1pt;
+    white-space:nowrap; 
+}    
+
+.kcGuiOptionsForm {
+    display:inline;
+    margin:0;
+    padding:0;
+}
+.kcGuiGUIDataForm {
+    display:inline;
+    margin:0;
+    padding:0;
+}
+
+.kcmPageLoginStat {
+    display: inline-block;
+    margin-left:10px
+}
+
+body {
+   margin-left: 54;
+   margin-right: 14;
+   margin-top: 26;
+   margin-bottom: 24;
+   font-size:12pt;
+}
+
+/* at least font-size default is required for the PDF-export to work if no further overrides */
+
+td {
+    font-size:12px;
+    font-weight:normal;
+    vertical-align:text-top;
+}
+th {
+    font-size:12px;
+    font-weight:normal;
+    vertical-align:text-top;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+table.kgridTable {
+    border-collapse:separate;
+    border-spacing:0;
+    empty-cells:show;
+    min-width:400pt;
+    max-width:1200pt;
+    border:none;
+    border-collapse:separate;
+    border-spacing:0;
+    padding-top: 1pt;
+    padding-bottom: 1pt;
+    padding-left: 1pt;
+    padding-right: 1pt;
+    margin-top: 12pt;
+    font-size:12px;
+    font-weight:normal;
+    vertical-align:text-top;
+}
+
+.portrait {
+   width: 576;
+}
+    
+.landscape {
+   width: 756;
+}
+ 
+/*= kgrid Styles (grid with border) =*/
+
+.kgridHead {
+    font-weight:bold;
+    border-left:1px solid black;
+    border-right:1px solid black;
+    border-top:1px solid #C0C0C0;
+    border-bottom:1px solid black;
+    background-color: #EEEEFF;
+}    
+td.kgridEven {
+    border-top:1px solid black;
+    border-bottom:1px solid #C0C0C0;
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-top: 2pt;
+    padding-bottom: 2pt;
+    background-color: white;
+}    
+td.kgridOdd {
+    border-top:1px solid #C0C0C0;
+    border-bottom:1px solid black;
+    background-color: #FEF5F2;
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-top: 2pt;
+    padding-bottom: 2pt;
+}    
+
+/*= knogrid Styles (grid with without border) =*/
+
+.knogridHead {
+    font-weight:bold;
+    border-left:0px solid black;
+    border-right:0px solid black;
+    border-top:0px solid #C0C0C0;
+    border-bottom:0px solid black;
+}    
+
+
+/*==*/
+/*=====*/
+/* kpage styles (used by page object - be careful if changing tag names) */   
+
+/* modified  - special tag for report (not standard css) */    
+kpageHeading.kpageHeading {
+   padding-top: 6;
+   padding-bottom: 6;
+   font-size:16pt;
+}
+
+table.kpageHeadingPortrait {
+    width: 576pt;
+    max-width:1200px;
+    font-size:20px;
+    border-style:none;
+    border-collapse:separate;
+    border-spacing:0;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    empty-cells:show;
+}
+
+td.kpageHeadingPortrait1 {
+    width: 288pt;
+    border-style:none;
+    font-size:20px;
+    font-weight:bold;
+    text-align: left;
+    vertical-align:text-top;
+}
+td.kpageHeadingPortrait2 {
+    width: 288pt;
+    border-style:none;
+    font-size:20px;
+    font-weight:bold;
+    text-align: left;
+    vertical-align:text-top;
+}
+td.kpageHeadingPortrait3 {
+    width: 2pt;
+    border-style:none;
+    font-size:20px;
+    font-weight:bold;
+    text-align: center;
+    vertical-align:text-top;
+}
+
+table.kpageHeadingLandscape {
+    width: 756pt;
+    max-width:1200px;
+    font-size:20px;
+    border-style:none;
+    border-collapse:separate;
+    border-spacing:0;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+td.kpageHeadingLandscape1 {
+    width: 370pt;
+    border-style:none;
+    font-size:20px;
+    font-weight:bold;
+    text-align: left;
+}
+td.kpageHeadingLandscape2 {
+    width: 370pt;
+    border-style:none;
+    font-size:20px;
+    font-weight:bold;
+    text-align: left;
+}
+td.kpageHeadingLandscape3 {
+    width: 2pt;
+    border-style:none;
+    font-size:20px;
+    font-weight:bold;
+    text-align: center;
+}
+
+table.kpageHeadingPortrait {
+    width:100%;
+    max-width:1200px;
+    font-size:20px;
+    border:1px solid #EEEEEE;
+    border-collapse:separate;
+    border-spacing:0;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+table.kpageHeaderStat {
+    width:100%;
+    max-width:1200px;
+    font-size:20px;
+    border-style:none;
+}
+
+td.kpageHeaderTitle {
+    padding-left: 20px;
+    padding-right: 20px;
+    vertical-align: top;
+    font-size:20px;
+    font-weight:bold;
+}    
+
+hr.kpagePageBreak {
+    margin-top:20px;
+    margin-bottom:20px;
+    margin-left:0px;
+    margin-right:0px;
+    padding-top:4px;
+    padding-bottom:4px;
+    background-color:#B0B0B0;
+    width:100%;
+    height:4px;
+}
+    
+/*.........END-OF-REPORT-STYLES SECTION --- DO NOT CHANGE THIS LINE........*/   
+/* All report styles (for printer/pdf/excel) must go above this line       */   
+/* All non-report styles (not for printer/pdf/excel) must go below         */   
+/* All report styles MUST use a subset of css compatible with the kcm code */   
+/* Custom report styles are 1-line comments starting with '/*@'            */   
+
+.kcmPageButtonExport {
+    margin-left:10px;
+    margin-top:2px;
+    margin-bottom:2px;
+}    
+    
+html {
+	background-color: #ffffff;
+	color: #000000;
+	font-family: Arial, sans-serif;
+	font-size: 100%;
+	padding: 0 1em 1em;
+}
+
+body.kcm {
+    min-width: 400px;
+	min-height: 400px;
+	background-image: none; 
+	background-repeat:no-repeat;
+	background-size: auto 68px;
+	background-position: left top;
+}
+table {
+    border-collapse:separate;
+    border-spacing:0;
+    empty-cells:show;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    border-top:0px;
+    border-bottom:0px;
+    margin-top:0px;
+    margin-bottom:0px;
+    display: inline;
+}
+h1, h2, h3, h4, h5, h6 {
+    border-top:0px;
+    border-bottom:0px;
+    margin-top:0px;
+    margin-bottom:0px;
+}
+h1 {
+    font-size:32px;
+    font-weight: bold;
+}    
+h2 {
+    font-size:24px;
+    font-weight: bold;
+}    
+h3 {
+    font-size:20px;
+    font-weight: normal;
+}    
+h4 {
+    font-size:16px;
+    font-weight: normal;
+}    
+h5 {
+    font-size:12px;
+    font-weight: normal;
+}    
+h6 {
+    font-size:10px;
+    font-weight: normal;
+}    
+hr {
+    margin-top:5px;
+    margin-bottom:10px;
+    height: 2px;
+    color: gray;
+} 
+td {
+    border-top:1px solid black;
+    border-bottom:1px solid black;
+    padding-top:10px;
+    padding-bottom:10px;
+    padding-left:10px;
+    padding-right:10px;
+    border-top:1px solid black;
+    border-bottom:1px solid black;
+    border-left:1px solid black;
+    border-right:1px solid black;
+    }    
+th {
+    font-size:16px;
+    font-weight: bold;
+    border-top:1px solid black;
+    border-bottom:1px solid black;
+    border-left:1px solid black;
+    border-right:1px solid black;
+    border-collapse:separate;
+    border-spacing:0;
+    padding-left: 3px;
+    padding-right: 3px;
+    vertical-align: top;
+    text-align:left;
+    vertical-align:bottom;
+}
+
+/*==================*/
+/*===== Tables =====*/
+/*==================*/
+    
+form.stdForm {
+    display:inline;
+    margin:0;
+    padding:0;
+}
+div.brdrect {
+	font-size: 12pt;
+    font-weight:bold;
+    text-align:center;
+    margin-left:15px;
+    margin-right:15px;
+    border:1px solid black;
+}
+div.linkButton {
+    display: inline;
+	font-size: 12pt;
+    font-weight:bold;
+    margin-left:15px;
+    margin-right:15px;
+    padding:2px;
+    border:1px solid #A8A8A8;
+    background-color:#F8F8F8;
+}
+table.ct {
+    width:1200px;
+    min-width:400px;
+    max-width:1200px;
+    border:1px solid #BBBBBB;
+    border-collapse:separate;
+    border-spacing:0;
+    margin-top: 14px;
+    margin-bottom: 14px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+
+.noprint {
+}    
+div.inline {
+    display: inline;
+}    
+form.button {
+    margin-top: 2px;
+    margin-bottom: 2px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}    
+div.right {
+    float: right;
+    width: 100px;
+}
+
+table.data {
+    min-width:400pt;
+    max-width:1200pt;
+    border:1px solid black;
+    border-collapse:separate;
+    border-spacing:0;
+    padding-top: 1pt;
+    padding-bottom: 1pt;
+    padding-left: 1pt;
+    padding-right: 1pt;
+    margin-top: 12pt;
+}
+table.data td {
+    font-size:10pt;
+    height: 12pt;
+    vertical-align:text-top;
+    padding-left: 2pt;
+    padding-right: 2pt;
+    padding-top: 2pt;
+    padding-bottom: 2pt;
+}
+
+
+
+/*===== Header Table =====*/
+table.header tr {
+    height: 74px;
+}
+
+/*===== Debug Table =====*/
+
+table.debug {
+    background-color:orange;
+    width:100%;
+    min-width:400px;
+    max-width:1200px;
+}
+
+/*=================================================*/
+/*===== Modifiers (add-ons for simple styles) =====*/
+/*=================================================*/
+
+.left {
+    text-align:left;
+    float:left;
+}
+.right {
+    text-align:right;
+    float:right;
+}
+
+td.addleft {
+    border-left:1px solid black;
+}    
+td.addright {
+    border-right:1px solid black;
+}    
+td.addbottom {
+    border-bottom:1px solid black;
+}    
+td.addall {
+    border-left:1px solid black;
+    border-right:1px solid black;
+    border-top:1px solid black;
+    border-bottom:1px solid black;
+}    
+    
+td.center {
+    text-align:center;
+}    
+
+/*==*/
+/*=====*/
+/*========= kgui prefix is global */
+
+.kguiSelectSemester {
+    border-style-none;
+    font-size:11pt;
+    font-weight:bold;
+    width:560px;
+}
+table.kguiData {
+    background-color:#FFF6E0;
+    border-style:none;
+    border-collapse:separate;
+    border-spacing:0;
+    margin-top: 6pt;
+    margin-bottom: 6pt;
+}
+
+
+/*==*/
+/*=====*/
+/*======== Report Options (in page object) ===*/
+
+table.kpageExportOptions {
+    background-color:#FFF6E0;
+    width:850px;
+    min-width:400px;
+    max-width:1200px;
+    border:1px solid black;
+    border-collapse:separate;
+    border-spacing:0;
+    margin-top: 12pt;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+td.kpageExportOptions {
+    border:0px solid #FFDDCC;
+    background-color:#FFF6E0;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    vertical-align: top;
+    vertical-align:text-top;
+    text-align:left;
+    font-size:10pt;
+    text-align:left;
+}
+
+/*==*/
+/*=====*/
+/*======== Navigation ===*/
+
+table.knavSystem {
+    width: 900px; 
+    border-style:none;
+    border-collapse:separate;
+    border-spacing:0;
+    padding-top: 1pt;
+    padding-bottom: 1pt;
+    padding-left: 1pt;
+    padding-right: 1pt;
+    margin-top: 12px;
+    font-size: 12pt;
+    
+}
+td.knavSystemIcon {
+    border-style:none;
+    font-size:20px;
+    font-weight:bold;
+    text-align: left;
+    width: 80px;
+    padding-left: 4px;
+    padding-right: 5px;
+    padding-top: 2pt;
+    padding-bottom: 2pt;
+    vertical-align:middle;
+}
+td.knavSystemTitle {
+    width:300pt;
+    max-width:600pt;
+    border-style:none;
+    font-size:12pt;
+    font-weight:bold;
+    text-align: left;
+    vertical-align:middle;
+    padding-left: 4px;
+    padding-right: 5px;
+    padding-top: 2pt;
+    padding-bottom: 2pt;
+}
+td.knavSystemTitleLeft {
+    width:100pt;
+    max-width:100pt;
+    border-style:none;
+    font-size:12pt;
+    font-weight:bold;
+    text-align: left;
+    vertical-align:middle;
+    padding-left: 4px;
+    padding-right: 5px;
+    padding-top: 2pt;
+    padding-bottom: 2pt;
+}
+td.knavSystemTitleRight {
+    width:230pt;
+    max-width:300pt;
+    border-style:none;
+    font-size:12pt;
+    font-weight:bold;
+    text-align: left;
+    vertical-align:middle;
+    padding-left: 4px;
+    padding-right: 5px;
+    padding-top: 2pt;
+    padding-bottom: 2pt;
+}
+td.knavSystemLogin {
+    width: 160px;
+    border-style:none;
+    font-size:12pt;
+    vertical-align:middle;
+    text-align: center;
+    padding-left: 4px;
+    padding-right: 5px;
+    padding-top: 2pt;
+    padding-bottom: 2pt;
+}
+div.knavMenu {
+	font-size: 12pt;
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+}
+td.knavMenu {
+    border-style:none;
+    border-collapse:separate;
+    border-spacing:0;
+    font-size:12pt;
+    padding-top: 2pt;
+    padding-bottom: 2pt;
+}
+
+div.knavListAction {
+	width: 120px;
+    margin-left:0px;
+}
+div.knavListReports {
+	width: 140px;
+}
+div.knavListChange {
+	width: 140px;
+}
+div.knavListAdmin {
+	width: 140px;
+    margin-right:0px;
+}
+div.knavListAll {
+	float: left;
+	font-size: 12pt;
+	border: #000000 1px solid;
+	border-radius: 6px;
+	padding-bottom: 2px;
+	text-align: center;
+    margin-left:10px;
+    margin-right:10px;
+	margin-top: .5em;
+	margin-bottom: .5em;
+	overflow: hidden;
+    line-height:20px;
+    padding-left: 6px;
+    padding-right: 2px;
+    padding-top: 5px;
+    padding-bottom: 8px;
+}
+
+div.knavListTitle {
+	font-weight: bold;
+    margin-bottom: 3px;
+}
+
+div.knavListLink {
+    margin-bottom: 3px;
+}
+div.knavListLink a:hover {
+    display: block;
+	background-color: #DDDDDD;
+}
+
