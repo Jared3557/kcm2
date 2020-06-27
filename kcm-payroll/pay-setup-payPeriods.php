@@ -10,22 +10,23 @@ include_once( '../../rc_database.inc.php' );
 include_once( '../../rc_messages.inc.php' );
 include_once( '../../rc_job-appData-functions.inc.php' );
 
-include_once( '../kcm-kernel/kernel-emitter.inc.php');
 include_once( '../kcm-kernel/kernel-functions.inc.php');
 include_once( '../kcm-kernel/kernel-objects.inc.php');
 include_once( '../kcm-kernel/kernel-globals.inc.php');
 
-include_once( '../draff/draff-functions.inc.php' );
-include_once( '../draff/draff-objects.inc.php' );
 include_once( '../draff/draff-chain.inc.php' );
+include_once( '../draff/draff-database.inc.php');
 include_once( '../draff/draff-emitter.inc.php' );
 include_once( '../draff/draff-form.inc.php' );
+include_once( '../draff/draff-functions.inc.php' );
+include_once( '../draff/draff-menu.inc.php' );
+include_once( '../draff/draff-page.inc.php' );
 
 include_once( 'pay-system-payData.inc.php' );
 include_once( 'pay-system-appEmitter.inc.php' );
 include_once( 'pay-system-globals.inc.php' );
 
-Class appForm_setupPayPeriods_select extends Draff_Form {
+Class appForm_setupPayPeriods_select extends kcmKernel_Draff_Form {
 //public $select_periodBatch;
 
 //function step_init_submit_accept( $appData, $appGlobals, $appChain ) {
@@ -36,7 +37,7 @@ Class appForm_setupPayPeriods_select extends Draff_Form {
 //function drForm_validate( $appData, $appGlobals, $appChain ) {
 //}
 
-function drForm_processSubmit ( $appData, $appGlobals, $appChain ) {
+function drForm_process_submit ( $appData, $appGlobals, $appChain ) {
     kernel_processBannerSubmits( $appGlobals, $appChain );
     $appChain->chn_form_savePostedData();
     if ( $appChain->chn_submit[0] == 'add' ) {
@@ -56,26 +57,20 @@ function drForm_initData( $appData, $appGlobals, $appChain ) {
 }
 
 function drForm_initHtml( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->set_theme( 'theme-report' );
-    $appEmitter->set_title('Payroll - ???');
-    $appEmitter->set_menu_standard( $appChain, $appGlobals );
-    $appEmitter->set_menu_customize( $appChain, $appGlobals  );
-    $appEmitter->set_title('Pay Period Setup');
-    $appEmitter->set_menu_customize( $appChain, $appGlobals );
+    $appEmitter->emit_options->set_theme( 'theme-report' );
+    $appEmitter->emit_options->set_title('Payroll - ???');
+    $appGlobals->gb_ribbonMenu_Initialize( $appChain, $appGlobals );
+    $appGlobals->gb_menu->drMenu_customize();
+    $appEmitter->emit_options->set_title('Pay Period Setup');
+    $appGlobals->gb_menu->drMenu_customize();
 }
 
 function drForm_initFields( $appData, $appGlobals, $appChain ) {
     // no controls on form
 }
 
-function drForm_outputPage ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->krnEmit_output_htmlHead  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyStart ( $appData, $appGlobals, $appChain, $this );
-    $appEmitter->krnEmit_output_ribbons  ( $appData, $appGlobals, $appChain, $this );
-    $this->drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputFooter  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyEnd  ( $appData, $appGlobals, $appChain, $this );
+function drForm_process_output ( $appData, $appGlobals, $appChain, $appEmitter ) {
+    $appGlobals->gb_output_form ( $appData, $appChain, $appEmitter, $this );
 }
 
 function drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter ) {
@@ -95,7 +90,7 @@ function drForm_outputFooter ( $appData, $appGlobals, $appChain, $appEmitter ) {
 
 } // end class
 
-Class appForm_setupPayPeriods_edit extends Draff_Form {
+Class appForm_setupPayPeriods_edit extends kcmKernel_Draff_Form {
 public $edit_period;
 public $edit_record_id;
 public $edit_closedDesc;
@@ -143,7 +138,7 @@ public $edit_combo_periodTypes;
 //    }
 //}
 
-function drForm_processSubmit ( $appData, $appGlobals, $appChain ) {
+function drForm_process_submit ( $appData, $appGlobals, $appChain ) {
     kernel_processBannerSubmits( $appGlobals, $appChain, $submit );
     if ( $appChain->chn_submit[0] == '@cancel') {
         $appChain->chn_message_set('Cancelled');
@@ -197,13 +192,13 @@ function drForm_initData( $appData, $appGlobals, $appChain ) {
 }
 
 function drForm_initHtml( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->set_theme( 'theme-report' );
-    $appEmitter->set_title('Payroll - ???');
-    $appEmitter->set_menu_standard( $appChain, $appGlobals );
-    $appEmitter->set_menu_customize( $appChain, $appGlobals  );
-    $appEmitter->set_title('Define Pay Periods');
-    $appGlobals->gb_appMenu_init($appChain, $appEmitter);
-    $appEmitter->set_menu_customize( $appChain, $appGlobals );
+    $appEmitter->emit_options->set_theme( 'theme-report' );
+    $appEmitter->emit_options->set_title('Payroll - ???');
+    $appGlobals->gb_ribbonMenu_Initialize( $appChain, $appGlobals );
+    $appGlobals->gb_menu->drMenu_customize( );
+    $appEmitter->emit_options->set_title('Define Pay Periods');
+    $appGlobals->gb_ribbonMenu_Initialize($appChain, $appEmitter);
+    $appGlobals->gb_menu->drMenu_customize();
 }
 
 function drForm_initFields( $appData, $appGlobals, $appChain ) {
@@ -236,14 +231,8 @@ function edit_init_combo_lists( $appGlobals ) {
     $this->edit_combo_periodTypes[RC_PAYPERIOD_SPECIAL] = 'Special (Bonuses, etc)';
 }
 
-function drForm_outputPage ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->krnEmit_output_htmlHead  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyStart ( $appData, $appGlobals, $appChain, $this );
-    $appEmitter->krnEmit_output_ribbons  ( $appData, $appGlobals, $appChain, $this );
-    $this->drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputFooter  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyEnd  ( $appData, $appGlobals, $appChain, $this );
+function drForm_process_output ( $appData, $appGlobals, $appChain, $appEmitter ) {
+    $appGlobals->gb_output_form ( $appData, $appChain, $appEmitter, $this );
 }
 
 function drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter ) {
@@ -262,7 +251,7 @@ function drForm_outputFooter ( $appData, $appGlobals, $appChain, $appEmitter ) {
 
 } // end class
 
-class appData_setupPayPeriods extends draff_appData {
+class application_data extends draff_appData {
 public $apd_OpenPeriod_Staff;
 public $apd_OpenPeriod_PM;
 public $apd_OpenPeriod_All;
@@ -490,16 +479,11 @@ function periodEdit_stdReport_output( $appData, $appGlobals, $appChain, $appEmit
 
 rc_session_initialize();
 
-$appGlobals = new kcmPay_globals();
+$appChain = new Draff_Chain(  'kcmKernel_emitter' );
+$appChain->chn_register_appGlobals( $appGlobals = new kcmPay_globals());
+$appChain->chn_register_appData( new application_data());
 $appGlobals->gb_forceLogin ();
-$appData = new appData_setupPayPeriods($appGlobals);
 
-
-//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-//@         Process Page               @
-//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
-$appChain = new Draff_Chain( $appData, $appGlobals, 'kcmKernel_emitter' );
 $appChain->chn_form_register(1,'appForm_setupPayPeriods_select');
 $appChain->chn_form_register(2,'appForm_setupPayPeriods_edit');
 $appChain->chn_form_launch(); // proceed to current step

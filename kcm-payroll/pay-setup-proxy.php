@@ -10,11 +10,13 @@ include_once( '../../rc_database.inc.php' );
 include_once( '../../rc_messages.inc.php' );
 include_once( '../../rc_job-appData-functions.inc.php' );
 
-include_once( '../draff/draff-functions.inc.php' );
-include_once( '../draff/draff-objects.inc.php' );
 include_once( '../draff/draff-chain.inc.php' );
+include_once( '../draff/draff-database.inc.php');
 include_once( '../draff/draff-emitter.inc.php' );
 include_once( '../draff/draff-form.inc.php' );
+include_once( '../draff/draff-functions.inc.php' );
+include_once( '../draff/draff-menu.inc.php' );
+include_once( '../draff/draff-page.inc.php' );
 
 include_once( '../kcm-kernel/kernel-globals.inc.php');
 include_once( '../kcm-kernel/kernel-functions.inc.php');
@@ -26,7 +28,7 @@ include_once( 'pay-system-globals.inc.php' );
 include_once( 'pay-system-payData.inc.php' );
 
 
-Class appForm_proxy_edit extends Draff_Form {
+Class appForm_proxy_edit extends kcmKernel_Draff_Form {
 
 // function step_init_submit_accept( $appData, $appGlobals, $appChain ) {
 //     $appData->apd_setProxy->sharedStep_initAlways( $appGlobals, $appChain );
@@ -39,22 +41,21 @@ Class appForm_proxy_edit extends Draff_Form {
 //     //$appData->com_setProxy_step->drForm_validate( $appData, $appGlobals, $appChain );
 // }
 
-function drForm_processSubmit ( $appData, $appGlobals, $appChain ) {
+function drForm_process_submit ( $appData, $appGlobals, $appChain ) {
     kernel_processBannerSubmits( $appGlobals, $appChain, $submit );
     $appData->apd_setProxy->sharedStep_processSubmit( $appGlobals, $appChain, $submit, $this);
-    //$appData->com_setProxy_step->drForm_processSubmit( $appData, $appGlobals, $appChain, $submit, $this);
+    //$appData->com_setProxy_step->drForm_process_submit( $appData, $appGlobals, $appChain, $submit, $this);
 }
 
 function drForm_initData( $appData, $appGlobals, $appChain ) {
 }
 
 function drForm_initHtml( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->set_theme( 'theme-report' );
-    $appEmitter->set_title('Payroll - ???');
-    $appEmitter->set_menu_standard( $appChain, $appGlobals );
-    $appEmitter->set_menu_customize( $appChain, $appGlobals  );
-    $appEmitter->set_title('');
-    $appEmitter->set_menu_customize( $appChain, $appGlobals );
+    $appEmitter->emit_options->set_theme( 'theme-report' );
+    $appEmitter->emit_options->set_title('Payroll - ???');
+    $appGlobals->gb_ribbonMenu_Initialize( $appChain, $appGlobals );
+    $appGlobals->gb_menu->drMenu_customize();
+    $appEmitter->emit_options->set_title('');
 
 }
 
@@ -63,14 +64,8 @@ function drForm_initFields( $appData, $appGlobals, $appChain ) {
     //$appData->com_setProxy_step->drForm_initFields( $appData, $appGlobals, $appChain );
 }
 
-function drForm_outputPage ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->krnEmit_output_htmlHead  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyStart ( $appData, $appGlobals, $appChain, $this );
-    $appEmitter->krnEmit_output_ribbons  ( $appData, $appGlobals, $appChain, $this );
-    $this->drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputFooter  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyEnd  ( $appData, $appGlobals, $appChain, $this );
+function drForm_process_output ( $appData, $appGlobals, $appChain, $appEmitter ) {
+    $appGlobals->gb_output_form ( $appData, $appChain, $appEmitter, $this );
 }
 
 function drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter ) {
@@ -114,17 +109,14 @@ function apd_formData_validate( $appGlobals, $appChain ) {
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 //@     Main Program                   @
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
 rc_session_initialize();
 
-$appGlobals = new kcmPay_globals();
+$appChain = new Draff_Chain(  'kcmKernel_emitter' );
+$appChain->chn_register_appGlobals( $appGlobals = new kcmPay_globals());
+$appChain->chn_register_appData( new appData_proxy());
 $appGlobals->gb_forceLogin ();
-$appData = new local_appData($appGlobals);
 
-//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-//@         Process Page               @
-//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
-$appChain = new Draff_Chain( $appData, $appGlobals, 'kcmKernel_emitter' );
 $appChain->chn_form_register(1,'appForm_proxy_edit');
 $appChain->chn_form_launch(); // proceed to current step
 

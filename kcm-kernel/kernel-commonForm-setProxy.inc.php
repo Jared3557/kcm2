@@ -7,14 +7,14 @@
 // Do not use from gateway (unless they both use same security classes)
 
 
-class appForm_shared_setProxy_edit extends Draff_Form {  //  extends Draff_Form
+class appForm_shared_setProxy_edit extends kcmKernel_Draff_Form {
 
 function __construct($returnUrl) {
  //   $this->sp_common = new common_shared_setProxyEdit;
     $this->sp_returnUrl = $returnUrl;
 }
 
-function drForm_processSubmit ( $appData, $appGlobals, $appChain ) {
+function drForm_process_submit ( $appData, $appGlobals, $appChain ) {
     kernel_processBannerSubmits( $appGlobals, $appChain );
     $appData->apd_edit_loadData( $appGlobals, $appChain );
     if ( $appChain->chn_submit[0] == 'cancel') {
@@ -51,11 +51,11 @@ function drForm_initData( $appData, $appGlobals, $appChain ) {
 }
 
 function drForm_initHtml($appData, $appGlobals, $appChain, $appEmitter) {
-    $appEmitter->set_theme( 'theme-panel' );
-    $appEmitter->set_title('Setup Proxy');
-    $appEmitter->set_menu_standard($appChain, $appGlobals);
-    $appEmitter->set_menu_customize( $appChain, $appGlobals  );
-    $appEmitter->addOption_styleTag('span.loc-small', 'display:inline; font-size:12pt; font-weight:normal; padding: 0pt 12pt 4pt 12pt');
+    $appEmitter->emit_options->set_theme( 'theme-panel' );
+    $appEmitter->emit_options->set_title('Setup Proxy');
+    $appGlobals->gb_ribbonMenu_Initialize($appChain, $appGlobals);
+    $appGlobals->gb_menu->drMenu_customize( );
+    $appEmitter->emit_options->addOption_styleTag('span.loc-small', 'display:inline; font-size:12pt; font-weight:normal; padding: 0pt 12pt 4pt 12pt');
     $appData->apd_proxyReport->stdRpt_initOutput( $appData, $appGlobals, $appChain, $appEmitter, $this );
 }
 
@@ -73,14 +73,8 @@ function drForm_initFields($appData, $appGlobals, $appChain) {
     $this->drForm_addField( new Draff_Button( 'disable','Disable') );
 }
 
-function drForm_outputPage ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->krnEmit_output_htmlHead  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyStart ( $appData, $appGlobals, $appChain, $this );
-    $appEmitter->krnEmit_output_ribbons  ( $appData, $appGlobals, $appChain, $this );
-    $this->drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputFooter  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyEnd  ( $appData, $appGlobals, $appChain, $this );
+function drForm_process_output ( $appData, $appGlobals, $appChain, $appEmitter ) {
+    $appGlobals->gb_output_form ( $appData, $appChain, $appEmitter, $this );
 }
 
     function drForm_outputHeader($appData, $appGlobals, $appChain, $appEmitter) {

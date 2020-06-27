@@ -298,11 +298,11 @@ function jdg_get_displayHtml ( $varName, $includeFinal = TRUE ) {
 class ledgerReport_lib {
 
 static function ldgLib_common_cssInit( $emitter ) {
-    $emitter->addOption_styleTag('span.strikeOut','display:inline-block;text-decoration: line-through;line-height:10pt;font-size:1rem;font-weight:normal; margin:0pt 0pt 0pt 10pt;');
-    $emitter->addOption_styleTag('button.loc-approved','background-color:#ccffcc !important;');
-    $emitter->addOption_styleTag('button.loc-unapproved','background-color:#ffcccc !important;border:3px double black;');
-    $emitter->addOption_styleTag('div.loc-approved','background-color:#ccffcc;');
-    $emitter->addOption_styleTag('div.loc-unapproved','background-color:#ffcccc;');
+    $emitter->emit_options->addOption_styleTag('span.strikeOut','display:inline-block;text-decoration: line-through;line-height:10pt;font-size:1rem;font-weight:normal; margin:0pt 0pt 0pt 10pt;');
+    $emitter->emit_options->addOption_styleTag('button.loc-approved','background-color:#ccffcc !important;');
+    $emitter->emit_options->addOption_styleTag('button.loc-unapproved','background-color:#ffcccc !important;border:3px double black;');
+    $emitter->emit_options->addOption_styleTag('div.loc-approved','background-color:#ccffcc;');
+    $emitter->emit_options->addOption_styleTag('div.loc-unapproved','background-color:#ffcccc;');
 }
 
 static function ldgLib_get_originDesc( $taskGroup ) {
@@ -577,53 +577,53 @@ function ldgRpt_get_actionButton ( $appGlobals , $approvalCode, $taskGroup ) {
 
 function ldgRpt_ledgerReport_standardInitStyles( $emitter ) {
     ledgerReport_lib::ldgLib_common_cssInit( $emitter );
-    $emitter->addOption_styleTag( 'span.strikeOut' , ' margin:0pt 0pt 0pt 0pt;' );  // override parent
-    $emitter->addOption_styleTag( 'hr.multi-sep' , ' margin:0pt 0pt 0pt 0pt;border-top:2px solid #ddddff;' );  // override parent
-    $emitter->addOption_styleTag( 'td.ldg-action' , 'min-width:100pt;border-left:2px' );
-    $emitter->addOption_styleTag( 'td.ldg-date' , 'min-width:85pt;line-height:12pt; padding: 4pt 6pt 4pt 6pt;' );
-    $emitter->addOption_styleTag( 'td.ldg-rate' , 'border-right:2px;' );
-    $emitter->addOption_styleTag( 'td.ldg-time'  , 'min-width:110pt;border-right:2px;line-height:12pt; padding: 4pt 6pt 4pt 6pt;' );
-    $emitter->addOption_styleTag( 'td.ldg-payHours' , 'border-left:2px; ' );
-    $emitter->addOption_styleTag( 'td.ldg-payRate' , 'border-left:2px;' );
-    $emitter->addOption_styleTag( 'td.ldg-payAmount' , 'border-left:2px;' );
-    $emitter->addOption_styleTag( 'tr.ldg-seperatorRow' , 'border:none;background-color:white;height:18pt;' );
-    $emitter->addOption_styleTag( 'td.ldg-seperatorRow' , 'border:none;background-color:white;height:18pt;' );
-    $emitter->addOption_styleTag( 'td.empHeader' , 'font-size:14pt;font-weight:bold;' );
+    $emitter->emit_options->addOption_styleTag( 'span.strikeOut' , ' margin:0pt 0pt 0pt 0pt;' );  // override parent
+    $emitter->emit_options->addOption_styleTag( 'hr.multi-sep' , ' margin:0pt 0pt 0pt 0pt;border-top:2px solid #ddddff;' );  // override parent
+    $emitter->emit_options->addOption_styleTag( 'td.ldg-action' , 'min-width:100pt;border-left:2px' );
+    $emitter->emit_options->addOption_styleTag( 'td.ldg-date' , 'min-width:85pt;line-height:12pt; padding: 4pt 6pt 4pt 6pt;' );
+    $emitter->emit_options->addOption_styleTag( 'td.ldg-rate' , 'border-right:2px;' );
+    $emitter->emit_options->addOption_styleTag( 'td.ldg-time'  , 'min-width:110pt;border-right:2px;line-height:12pt; padding: 4pt 6pt 4pt 6pt;' );
+    $emitter->emit_options->addOption_styleTag( 'td.ldg-payHours' , 'border-left:2px; ' );
+    $emitter->emit_options->addOption_styleTag( 'td.ldg-payRate' , 'border-left:2px;' );
+    $emitter->emit_options->addOption_styleTag( 'td.ldg-payAmount' , 'border-left:2px;' );
+    $emitter->emit_options->addOption_styleTag( 'tr.ldg-seperatorRow' , 'border:none;background-color:white;height:18pt;' );
+    $emitter->emit_options->addOption_styleTag( 'td.ldg-seperatorRow' , 'border:none;background-color:white;height:18pt;' );
+    $emitter->vaddOption_styleTag( 'td.empHeader' , 'font-size:14pt;font-weight:bold;' );
  
-    $emitter->addOption_styleTag( 'table.payTable' ,  'background-color:white;' );
-    $emitter->addOption_styleTag( 'td' , 'line-height:1.5rem;' );
-    $emitter->addOption_styleTag( 'td.source' ,  'font-size:1rem; width:30pt;vertical-align:top;' );
-    $emitter->addOption_styleTag( 'td.status' ,  'font-size:8pt;vertical-align:middle;line-height:10pt;text-align:center;padding:0pt;' );
-    $emitter->addOption_styleTag( 'label.status' ,  'margin:6pt;display:block;border: 1px solid black; font-size:1rem;vertical-align:middle;text-align:center;padding:4pt;' );
-    $emitter->addOption_styleTag( 'td.job' , 'width:200pt;border-left:2px solid black;' );
-    $emitter->addOption_styleTag( 'td.travel' , 'background-color:#ddddff; height:15pt;' );
-    $emitter->addOption_styleTag( 'tr.travel' , 'background-color:#ddddff; height:15pt;' );
-    $emitter->addOption_styleTag( 'td.lastRow' ,  'font-size:1rem; pt;vertical-align:middle;' );
-    $emitter->addOption_styleTag( 'button.small' ,  'font-size:1rem;padding:1pt 6pt 1pt 6pt;border-radius: 4pt;height:14pt;min-height:14pt;max-height:14pt;' );
-    $emitter->addOption_styleTag( 'td.pisource' , 'width:120pt;font-size:18pt;text-align:center;' );
-    $emitter->addOption_styleTag( 'button.accept  ,  button.correct' , 'font-size:12pt;padding:2pt 2pt 2pt 2pt;border-radius: 2pt;min-height:14pt;margin:4pt;' );
-    $emitter->addOption_styleTag( 'button.accept' , 'background-color:#ffcccc;' );
-    $emitter->addOption_styleTag( 'button.normal' , 'background-color:#ccffcc;' );
-    $emitter->addOption_styleTag( 'td.boLeft' , 'border-left:2px;' );
-    $emitter->addOption_styleTag( 'td.boRight' , 'border-right:2px;' );
-    $emitter->addOption_styleTag( 'td.source' , 'border-right:2px;' );
-    $emitter->addOption_styleTag( 'tr.accept' , 'background-color:#bbffbb' );
-    $emitter->addOption_styleTag( 'td.pending' , 'background-color:#ffcccc' );
-    $emitter->addOption_styleTag( 'span.s-sc' , 'border:none; padding:2px;' );
-    $emitter->addOption_styleTag( 'span.s-sm'    , 'border:none; padding:2px;' );
-    $emitter->addOption_styleTag( 'span.s-st' , 'border:none; padding:2px;' );
-    $emitter->addOption_styleTag( 'span.s-pm' , 'border:none; padding:2px;' );
-    $emitter->addOption_styleTag( 'span.s-ot' , 'border:none; padding:2px;' );
-    $emitter->addOption_styleTag( 'hr.light' , 'height:0px; width:100%; border-top: 1px solid #eeeeee;margin:0pt 0pt 0pt 0pt; padding:0pt;' );
-    $emitter->addOption_styleTag( 'span.accepted' , 'display:inline-block;font-weight:bold;padding:3pt;border:1px solid #bbbbbb;margin: 5pt 5pt 5pt 4pt;' );
-    $emitter->addOption_styleTag( 'span.source' , 'display:inline-block;font-weight:bold;font-size:1rem;padding:0pt 5pt 0pt 5pt;border:1px solid #bbbbbb;margin: 1pt 4pt 1pt 12pt;' );
-    $emitter->addOption_styleTag( 'span.year' , 'display:inline-block;font-size:80%;text-align:center;padding: 2pt 0pt 2pt 10pt;' );
-    $emitter->addOption_styleTag( 'span.dif' , 'text-decoration: line-through;background-color:#ffdddd;border:1px solid #aaaa; padding:2px;' );
-    $emitter->addOption_styleTag( 'tbody.ldg-date' , 'border-top:5px double #aaaaaa;border-bottom:5px double #aaaaaa;' );
-    $emitter->addOption_styleTag( 'div.line' , 'height: 1px; background-color: #000;' );
-    $emitter->addOption_styleTag( 'td.line' , 'height: 1px; background-color: #000;' );
-    $emitter->addOption_styleTag( '.ldg-row-even','background-color: #ffffe4;');
-    $emitter->addOption_styleTag( '.ldg-row-odd', 'background-color: #fffff8;');
+    $emitter->emit_options->addOption_styleTag( 'table.payTable' ,  'background-color:white;' );
+    $emitter->emit_options->addOption_styleTag( 'td' , 'line-height:1.5rem;' );
+    $emitter->emit_options->addOption_styleTag( 'td.source' ,  'font-size:1rem; width:30pt;vertical-align:top;' );
+    $emitter->emit_options->addOption_styleTag( 'td.status' ,  'font-size:8pt;vertical-align:middle;line-height:10pt;text-align:center;padding:0pt;' );
+    $emitter->emit_options->addOption_styleTag( 'label.status' ,  'margin:6pt;display:block;border: 1px solid black; font-size:1rem;vertical-align:middle;text-align:center;padding:4pt;' );
+    $emitter->emit_options->addOption_styleTag( 'td.job' , 'width:200pt;border-left:2px solid black;' );
+    $emitter->emit_options->addOption_styleTag( 'td.travel' , 'background-color:#ddddff; height:15pt;' );
+    $emitter->emit_options->addOption_styleTag( 'tr.travel' , 'background-color:#ddddff; height:15pt;' );
+    $emitter->emit_options->addOption_styleTag( 'td.lastRow' ,  'font-size:1rem; pt;vertical-align:middle;' );
+    $emitter->emit_options->addOption_styleTag( 'button.small' ,  'font-size:1rem;padding:1pt 6pt 1pt 6pt;border-radius: 4pt;height:14pt;min-height:14pt;max-height:14pt;' );
+    $emitter->emit_options->addOption_styleTag( 'td.pisource' , 'width:120pt;font-size:18pt;text-align:center;' );
+    $emitter->emit_options->addOption_styleTag( 'button.accept  ,  button.correct' , 'font-size:12pt;padding:2pt 2pt 2pt 2pt;border-radius: 2pt;min-height:14pt;margin:4pt;' );
+    $emitter->emit_options->addOption_styleTag( 'button.accept' , 'background-color:#ffcccc;' );
+    $emitter->emit_options->addOption_styleTag( 'button.normal' , 'background-color:#ccffcc;' );
+    $emitter->emit_options->addOption_styleTag( 'td.boLeft' , 'border-left:2px;' );
+    $emitter->emit_options->addOption_styleTag( 'td.boRight' , 'border-right:2px;' );
+    $emitter->emit_options->addOption_styleTag( 'td.source' , 'border-right:2px;' );
+    $emitter->emit_options->addOption_styleTag( 'tr.accept' , 'background-color:#bbffbb' );
+    $emitter->emit_options->addOption_styleTag( 'td.pending' , 'background-color:#ffcccc' );
+    $emitter->emit_options->addOption_styleTag( 'span.s-sc' , 'border:none; padding:2px;' );
+    $emitter->emit_options->addOption_styleTag( 'span.s-sm'    , 'border:none; padding:2px;' );
+    $emitter->emit_options->addOption_styleTag( 'span.s-st' , 'border:none; padding:2px;' );
+    $emitter->emit_options->addOption_styleTag( 'span.s-pm' , 'border:none; padding:2px;' );
+    $emitter->emit_options->addOption_styleTag( 'span.s-ot' , 'border:none; padding:2px;' );
+    $emitter->emit_options->addOption_styleTag( 'hr.light' , 'height:0px; width:100%; border-top: 1px solid #eeeeee;margin:0pt 0pt 0pt 0pt; padding:0pt;' );
+    $emitter->emit_options->addOption_styleTag( 'span.accepted' , 'display:inline-block;font-weight:bold;padding:3pt;border:1px solid #bbbbbb;margin: 5pt 5pt 5pt 4pt;' );
+    $emitter->emit_options->addOption_styleTag( 'span.source' , 'display:inline-block;font-weight:bold;font-size:1rem;padding:0pt 5pt 0pt 5pt;border:1px solid #bbbbbb;margin: 1pt 4pt 1pt 12pt;' );
+    $emitter->emit_options->addOption_styleTag( 'span.year' , 'display:inline-block;font-size:80%;text-align:center;padding: 2pt 0pt 2pt 10pt;' );
+    $emitter->emit_options->addOption_styleTag( 'span.dif' , 'text-decoration: line-through;background-color:#ffdddd;border:1px solid #aaaa; padding:2px;' );
+    $emitter->emit_options->addOption_styleTag( 'tbody.ldg-date' , 'border-top:5px double #aaaaaa;border-bottom:5px double #aaaaaa;' );
+    $emitter->emit_options->addOption_styleTag( 'div.line' , 'height: 1px; background-color: #000;' );
+    $emitter->emit_options->addOption_styleTag( 'td.line' , 'height: 1px; background-color: #000;' );
+    $emitter->emit_options->addOption_styleTag( '.ldg-row-even','background-color: #ffffe4;');
+    $emitter->emit_options->addOption_styleTag( '.ldg-row-odd', 'background-color: #fffff8;');
 }
 
 } // end class
@@ -951,38 +951,38 @@ function ldgEdit_getHour( $time) {
 function ldgEdit_stdReport_init_styles($emitter) {
     ledgerReport_lib::ldgLib_common_cssInit($emitter);
     
-    $emitter->addOption_styleTag('table.payTable', 'background-color:white;');
-    $emitter->addOption_styleTag('td.source', 'font-size:1rem;vertical-align:middle;');
-    $emitter->addOption_styleTag('td.status', 'font-size:1rem;vertical-align:middle;line-height:1.2rem;text-align:center;padding:0pt;');
-    $emitter->addOption_styleTag('label.status', 'margin:6pt;display:block;border: 1px solid black; font-size:1rem;vertical-align:middle;text-align:center;padding:4pt;');
-    $emitter->addOption_styleTag('input[type="radio"].status', 'width:16pt; height:16pt;margin:4pt;vertical-align:middle;margin:0;padding:0pt;');
-    $emitter->addOption_styleTag('input[type="radio"].status:checked + label.status', 'background-color:green');
-    $emitter->addOption_styleTag('input[type="radio"].status:checked + label.unknown', 'background-color:red');
-    $emitter->addOption_styleTag('td.lastRow', 'font-size:1rem; pt;vertical-align:middle;background-color:#f8f8ff');
-    $emitter->addOption_styleTag('button.small', 'font-size:1rem;padding:1pt 6pt 1pt 6pt;border-radius: 4pt;height:14pt;min-height:14pt;max-height:14pt;');
-    $emitter->addOption_styleTag('td.override',  'background-color:#ffccff;');
-    $emitter->addOption_styleTag('td.data',  'font-size:60%;color:#777777;');
-    $emitter->addOption_styleTag('td.job',  'background-color:#e2f8f7;');
-    $emitter->addOption_styleTag('td.days',  'background-color:#e2f8f7;');
-    $emitter->addOption_styleTag('td.hours',  'background-color:#e2f8f7;');
-    $emitter->addOption_styleTag('td.ldg-rate',  'background-color:#e2f8f7;');
-    $emitter->addOption_styleTag('td.totals',  'background-color:#e2f8f7;');
-    $emitter->addOption_styleTag('td.title',  'filter: brightness(105%);font-size:105%;');
-    $emitter->addOption_styleTag('optGroup',  'background-color:#bbbbbb;font-size:16pt;border:5px solid red;margin:8pt 0pt 0pt 0pt;padding:12pt;');
-    $emitter->addOption_styleTag('option',  'background-color:white;font-size:14pt;border:0px solid black;');
-    $emitter->addOption_styleTag('span.overrideDesc',  'display:inline-block; font-size:1rem;margin:5pt 0pt 0pt 15pt');
-    $emitter->addOption_styleTag('td.descText',  'font-size:11pt;');
-    $emitter->addOption_styleTag('td.editColHead',  'font-size:1.2rem;');
-    $emitter->addOption_styleTag('td.overrideCol',  'font-size:1.1rem; font-weight:normal;');
-    $emitter->addOption_styleTag('tr.sectionHead',  'background-color:#cccccc;height:8pt; font-size:8pt;text-align:center;');
-    $emitter->addOption_styleTag('div.sched'   ,'display:inline-block; border:1px solid #aaaaaa; font-size:18pt; padding:2px;margin: 3pt 6pt 3pt 6pt;line-height:10pt;');
-    $emitter->addOption_styleTag('span.s-sc','text-decoration: line-through;background-color:#e8e8ff;border:1px solid #aaaa; padding:2px;');
-    $emitter->addOption_styleTag('span.s-sm' ,'text-decoration: line-through;background-color:#e8ccff;border:1px solid #aaaa; padding:2px;');
-    $emitter->addOption_styleTag('span.s-st','text-decoration: line-through;background-color:#ffdddd;border:1px solid #aaaa; padding:2px;');
-    $emitter->addOption_styleTag('span.s-pm' ,'text-decoration: line-through;background-color:#ff0000;border:1px solid #aaaa; padding:2px;');
-    $emitter->addOption_styleTag('span.s-ot','text-decoration: line-through;background-color:red;border:1px solid #aaaa; padding:2px;');
-    $emitter->addOption_styleTag('span.schedDesc' ,'display:inline; font-size:1.2rem; margin: 3pt 4pt 3pt 4pt;');
-    $emitter->addOption_styleTag('td.draff-edit-fieldData'   ,'line-height:10pt;');  // override
+    $emitter->emit_options->addOption_styleTag('table.payTable', 'background-color:white;');
+    $emitter->emit_options->addOption_styleTag('td.source', 'font-size:1rem;vertical-align:middle;');
+    $emitter->emit_options->addOption_styleTag('td.status', 'font-size:1rem;vertical-align:middle;line-height:1.2rem;text-align:center;padding:0pt;');
+    $emitter->emit_options->addOption_styleTag('label.status', 'margin:6pt;display:block;border: 1px solid black; font-size:1rem;vertical-align:middle;text-align:center;padding:4pt;');
+    $emitter->emit_options->addOption_styleTag('input[type="radio"].status', 'width:16pt; height:16pt;margin:4pt;vertical-align:middle;margin:0;padding:0pt;');
+    $emitter->emit_options->addOption_styleTag('input[type="radio"].status:checked + label.status', 'background-color:green');
+    $emitter->emit_options->addOption_styleTag('input[type="radio"].status:checked + label.unknown', 'background-color:red');
+    $emitter->emit_options->addOption_styleTag('td.lastRow', 'font-size:1rem; pt;vertical-align:middle;background-color:#f8f8ff');
+    $emitter->emit_options->addOption_styleTag('button.small', 'font-size:1rem;padding:1pt 6pt 1pt 6pt;border-radius: 4pt;height:14pt;min-height:14pt;max-height:14pt;');
+    $emitter->emit_options->addOption_styleTag('td.override',  'background-color:#ffccff;');
+    $emitter->emit_options->addOption_styleTag('td.data',  'font-size:60%;color:#777777;');
+    $emitter->emit_options->addOption_styleTag('td.job',  'background-color:#e2f8f7;');
+    $emitter->emit_options->addOption_styleTag('td.days',  'background-color:#e2f8f7;');
+    $emitter->emit_options->addOption_styleTag('td.hours',  'background-color:#e2f8f7;');
+    $emitter->emit_options->addOption_styleTag('td.ldg-rate',  'background-color:#e2f8f7;');
+    $emitter->emit_options->addOption_styleTag('td.totals',  'background-color:#e2f8f7;');
+    $emitter->emit_options->addOption_styleTag('td.title',  'filter: brightness(105%);font-size:105%;');
+    $emitter->emit_options->addOption_styleTag('optGroup',  'background-color:#bbbbbb;font-size:16pt;border:5px solid red;margin:8pt 0pt 0pt 0pt;padding:12pt;');
+    $emitter->emit_options->addOption_styleTag('option',  'background-color:white;font-size:14pt;border:0px solid black;');
+    $emitter->emit_options->addOption_styleTag('span.overrideDesc',  'display:inline-block; font-size:1rem;margin:5pt 0pt 0pt 15pt');
+    $emitter->emit_options->addOption_styleTag('td.descText',  'font-size:11pt;');
+    $emitter->emit_options->addOption_styleTag('td.editColHead',  'font-size:1.2rem;');
+    $emitter->emit_options->addOption_styleTag('td.overrideCol',  'font-size:1.1rem; font-weight:normal;');
+    $emitter->emit_options->addOption_styleTag('tr.sectionHead',  'background-color:#cccccc;height:8pt; font-size:8pt;text-align:center;');
+    $emitter->emit_options->addOption_styleTag('div.sched'   ,'display:inline-block; border:1px solid #aaaaaa; font-size:18pt; padding:2px;margin: 3pt 6pt 3pt 6pt;line-height:10pt;');
+    $emitter->emit_options->addOption_styleTag('span.s-sc','text-decoration: line-through;background-color:#e8e8ff;border:1px solid #aaaa; padding:2px;');
+    $emitter->emit_options->addOption_styleTag('span.s-sm' ,'text-decoration: line-through;background-color:#e8ccff;border:1px solid #aaaa; padding:2px;');
+    $emitter->emit_options->addOption_styleTag('span.s-st','text-decoration: line-through;background-color:#ffdddd;border:1px solid #aaaa; padding:2px;');
+    $emitter->emit_options->addOption_styleTag('span.s-pm' ,'text-decoration: line-through;background-color:#ff0000;border:1px solid #aaaa; padding:2px;');
+    $emitter->emit_options->addOption_styleTag('span.s-ot','text-decoration: line-through;background-color:red;border:1px solid #aaaa; padding:2px;');
+    $emitter->emit_options->addOption_styleTag('span.schedDesc' ,'display:inline; font-size:1.2rem; margin: 3pt 4pt 3pt 4pt;');
+    $emitter->emit_options->addOption_styleTag('td.draff-edit-fieldData'   ,'line-height:10pt;');  // override
 }
 
 } // end class

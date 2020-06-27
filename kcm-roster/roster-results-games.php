@@ -9,13 +9,14 @@ include_once( '../../rc_admin.inc.php' );
 include_once( '../../rc_database.inc.php' );
 include_once( '../../rc_messages.inc.php' );
 
-include_once( '../draff/draff-functions.inc.php' );
-include_once( '../draff/draff-objects.inc.php' );
 include_once( '../draff/draff-chain.inc.php' );
+include_once( '../draff/draff-database.inc.php');
 include_once( '../draff/draff-emitter.inc.php' );
 include_once( '../draff/draff-form.inc.php' );
+include_once( '../draff/draff-functions.inc.php' );
+include_once( '../draff/draff-menu.inc.php' );
+include_once( '../draff/draff-page.inc.php' );
 
-include_once( '../kcm-kernel/kernel-emitter.inc.php');
 include_once( '../kcm-kernel/kernel-functions.inc.php');
 include_once( '../kcm-kernel/kernel-objects.inc.php');
 include_once( '../kcm-kernel/kernel-globals.inc.php');
@@ -41,9 +42,9 @@ const FORM_GAME_CROSSTABLE  = 51;
 //@  Step 1
 //@@@@@@@@@@@@@@@@@@@@
 
-class appForm_chess_winner extends Draff_Form {  // specify winner
+class appForm_chess_winner extends kcmKernel_Draff_Form {  // specify winner
 
-function drForm_processSubmit ( $appData, $appGlobals, $appChain ) {
+function drForm_process_submit ( $appData, $appGlobals, $appChain ) {
     kernel_processBannerSubmits( $appGlobals, $appChain );
     if ($this->appChain->chn_submit[0] == '@edit') {
         $appData->apd_chessWinner_submit( $appGlobals, $appChain, $appChain->chn_submit[1]);
@@ -90,14 +91,12 @@ function drForm_initData( $appData, $appGlobals, $appChain ) {
 }
 
 function drForm_initHtml( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->set_theme( 'theme-select' );
-    $appEmitter->set_title('Enter '.$appData->apd_chess_gameTypeDesc.' Results');
-    $appGlobals->gb_appMenu_init($appChain, $appEmitter, $appData->apd_roster_program);
-    $appEmitter->set_menu_customize( $appChain, $appGlobals, '$results', $appData->apd_chess_gameTypeMenuKey );
+    $appEmitter->emit_options->set_theme( 'theme-select' );
+    $appEmitter->emit_options->set_title('Enter '.$appData->apd_chess_gameTypeDesc.' Results');
+    $appGlobals->gb_ribbonMenu_Initialize($appChain, $appEmitter, $appData->apd_roster_program);
+    $appGlobals->gb_menu->drMenu_customize('$results', $appData->apd_chess_gameTypeMenuKey );
     kcmRosterLib_setBannerSubTitle($appEmitter,$appGlobals, $appData->apd_roster_program,'Enter '.$appData->apd_chess_gameTypeDesc.' Results');
-    //$appGlobals->gb_appMenu_init($appChain, $appEmitter, $appData->apd_roster_program);
-    //$appEmitter->set_menu_customize( $appChain, $appGlobals, '$results', $appData->apd_chess_gameTypeMenuKey);
-}
+ }
 
 function drForm_initFields( $appData, $appGlobals, $appChain ) {
     kcmRosterLib_kidList_buttons_define($this, $appGlobals, $appData->apd_roster_program,  'winnerId' );
@@ -106,14 +105,8 @@ function drForm_initFields( $appData, $appGlobals, $appChain ) {
     $this->drForm_addField( new Draff_Button( '@crosstable' , 'Crosstable' ) );
 }
 
-function drForm_outputPage ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->krnEmit_output_htmlHead  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyStart ( $appData, $appGlobals, $appChain, $this );
-    $appEmitter->krnEmit_output_ribbons  ( $appData, $appGlobals, $appChain, $this );
-    $this->drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputFooter  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyEnd  ( $appData, $appGlobals, $appChain, $this );
+function drForm_process_output ( $appData, $appGlobals, $appChain, $appEmitter ) {
+    $appGlobals->gb_output_form ( $appData, $appChain, $appEmitter, $this );
 }
 
 function drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter ) {  // appForm_chess_winner
@@ -140,9 +133,9 @@ function drForm_outputFooter ( $appData, $appGlobals, $appChain, $appEmitter ) {
 //@  Step 2
 //@@@@@@@@@@@@@@@@@@@@
 
-class appForm_chess_loser extends Draff_Form {  // specify loser
+class appForm_chess_loser extends kcmKernel_Draff_Form {  // specify loser
 
-function drForm_processSubmit ( $appData, $appGlobals, $appChain ) {
+function drForm_process_submit ( $appData, $appGlobals, $appChain ) {
 
     kernel_processBannerSubmits( $appGlobals, $appChain );
     $appData->apd_formData_get( $appGlobals, $appChain );
@@ -180,14 +173,12 @@ function drForm_initData( $appData, $appGlobals, $appChain ) {
 }
 
 function drForm_initHtml( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->set_theme( 'theme-select' );
-    $appEmitter->set_title('Enter '.$appData->apd_chess_gameTypeDesc.' Results');
-    $appGlobals->gb_appMenu_init($appChain, $appEmitter, $appData->apd_roster_program);
-    $appEmitter->set_menu_customize( $appChain, $appGlobals, '$results', $appData->apd_chess_gameTypeMenuKey );
+    $appEmitter->emit_options->set_theme( 'theme-select' );
+    $appEmitter->emit_options->set_title('Enter '.$appData->apd_chess_gameTypeDesc.' Results');
+    $appGlobals->gb_ribbonMenu_Initialize($appChain, $appEmitter, $appData->apd_roster_program);
+    $appGlobals->gb_menu->drMenu_customize('$results', $appData->apd_chess_gameTypeMenuKey );
     kcmRosterLib_setBannerSubTitle($appEmitter,$appGlobals, $appData->apd_roster_program,'Enter '.$appData->apd_chess_gameTypeDesc.' Results');
-    //$appGlobals->gb_appMenu_init($appChain, $appEmitter, $appData->apd_roster_program);
-    //$appEmitter->set_menu_customize( $appChain, $appGlobals, '$results', $appData->apd_chess_gameTypeMenuKey);
-}
+ }
 
 function drForm_initFields( $appData, $appGlobals, $appChain ) {
     $appData->apd_chessLoser_getData( $appGlobals, $appChain );
@@ -198,14 +189,8 @@ function drForm_initFields( $appData, $appGlobals, $appChain ) {
     $this->drForm_addField( new Draff_Button( '@crosstable' , 'Crosstable' ) );
 }
 
-function drForm_outputPage ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->krnEmit_output_htmlHead  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyStart ( $appData, $appGlobals, $appChain, $this );
-    $appEmitter->krnEmit_output_ribbons  ( $appData, $appGlobals, $appChain, $this );
-    $this->drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputFooter  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyEnd  ( $appData, $appGlobals, $appChain, $this );
+function drForm_process_output ( $appData, $appGlobals, $appChain, $appEmitter ) {
+    $appGlobals->gb_output_form ( $appData, $appChain, $appEmitter, $this );
 }
 
 function drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter ) {  // appForm_chess_loser
@@ -235,10 +220,10 @@ function drForm_outputFooter ( $appData, $appGlobals, $appChain, $appEmitter ) {
 //@  Step 3
 //@@@@@@@@@@@@@@@@@@@@
 
-class appForm_chess_draw extends Draff_Form {  // specify both players of draw
+class appForm_chess_draw extends kcmKernel_Draff_Form {  // specify both players of draw
 private $draw_playerList;
 
-function drForm_processSubmit ( $appData, $appGlobals, $appChain ) {
+function drForm_process_submit ( $appData, $appGlobals, $appChain ) {
 
     kernel_processBannerSubmits( $appGlobals, $appChain );
 
@@ -277,14 +262,12 @@ function drForm_initData( $appData, $appGlobals, $appChain ) {
 }
 
 function drForm_initHtml( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->set_theme( 'theme-select' );
-    $appEmitter->set_title('Enter '.$appData->apd_chess_gameTypeDesc.' Results');
-    $appGlobals->gb_appMenu_init($appChain, $appEmitter, $appData->apd_roster_program);
-    $appEmitter->set_menu_customize( $appChain, $appGlobals, '$results', $appData->apd_chess_gameTypeMenuKey );
+    $appEmitter->emit_options->set_theme( 'theme-select' );
+    $appEmitter->emit_options->set_title('Enter '.$appData->apd_chess_gameTypeDesc.' Results');
+    $appGlobals->gb_ribbonMenu_Initialize($appChain, $appEmitter, $appData->apd_roster_program);
+    $appGlobals->gb_menu->drMenu_customize('$results', $appData->apd_chess_gameTypeMenuKey );
     kcmRosterLib_setBannerSubTitle($appEmitter,$appGlobals, $appData->apd_roster_program,'Enter '.$appData->apd_chess_gameTypeDesc.' Results');
-    //$appGlobals->gb_appMenu_init($appChain, $appEmitter, $appData->apd_roster_program);
-    //$appEmitter->set_menu_customize( $appChain, $appGlobals, '$results', $appData->apd_chess_gameTypeMenuKey);
-}
+ }
 
 function drForm_initFields( $appData, $appGlobals, $appChain ) {
     kcmRosterLib_kidList_checkboxes_define($this, $appGlobals, $appData->apd_roster_program ); //????--with-draw-array
@@ -305,14 +288,8 @@ function drForm_initFields( $appData, $appGlobals, $appChain ) {
 //    }
 //}
 
-function drForm_outputPage ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->krnEmit_output_htmlHead  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyStart ( $appData, $appGlobals, $appChain, $this );
-    $appEmitter->krnEmit_output_ribbons  ( $appData, $appGlobals, $appChain, $this );
-    $this->drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputFooter  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyEnd  ( $appData, $appGlobals, $appChain, $this );
+function drForm_process_output ( $appData, $appGlobals, $appChain, $appEmitter ) {
+    $appGlobals->gb_output_form ( $appData, $appChain, $appEmitter, $this );
 }
 
 function drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter ) {  // appForm_chess_draw
@@ -344,9 +321,9 @@ function drForm_outputFooter ( $appData, $appGlobals, $appChain, $appEmitter ) {
 
 }  // end class appForm_chess_draw
 
-class appForm_chess_edit extends Draff_Form {
+class appForm_chess_edit extends kcmKernel_Draff_Form {
 
-function drForm_processSubmit ( $appData, $appGlobals, $appChain ) {
+function drForm_process_submit ( $appData, $appGlobals, $appChain ) {
     kernel_processBannerSubmits( $appGlobals, $appChain );
 
     if ($appChain->chn_submit[0] == '@cancel') {
@@ -384,14 +361,12 @@ function drForm_initData( $appData, $appGlobals, $appChain ) {
 }
 
 function drForm_initHtml( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->set_theme( 'theme-select' );
-    $appEmitter->set_title('Enter '.$appData->apd_chess_gameTypeDesc.' Results');
-    $appGlobals->gb_appMenu_init($appChain, $appEmitter, $appData->apd_roster_program);
-    $appEmitter->set_menu_customize( $appChain, $appGlobals, '$results', $appData->apd_chess_gameTypeMenuKey );
+    $appEmitter->emit_options->set_theme( 'theme-select' );
+    $appEmitter->emit_options->set_title('Enter '.$appData->apd_chess_gameTypeDesc.' Results');
+    $appGlobals->gb_ribbonMenu_Initialize($appChain, $appEmitter, $appData->apd_roster_program);
+    $appGlobals->gb_menu->drMenu_customize( '$results', $appData->apd_chess_gameTypeMenuKey );
     kcmRosterLib_setBannerSubTitle($appEmitter,$appGlobals, $appData->apd_roster_program,'Edit Game');
-    //$appGlobals->gb_appMenu_init($appChain, $appEmitter, $appData->apd_roster_program);
-    //$appEmitter->set_menu_customize( $appChain, $appGlobals  );
-}
+ }
 
 function drForm_initFields( $appData, $appGlobals, $appChain ) {
     $gameEditId = $appChain->chn_data_posted_get('#editGameId');
@@ -465,15 +440,8 @@ function drForm_initFields( $appData, $appGlobals, $appChain ) {
 //    // need to check wins = game_losses and number of draws make sense (but allow work-around) - and maybe only one draw difference
 //}
 
-function drForm_outputPage ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->krnEmit_output_htmlHead  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyStart ( $appData, $appGlobals, $appChain, $this );
-    $appEmitter->krnEmit_output_ribbons  ( $appData, $appGlobals, $appChain, $this );
-    $this->drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputFooter  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyEnd  ( $appData, $appGlobals, $appChain, $this );
-}
+function drForm_process_output ( $appData, $appGlobals, $appChain, $appEmitter ) {
+v}
 
 function drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter ) {
 }
@@ -488,7 +456,7 @@ function drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter ) 
     $tableLayout = new rsmp_emitter_table_layout('sc', array(25,6,6,6));
     $appEmitter->table_start('draff-edit', $tableLayout);
 
-    $appEmitter->krnEmit_recordEditTitleRow('Edit Game', 4);
+    krnEmit_recordEditTitleRow($appEmitter,'Edit Game', 4);
     //appEmitter->row_start();
     //$appEmitter->cell_block('Edit Game','draff-edit-head','colspan="4"');
     //$appEmitter->row_end();
@@ -562,9 +530,9 @@ function drForm_outputFooter ( $appData, $appGlobals, $appChain, $appEmitter ) {
 //@  Form
 //@@@@@@@@@@@@@@@@@@@@
 
-class appForm_bughouse_players extends Draff_Form {
+class appForm_bughouse_players extends kcmKernel_Draff_Form {
 
-function drForm_processSubmit ( $appData, $appGlobals, $appChain ) {
+function drForm_process_submit ( $appData, $appGlobals, $appChain ) {
     //$appChain->chn_data_posted_clearAll();
    // $appChain->chn_data_status_clearAll();
     kernel_processBannerSubmits( $appGlobals, $appChain, $submit );
@@ -584,14 +552,12 @@ function drForm_initData( $appData, $appGlobals, $appChain ) {
 }
 
 function drForm_initHtml( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->set_theme( 'theme-select' );
-    $appEmitter->set_title('Bughouse');
-    $appGlobals->gb_appMenu_init($appChain, $appEmitter, $appData->apd_roster_program);
-    $appEmitter->set_menu_customize( $appChain, $appGlobals, '$results', 'resS_B' );
+    $appEmitter->emit_options->set_theme( 'theme-select' );
+    $appEmitter->emit_options->set_title('Bughouse');
+    $appGlobals->gb_ribbonMenu_Initialize($appChain, $appEmitter, $appData->apd_roster_program);
+    $appGlobals->gb_menu->drMenu_customize( '$results', 'resS_B' );
     kcmRosterLib_setBannerSubTitle($appEmitter,$appGlobals, $appData->apd_roster_program,'Bughouse');
-    //$appGlobals->gb_appMenu_init($appChain, $appEmitter, $appData->apd_roster_program);
-    //$appEmitter->set_menu_customize( $appChain, $appGlobals, '$results', 'resS_B');
-}
+  
 
 function drForm_initFields( $appData, $appGlobals, $appChain ) {
     $appData->apd_bugPlayers_getPosted( $appGlobals, $appChain );
@@ -603,14 +569,8 @@ function drForm_initFields( $appData, $appGlobals, $appChain ) {
     kcmRosterLib_kidList_checkboxes_define($this, $appGlobals, $appData->apd_roster_program, $appData->apd_bugPlayers_kidPeriodIdList);
 }
 
-function drForm_outputPage ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->krnEmit_output_htmlHead  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyStart ( $appData, $appGlobals, $appChain, $this );
-    $appEmitter->krnEmit_output_ribbons  ( $appData, $appGlobals, $appChain, $this );
-    $this->drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputFooter  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyEnd  ( $appData, $appGlobals, $appChain, $this );
+function drForm_process_output ( $appData, $appGlobals, $appChain, $appEmitter ) {
+    $appGlobals->gb_output_form ( $appData, $appChain, $appEmitter, $this );
 }
 
 function drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter ) {
@@ -645,9 +605,9 @@ function drForm_outputFooter ( $appData, $appGlobals, $appChain, $appEmitter ) {
 //@  Form
 //@@@@@@@@@@@@@@@@@@@@
 
-class appForm_bughouse_games extends Draff_Form {
+class appForm_bughouse_games extends kcmKernel_Draff_Form {
 
-function drForm_processSubmit ( $appData, $appGlobals, $appChain ) {
+function drForm_process_submit ( $appData, $appGlobals, $appChain ) {
     kernel_processBannerSubmits( $appGlobals, $appChain );
 
     if ($appChain->chn_submit[0] == '@back') {
@@ -682,33 +642,31 @@ function drForm_initData( $appData, $appGlobals, $appChain ) {
 }
 
 function drForm_initHtml( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->set_theme( 'theme-select' );
-    $appEmitter->set_title('Enter '.$appData->apd_chess_gameTypeDesc.' Results');
-    //$appGlobals->gb_appMenu_init($appChain, $appEmitter, $appData->apd_roster_program);
-    //$appEmitter->set_menu_customize( $appChain, $appGlobals, '$results', $appData->apd_chess_gameTypeMenuKey );
+    $appEmitter->emit_options->set_theme( 'theme-select' );
+    $appEmitter->emit_options->set_title('Enter '.$appData->apd_chess_gameTypeDesc.' Results');
     kcmRosterLib_setBannerSubTitle($appEmitter,$appGlobals, $appData->apd_roster_program,'Bughouse');
-    //$appGlobals->gb_appMenu_init($appChain, $appEmitter, $appData->apd_roster_program);
-    //$appEmitter->set_menu_customize( $appChain, $appGlobals, '$results', 'resS_B');
-    $appEmitter->addOption_styleTag('div.lc-tables','max-width:95%;');
-    $appEmitter->addOption_styleTag('table.lc-table','margin: 10px;width:100%;margin-bottom:0;');
-    $appEmitter->addOption_styleTag('table.lc-tableCrazy','margin-top:0;');
-    $appEmitter->addOption_styleTag('td.lc-td','padding: 2px 10px;font-size: 1.4rem;line-height:1.7rem;vertical-align:middle;text-align:left;');
-    $appEmitter->addOption_styleTag('td.lc-td-vs','padding: 10px;font-size:1.5rem;vertical-align:middle;');
-    $appEmitter->addOption_styleTag('td.lc-td-left','border-right:0px;text-align:left;padding-left:4px;');
-    $appEmitter->addOption_styleTag('td.lc-td-middle','border-left:0px;border-right:0px;');
-    $appEmitter->addOption_styleTag('td.lc-td-right','text-align:left;border-left:0px;border-right:1px;');
-    $appEmitter->addOption_styleTag('span.lc-name','font-size:1.0em;font-weight:bold;');
-    $appEmitter->addOption_styleTag('span.lc-result','font-size:1.0em;font-weight:bold;margin:0;padding:0;');
-    $appEmitter->addOption_styleTag('td.lc-td-4','border-left:0px;');
-    $appEmitter->addOption_styleTag('td.lc-td-unusual','border:1px; text-align:left;');
-    $appEmitter->addOption_styleTag('span.lc-and','display:inline-block; font-size:1.5em;font-weight:bold;padding:2px 10px;');
-    $appEmitter->addOption_styleTag('span.lc-radioText','display:inline-block;padding:2px 2px;');
-    $appEmitter->addOption_styleTag('span.lc-versus','display:inline-block;padding:2px 2px;font-size:1.2em;font-weight:bold;margin:1px 1px 4px 1px;');
-    $appEmitter->addOption_styleTag('span.lc-hint','display:inline-block;padding:2px 2px;font-size:0.7em;margin:1px 1px 4px 1px;width:30em;');
-    $appEmitter->addOption_styleTag('span.lc-block','display:inline-block;padding:2px 2px;text-align:left;');
-    $appEmitter->addOption_styleTag('span.lc-noneOfAbove','font-size:1.5em;font-weight:bold;');
-	$appEmitter->addOption_styleTag('td.lc-td-unusualLeft','width:30px;border-right:0px solid gray;');
-    //$appEmitter->addOption_styleTag('label','vertical-align:middle;');
+   $appGlobals->gb_ribbonMenu_Initialize($appChain, $appEmitter, $appData->apd_roster_program);
+    $appGlobals->gb_menu->drMenu_customize($appChain, $appGlobals, '$results', 'resS_B');
+    $appEmitter->emit_options->addOption_styleTag('div.lc-tables','max-width:95%;');
+    $appEmitter->emit_options->addOption_styleTag('table.lc-table','margin: 10px;width:100%;margin-bottom:0;');
+    $appEmitter->emit_options->addOption_styleTag('table.lc-tableCrazy','margin-top:0;');
+    $appEmitter->emit_options->addOption_styleTag('td.lc-td','padding: 2px 10px;font-size: 1.4rem;line-height:1.7rem;vertical-align:middle;text-align:left;');
+    $appEmitter->emit_options->addOption_styleTag('td.lc-td-vs','padding: 10px;font-size:1.5rem;vertical-align:middle;');
+    $appEmitter->emit_options->addOption_styleTag('td.lc-td-left','border-right:0px;text-align:left;padding-left:4px;');
+    $appEmitter->emit_options->addOption_styleTag('td.lc-td-middle','border-left:0px;border-right:0px;');
+    $appEmitter->emit_options->addOption_styleTag('td.lc-td-right','text-align:left;border-left:0px;border-right:1px;');
+    $appEmitter->vaddOption_styleTag('span.lc-name','font-size:1.0em;font-weight:bold;');
+    $appEmitter->emit_options->addOption_styleTag('span.lc-result','font-size:1.0em;font-weight:bold;margin:0;padding:0;');
+    $appEmitter->emit_options->addOption_styleTag('td.lc-td-4','border-left:0px;');
+    $appEmitter->emit_options->addOption_styleTag('td.lc-td-unusual','border:1px; text-align:left;');
+    $appEmitter->emit_options->addOption_styleTag('span.lc-and','display:inline-block; font-size:1.5em;font-weight:bold;padding:2px 10px;');
+    $appEmitter->emit_options->addOption_styleTag('span.lc-radioText','display:inline-block;padding:2px 2px;');
+    $appEmitter->emit_options->addOption_styleTag('span.lc-versus','display:inline-block;padding:2px 2px;font-size:1.2em;font-weight:bold;margin:1px 1px 4px 1px;');
+    $appEmitter->emit_options->addOption_styleTag('span.lc-hint','display:inline-block;padding:2px 2px;font-size:0.7em;margin:1px 1px 4px 1px;width:30em;');
+    $appEmitter->emit_options->addOption_styleTag('span.lc-block','display:inline-block;padding:2px 2px;text-align:left;');
+    $appEmitter->emit_options->addOption_styleTag('span.lc-noneOfAbove','font-size:1.5em;font-weight:bold;');
+	$appEmitter->emit_options->addOption_styleTag('td.lc-td-unusualLeft','width:30px;border-right:0px solid gray;');
+    //$appEmitter->emit_options->addOption_styleTag('label','vertical-align:middle;');
 }
 
 function drForm_initFields( $appData, $appGlobals, $appChain ) {
@@ -750,14 +708,8 @@ function drForm_initFields( $appData, $appGlobals, $appChain ) {
 }
 
 
-function drForm_outputPage ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->krnEmit_output_htmlHead  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyStart ( $appData, $appGlobals, $appChain, $this );
-    $appEmitter->krnEmit_output_ribbons  ( $appData, $appGlobals, $appChain, $this );
-    $this->drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputFooter  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyEnd  ( $appData, $appGlobals, $appChain, $this );
+function drForm_process_output ( $appData, $appGlobals, $appChain, $appEmitter ) {
+    $appGlobals->gb_output_form ( $appData, $appChain, $appEmitter, $this );
 }
 
 function drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter ) {
@@ -822,9 +774,9 @@ function drForm_outputFooter ( $appData, $appGlobals, $appChain, $appEmitter ) {
 //@
 //@@@@@@@@@@@@@@@@@@@@
 
-class appForm_game_history  extends Draff_Form {  // specify winner
+class appForm_game_history  extends kcmKernel_Draff_Form {  // specify winner
 
-function drForm_processSubmit ( $appData, $appGlobals, $appChain ) {
+function drForm_process_submit ( $appData, $appGlobals, $appChain ) {
     kernel_processBannerSubmits( $appGlobals, $appChain );
 
     $appChain->chn_form_savePostedData();
@@ -841,13 +793,11 @@ function drForm_initData( $appData, $appGlobals, $appChain ) {
 }
 
 function drForm_initHtml( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->set_theme( 'theme-select' );
-    $appEmitter->set_title('Enter '.$appData->apd_chess_gameTypeDesc.' Results');
-    $appGlobals->gb_appMenu_init($appChain, $appEmitter, $appData->apd_roster_program);
-    $appEmitter->set_menu_customize( $appChain, $appGlobals, '$results', $appData->apd_chess_gameTypeMenuKey );
+    $appEmitter->emit_options->set_theme( 'theme-select' );
+    $appEmitter->emit_options->set_title('Enter '.$appData->apd_chess_gameTypeDesc.' Results');
+    $appGlobals->gb_ribbonMenu_Initialize($appChain, $appEmitter, $appData->apd_roster_program);
+    $appGlobals->gb_menu->drMenu_customize( '$results', $appData->apd_chess_gameTypeMenuKey );
     kcmRosterLib_setBannerSubTitle($appEmitter,$appGlobals, $appData->apd_roster_program,'Game History Report');
-    $appGlobals->gb_appMenu_init($appChain, $appEmitter, $appData->apd_roster_program);
-    $appEmitter->set_menu_customize( $appChain, $appGlobals  );
     $appData->apd_gameHistory_report = new report_gameHistory;
     $appData->apd_gameHistory_report->stdRpt_initStyles($appEmitter);
 }
@@ -871,14 +821,8 @@ function drForm_initFields( $appData, $appGlobals, $appChain ) {
 
 }
 
-function drForm_outputPage ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->krnEmit_output_htmlHead  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyStart ( $appData, $appGlobals, $appChain, $this );
-    $appEmitter->krnEmit_output_ribbons  ( $appData, $appGlobals, $appChain, $this );
-    $this->drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputFooter  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyEnd  ( $appData, $appGlobals, $appChain, $this );
+function drForm_process_output ( $appData, $appGlobals, $appChain, $appEmitter ) {
+    $appGlobals->gb_output_form ( $appData, $appChain, $appEmitter, $this );
 }
 
 function drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter ) {
@@ -918,9 +862,9 @@ function outFilterOptions($appGlobals) {
 //@  Form
 //@@@@@@@@@@@@@@@@@@@@
 
-class appForm_crossTable extends Draff_Form {  // specify winner
+class appForm_crossTable extends kcmKernel_Draff_Form {  // specify winner
 
-function drForm_processSubmit ( $appData, $appGlobals, $appChain ) {
+function drForm_process_submit ( $appData, $appGlobals, $appChain ) {
 
     kernel_processBannerSubmits( $appGlobals, $appChain );
     if ($appChain->chn_submit[0] == '@back') {
@@ -945,16 +889,16 @@ function drForm_initData( $appData, $appGlobals, $appChain ) {
 }
 
 function drForm_initHtml( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->set_theme( 'theme-select' );
-    $appEmitter->set_title('Enter '.$appData->apd_chess_gameTypeDesc.' Results');
-    $appGlobals->gb_appMenu_init($appChain, $appEmitter, $appData->apd_roster_program);
-    $appEmitter->set_menu_customize( $appChain, $appGlobals, '$results', $appData->apd_chess_gameTypeMenuKey );
+    $appEmitter->emit_options->set_theme( 'theme-select' );
+    $appEmitter->emit_options->set_title('Enter '.$appData->apd_chess_gameTypeDesc.' Results');
+    $appGlobals->gb_ribbonMenu_Initialize($appChain, $appEmitter, $appData->apd_roster_program);
+    $appGlobals->gb_menu->drMenu_customize( '$results', $appData->apd_chess_gameTypeMenuKey );
     kcmRosterLib_setBannerSubTitle($appEmitter,$appGlobals, $appData->apd_roster_program,$appData->apd_chess_gameTypeDesc.' CrossTable');
-    $appEmitter->addOption_styleFile('kcm-roster/kcm1css/kcm-common_css.css','all','../');
-    $appEmitter->addOption_styleFile('kcm-roster/kcm1css/kcm-common_screen.css','all','../');
-    $appEmitter->addOption_styleFile('kcm-roster/kcm1css/kcm-common_print.css','all','../');
-    $appEmitter->addOption_styleFile('kcm-roster/kcm1css/kcm-gameEntry.css','all','../');
-    $appEmitter->addOption_styleTag('button.lc-edit','padding:2pt; border-radius:0;border:1px solid #aaf;background-color:#eef');
+    $appEmitter->emit_options->addOption_styleFile('kcm-roster/kcm1css/kcm-common_css.css','all','../');
+    $appEmitter->emit_options->addOption_styleFile('kcm-roster/kcm1css/kcm-common_screen.css','all','../');
+    $appEmitter->emit_options->addOption_styleFile('kcm-roster/kcm1css/kcm-common_print.css','all','../');
+    $appEmitter->emit_options->addOption_styleFile('kcm-roster/kcm1css/kcm-gameEntry.css','all','../');
+    $appEmitter->emit_options->addOption_styleTag('button.lc-edit','padding:2pt; border-radius:0;border:1px solid #aaf;background-color:#eef');
 }
 
 function drForm_initFields( $appData, $appGlobals, $appChain ) {
@@ -962,14 +906,8 @@ function drForm_initFields( $appData, $appGlobals, $appChain ) {
 }
 
 
-function drForm_outputPage ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->krnEmit_output_htmlHead  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyStart ( $appData, $appGlobals, $appChain, $this );
-    $appEmitter->krnEmit_output_ribbons  ( $appData, $appGlobals, $appChain, $this );
-    $this->drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputFooter  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyEnd  ( $appData, $appGlobals, $appChain, $this );
+function drForm_process_output ( $appData, $appGlobals, $appChain, $appEmitter ) {
+    $appGlobals->gb_output_form ( $appData, $appChain, $appEmitter, $this );
 }
 
 function drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter ) {  // appForm_chess_winner
@@ -992,7 +930,7 @@ function drForm_outputFooter ( $appData, $appGlobals, $appChain, $appEmitter ) {
 
 }  // end class
 
-class appData_gameResults extends draff_appData {
+class application_data extends draff_appData {
 
 public $apd_roster_program;
 public $apd_roster_period;
@@ -1037,7 +975,7 @@ function __construct($appGlobals) {
 }
 
 function apd_all_getData($appChain) {
-    $this->apd_chess_gameTypeCode = draff_urlArg_getRequired('rsmMode',NULL);
+    $this->apd_chess_gameTypeCode = draff_urlArg_getRequired('drfMode',NULL);
     $this->apd_chess_gameTypeCode = $this->apd_chess_gameTypeCode - 1;
     if ($this->apd_chess_gameTypeCode==0) {
        $this->apd_chess_gameTypeDesc = 'Chess';
@@ -2045,11 +1983,10 @@ function __construct() {
 
 rc_session_initialize();
 
-$appGlobals = new kcmRoster_globals();
+$appChain = new Draff_Chain(  'kcmKernel_emitter' );
+$appChain->chn_register_appGlobals( $appGlobals = new kcmRoster_globals());
+$appChain->chn_register_appData( $appData = new application_data());
 $appGlobals->gb_forceLogin ();
-
-$appData = new appData_gameResults($appGlobals);
-$appChain = new Draff_Chain( $appData, $appGlobals, 'kcmKernel_emitter' );
 
 $appData->apd_all_getData($appChain);  //????? should be moved to appData get
 

@@ -9,13 +9,14 @@ include_once( '../../rc_admin.inc.php' );
 include_once( '../../rc_database.inc.php' );
 include_once( '../../rc_messages.inc.php' );
 
-include_once( '../draff/draff-functions.inc.php' );
-include_once( '../draff/draff-objects.inc.php' );
 include_once( '../draff/draff-chain.inc.php' );
+include_once( '../draff/draff-database.inc.php');
 include_once( '../draff/draff-emitter.inc.php' );
 include_once( '../draff/draff-form.inc.php' );
+include_once( '../draff/draff-functions.inc.php' );
+include_once( '../draff/draff-menu.inc.php' );
+include_once( '../draff/draff-page.inc.php' );
 
-include_once( '../kcm-kernel/kernel-emitter.inc.php');
 include_once( '../kcm-kernel/kernel-functions.inc.php');
 include_once( '../kcm-kernel/kernel-objects.inc.php');
 include_once( '../kcm-kernel/kernel-globals.inc.php');
@@ -26,10 +27,10 @@ CONST PAGE_SCHOOL_SELECT   = 1;
 CONST PAGE_SCHOOL_REPORT   = 2;
 CONST PAGE_SCHOOL_VIEW     = 3;
 
-Class appForm_school_select extends Draff_Form {
+Class appForm_school_select extends kcmKernel_Draff_Form {
 private $current_schoolSelectMap;
 
-function drForm_processSubmit ( $appData, $appGlobals, $appChain ) {  // abstract function
+function drForm_process_submit ( $appData, $appGlobals, $appChain ) {  // abstract function
     kernel_processBannerSubmits( $appGlobals, $appChain );
     $appData->apd_common_submit($appChain);
     if (  isset($appChain->chn_submit[1]) and is_numeric($appChain->chn_submit[1]) ) {
@@ -54,10 +55,10 @@ function drForm_initData( $appData, $appGlobals, $appChain ) {
 }
 
 function drForm_initHtml( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->set_theme( 'theme-select' );
-    $appEmitter->set_title('Staff List');
-    $appEmitter->set_menu_standard($appChain, $appGlobals);
-    $appEmitter->set_menu_customize( $appChain, $appGlobals  );
+    $appEmitter->emit_options->set_theme( 'theme-select' );
+    $appEmitter->emit_options->set_title('School List');
+    $appGlobals->gb_ribbonMenu_Initialize($appChain, $appGlobals);
+    $appGlobals->gb_menu->drMenu_customize();
 }
 
 function drForm_initFields( $appData, $appGlobals, $appChain ) {
@@ -68,18 +69,12 @@ function drForm_initFields( $appData, $appGlobals, $appChain ) {
     }
 }
 
-function drForm_outputPage ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->krnEmit_output_htmlHead  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyStart ( $appData, $appGlobals, $appChain, $this );
-    $appEmitter->krnEmit_output_ribbons  ( $appData, $appGlobals, $appChain, $this );
-    $this->drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputFooter  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyEnd  ( $appData, $appGlobals, $appChain, $this );
+function drForm_process_output ( $appData, $appGlobals, $appChain, $appEmitter ) {
+     $appGlobals->gb_output_form ( $appData, $appChain, $appEmitter, $this );
 }
 
 function drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appData->apd_common_header_output( $appData, $appGlobals, $appChain, $appEmitter );
+    $appData->apd_common_header_output(  $appEmitter );
 }
 
 function drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter ) {
@@ -95,10 +90,10 @@ function drForm_outputFooter ( $appData, $appGlobals, $appChain, $appEmitter ) {
 
 } // end class
 
-Class appForm_school_report extends Draff_Form {
+Class appForm_school_report extends kcmKernel_Draff_Form {
 public $scl_reportSchoolList;
 
-function drForm_processSubmit ( $appData, $appGlobals, $appChain ) {
+function drForm_process_submit ( $appData, $appGlobals, $appChain ) {
     kernel_processBannerSubmits( $appGlobals, $appChain );
     $appData->apd_common_submit($appChain);
 }
@@ -109,28 +104,22 @@ function drForm_initData( $appData, $appGlobals, $appChain ) {
 
 function drForm_initHtml( $appData, $appGlobals, $appChain, $appEmitter ) {
     $this->scl_reportSchoolList->rpt_initStyles($appEmitter);
-    $appEmitter->set_theme( 'theme-report' );
-    $appEmitter->set_title('School List');
-    $appEmitter->set_menu_standard( $appChain, $appGlobals );
-    $appEmitter->set_menu_customize( $appChain, $appGlobals  );
+    $appEmitter->emit_options->set_theme( 'theme-report' );
+    $appEmitter->emit_options->set_title('School List');
+    $appGlobals->gb_ribbonMenu_Initialize( $appChain, $appGlobals );
+    $appGlobals->gb_menu->drMenu_customize();
 }
 
 function drForm_initFields( $appData, $appGlobals, $appChain ) {
     $appData->apd_common_header_define( $this );
 }
 
-function drForm_outputPage ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->krnEmit_output_htmlHead  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyStart ( $appData, $appGlobals, $appChain, $this );
-    $appEmitter->krnEmit_output_ribbons  ( $appData, $appGlobals, $appChain, $this );
-    $this->drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputFooter  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyEnd  ( $appData, $appGlobals, $appChain, $this );
+function drForm_process_output ( $appData, $appGlobals, $appChain, $appEmitter ) {
+    $appGlobals->gb_output_form ( $appData, $appChain, $appEmitter, $this );
 }
 
 function drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appData->apd_common_header_output( $appData, $appGlobals, $appChain, $appEmitter );
+    $appData->apd_common_header_output(  $appEmitter );
 }
 
 function drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter ) {
@@ -145,9 +134,9 @@ function drForm_outputFooter ( $appData, $appGlobals, $appChain, $appEmitter ) {
 } // end class
 
 
-Class appForm_school_view extends Draff_Form {
+Class appForm_school_view extends kcmKernel_Draff_Form {
     
-    function drForm_processSubmit ( $appData, $appGlobals, $appChain ) {
+    function drForm_process_submit ( $appData, $appGlobals, $appChain ) {
         kernel_processBannerSubmits( $appGlobals, $appChain );
         if ($appChain->chn_submit[0] == 'back') {
             $appChain->chn_form_launch(PAGE_STAFF_SELECT);
@@ -160,16 +149,16 @@ Class appForm_school_view extends Draff_Form {
     }
     
     function drForm_initHtml( $appData, $appGlobals, $appChain, $appEmitter ) {
-        $appEmitter->set_theme( 'theme-panel' );
-        $appEmitter->set_title('School List');
-        $appEmitter->set_menu_standard($appChain, $appGlobals);
-        $appEmitter->set_menu_customize( $appChain, $appGlobals  );
-        $appEmitter->addOption_styleTag('table.loc-edit-table','border:1pt;width:30em;min-width:30em;max-width:60em; padding: 1em 0.4em 1em 0.4em;');
-        $appEmitter->addOption_styleTag('td.loc-name','width:12em;border:1pt; padding: 1em 0.4em 1em 0.4em;');
-        $appEmitter->addOption_styleTag('td.loc-colDesc','width:4em;border:1pt; padding: 1em 0.4em 1em 0.4em;');
-        $appEmitter->addOption_styleTag('td.loc-phone','width:8em;border:1pt; padding: 1em 0.4em 1em 0.4em;');
-        $appEmitter->addOption_styleTag('span.loc-short','margin-left:1.2em;');
-        $appEmitter->addOption_styleTag('span.loc-email2','font-size:1.0em;;');
+        $appEmitter->emit_options->set_theme( 'theme-panel' );
+        $appEmitter->emit_options->set_title('School List');
+        $appGlobals->gb_ribbonMenu_Initialize($appChain, $appGlobals);
+        $appGlobals->gb_menu->drMenu_customize( );
+        $appEmitter->emit_options->addOption_styleTag('table.loc-edit-table','border:1pt;width:30em;min-width:30em;max-width:60em; padding: 1em 0.4em 1em 0.4em;');
+        $appEmitter->emit_options->addOption_styleTag('td.loc-name','width:12em;border:1pt; padding: 1em 0.4em 1em 0.4em;');
+        $appEmitter->emit_options->addOption_styleTag('td.loc-colDesc','width:4em;border:1pt; padding: 1em 0.4em 1em 0.4em;');
+        $appEmitter->emit_options->addOption_styleTag('td.loc-phone','width:8em;border:1pt; padding: 1em 0.4em 1em 0.4em;');
+        $appEmitter->emit_options->addOption_styleTag('span.loc-short','margin-left:1.2em;');
+        $appEmitter->emit_options->addOption_styleTag('span.loc-email2','font-size:1.0em;;');
         
     }
     
@@ -179,18 +168,12 @@ Class appForm_school_view extends Draff_Form {
         $this->drForm_addField( new Draff_Button( 'back',"Back") );
     }
     
-    function drForm_outputPage ( $appData, $appGlobals, $appChain, $appEmitter ) {
-        $appEmitter->krnEmit_output_htmlHead  ( $appData, $appGlobals, $appChain, $appEmitter );
-        $appEmitter->krnEmit_output_bodyStart ( $appData, $appGlobals, $appChain, $this );
-        $appEmitter->krnEmit_output_ribbons  ( $appData, $appGlobals, $appChain, $this );
-        $this->drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter );
-        $this->drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter );
-        $this->drForm_outputFooter  ( $appData, $appGlobals, $appChain, $appEmitter );
-        $appEmitter->krnEmit_output_bodyEnd  ( $appData, $appGlobals, $appChain, $this );
+    function drForm_process_output ( $appData, $appGlobals, $appChain, $appEmitter ) {
+        $appGlobals->gb_output_form ( $appData, $appChain, $appEmitter, $this );
     }
     
     function drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter ) {
-        $appData->apd_common_header_output( $appData, $appGlobals, $appChain, $appEmitter );
+        $appData->apd_common_header_output( $appEmitter );
     }
     
     function drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter ) {
@@ -257,8 +240,8 @@ function __construct() {
 }
 
 function rpt_initStyles($appEmitter) {
-    $appEmitter->addOption_styleTag('span.loc-school','font-size:14pt;font-weight:bold;');
-    $appEmitter->addOption_styleTag('span.loc-phone','font-size:14pt;');
+    $appEmitter->emit_options->addOption_styleTag('span.loc-school','font-size:14pt;font-weight:bold;');
+    $appEmitter->emit_options->addOption_styleTag('span.loc-phone','font-size:14pt;');
 }
 
 function rpt_getData($appGlobals) {
@@ -294,7 +277,7 @@ function rpt_output($appEmitter,$appGlobals) {
     $appEmitter->table_start('draff-report',$tableLayout);
 
     $appEmitter->table_head_start();
-    $appEmitter->krnEmit_reportTitleRow('School List Report',3);
+    krnEmit_reportTitleRow($appEmitter,'School List Report',3);
 
     $appEmitter->row_start('rpt-grid-row');
     $appEmitter->cell_block('School Name<br>  School System','co-school');
@@ -317,17 +300,14 @@ function rpt_output($appEmitter,$appGlobals) {
 }
 
 function rpt_outRow_detail($appEmitter,$row) {
-       $phone = '<span class="loc-phone">' . $appEmitter->getString_phone($row['pSc:SchoolPhone']) .  '</span>';
+       //$phone = '<span class="loc-phone">' . $appEmitter->getString_phone($row['pSc:SchoolPhone']) .  '</span>';
+       // per gerald kidchess does not want staff calling the schools to get directions, report lateness, etc
        $address = $row['pSc:Address'];
        $city = $row['pSc:City'];
        $state = $row['pSc:State'];
        $zip =$row['pSc:Zip'];
        $addressAll = $address . '<br>' . $city . ',  ' .  $state . ' ' . $zip;
-       $googleAddress = $address . '+' . $city . '+' .  $state . '+' . $zip;
-       $googleAddress = str_replace(' ','+',$googleAddress);
        $googleUrl = 'https://www.google.com/maps/place/'.$address . '+' . $city . '+' .  $state . '+' . $zip;
-       $address = $address . '<br>' . $city . ',  ' .  $state . ' ' . $zip;
-
 
        $schoolName = '<span class="loc-school">' . $row['pSc:NameShort'] . '</span>';
        $googleLink = $appEmitter->getString_link($googleUrl,'Map','') ;
@@ -347,9 +327,6 @@ public $apd_selectMap_mySchools;
 public $apd_school_id;
 public $apd_school_rec;
 
-function __construct() {
-}
-
 function apd_init_selectMap_allSchools( $appGlobals ) {
     $this->apd_init_selectMap_allSchools = $this->getMap_allSchools_select($appGlobals);
 }
@@ -364,7 +341,7 @@ function apd_common_header_define( $form ) {
     $form->drForm_addField( new Draff_Button( '@selectToday',"My<br>Schools") );
 }
 
-function apd_common_header_output ( $appData, $appGlobals, $appChain, $appEmitter ) {
+function apd_common_header_output ( $appEmitter ) {
     $appEmitter->zone_start('zone-content-header theme-select');
     $appEmitter->content_field('@selectToday');
     $appEmitter->content_field('@selectAll');
@@ -418,15 +395,11 @@ function getMap_allSchools_select($appGlobals) {
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 rc_session_initialize();
 
-$appGlobals = new kcmGateway_globals();
+$appChain = new Draff_Chain( 'kcmKernel_emitter' );
+$appChain->chn_register_appGlobals( $appGlobals = new kcmGateway_globals());
+$appChain->chn_register_appData( new application_data());
 $appGlobals->gb_forceLogin ();
-$appData = new application_data();
 
-//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-//@         Process Page               @
-//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
-$appChain = new Draff_Chain( $appData, $appGlobals, 'kcmKernel_emitter' );
 $appChain->chn_form_register(PAGE_SCHOOL_SELECT,'appForm_school_select');
 $appChain->chn_form_register(PAGE_SCHOOL_REPORT,'appForm_school_report');
 $appChain->chn_form_register(PAGE_SCHOOL_VIEW,'appForm_school_view');

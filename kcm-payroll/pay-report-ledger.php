@@ -10,13 +10,14 @@ include_once( '../../rc_database.inc.php' );
 include_once( '../../rc_messages.inc.php' );
 include_once( '../../rc_job-appData-functions.inc.php' );
 
-include_once( '../draff/draff-functions.inc.php' );
-include_once( '../draff/draff-objects.inc.php' );
 include_once( '../draff/draff-chain.inc.php' );
+include_once( '../draff/draff-database.inc.php');
 include_once( '../draff/draff-emitter.inc.php' );
 include_once( '../draff/draff-form.inc.php' );
+include_once( '../draff/draff-functions.inc.php' );
+include_once( '../draff/draff-menu.inc.php' );
+include_once( '../draff/draff-page.inc.php' );
 
-include_once( '../kcm-kernel/kernel-emitter.inc.php');
 include_once( '../kcm-kernel/kernel-functions.inc.php');
 include_once( '../kcm-kernel/kernel-objects.inc.php');
 include_once( '../kcm-kernel/kernel-globals.inc.php');
@@ -27,7 +28,7 @@ include_once( 'pay-system-globals.inc.php' );
 
 include_once( 'pay-report-ledger.inc.php' );
 
-Class appForm_ledgerReport_main extends Draff_Form {
+Class appForm_ledgerReport_main extends kcmKernel_Draff_Form {
 public $ledger_param_staffId;
 public $ledger_periods;
 public $ledger_periods_count;
@@ -35,7 +36,7 @@ public $ledger_cur_periodId;
 public $ledger_cur_period;
 public $ledger_periodSelect_buttons;
 
-function drForm_processSubmit ( $appData, $appGlobals, $appChain ) {  // bundle
+function drForm_process_submit ( $appData, $appGlobals, $appChain ) {  // bundle
      kernel_processBannerSubmits( $appGlobals, $appChain, $submit );
    if ( $submit == '@cancel') {
         $appChain->chn_curStream_Clear();
@@ -53,14 +54,14 @@ function drForm_initData( $appData, $appGlobals, $appChain ) {
 }
 
 function drForm_initHtml( $appData, $appGlobals, $appChain, $appEmitter ) {  // bundle
-    $appEmitter->set_theme( 'theme-report' );
-    $appEmitter->set_title('Payroll - ???');
-    $appEmitter->set_menu_standard( $appChain, $appGlobals );
-    $appEmitter->set_menu_customize( $appChain, $appGlobals  );
+    $appEmitter->emit_options->set_theme( 'theme-report' );
+    $appEmitter->emit_options->set_title('Payroll - ???');
+    $appGlobals->gb_ribbonMenu_Initialize( $appChain, $appGlobals );
+    $appGlobals->gb_menu->drMenu_customize( );
     $desc = (!$appGlobals->gb_proxyIsPayMaster) ?'View Previous Pay Periods' : 'Ledger Report';
-    $appEmitter->set_title($desc);
-    $appGlobals->gb_appMenu_init($appChain, $appEmitter);
-    $appEmitter->set_menu_customize( $appChain, $appGlobals );
+    $appEmitter->emit_options->set_title($desc);
+    $appGlobals->gb_ribbonMenu_Initialize($appChain, $appEmitter);
+    $appGlobals->gb_menu->drMenu_customize();
 }
 function drForm_initFields( $appData, $appGlobals, $appChain ) {  // bundle
     // buttons on the ledger report are printed directly without defining them
@@ -100,14 +101,8 @@ function drForm_initFields( $appData, $appGlobals, $appChain ) {  // bundle
 }
 
 
-function drForm_outputPage ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->krnEmit_output_htmlHead  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyStart ( $appData, $appGlobals, $appChain, $this );
-    $appEmitter->krnEmit_output_ribbons  ( $appData, $appGlobals, $appChain, $this );
-    $this->drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputFooter  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyEnd  ( $appData, $appGlobals, $appChain, $this );
+function drForm_process_output ( $appData, $appGlobals, $appChain, $appEmitter ) {
+    $appGlobals->gb_output_form ( $appData, $appChain, $appEmitter, $this );
 }
 
 function drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter ) {
@@ -171,7 +166,7 @@ function drForm_validate( $appData, $appGlobals, $appChain ) {   // bundle
 
 } // end class
 
-class appData_ledgerReport extends draff_appData {
+class application_data extends draff_appData {
 
 //---  user information
 public $apd_user_proxy;
@@ -204,13 +199,17 @@ rc_session_initialize();
 
 $appGlobals = new kcmPay_globals();
 $appGlobals->gb_forceLogin ();
-$appData = new appData_ledgerReport($appGlobals);
+$appData = new application_data($appGlobals);
 
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 //@         Process Page               @
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-$appChain = new Draff_Chain( $appData, $appGlobals, 'kcmKernel_emitter' );
+$appChain = new Draff_Chain( 'kcmKernel_emitter' );
+$appChain->chn_register_appGlobals( $appGlobals = new kcmPay_globals());
+$appChain->chn_register_appData( new application_data());
+$appGlobals->gb_forceLogin ();
+
 $appChain->chn_form_register(1,'appForm_ledgerReport_main');
 $appChain->chn_form_launch(); // proceed to current step
 

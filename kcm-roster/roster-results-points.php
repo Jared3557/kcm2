@@ -9,13 +9,14 @@ include_once( '../../rc_admin.inc.php' );
 include_once( '../../rc_database.inc.php' );
 include_once( '../../rc_messages.inc.php' );
 
-include_once( '../draff/draff-functions.inc.php' );
-include_once( '../draff/draff-objects.inc.php' );
 include_once( '../draff/draff-chain.inc.php' );
+include_once( '../draff/draff-database.inc.php');
 include_once( '../draff/draff-emitter.inc.php' );
 include_once( '../draff/draff-form.inc.php' );
+include_once( '../draff/draff-functions.inc.php' );
+include_once( '../draff/draff-menu.inc.php' );
+include_once( '../draff/draff-page.inc.php' );
 
-include_once( '../kcm-kernel/kernel-emitter.inc.php');
 include_once( '../kcm-kernel/kernel-functions.inc.php');
 include_once( '../kcm-kernel/kernel-objects.inc.php');
 include_once( '../kcm-kernel/kernel-globals.inc.php');
@@ -36,7 +37,7 @@ define ('FORM_POINTS_HISTORY',4);
 //@  Step 1
 //@@@@@@@@@@@@@@@@@@@@
 
-class appForm_points_player  extends Draff_Form {
+class appForm_points_player  extends kcmKernel_Draff_Form {
 
 //function step_init_submit_accept( $appData, $appGlobals, $appChain ) {
 //}
@@ -44,7 +45,7 @@ class appForm_points_player  extends Draff_Form {
 //function drForm_validate( $appData, $appGlobals, $appChain ) {
 //}
 
-function drForm_processSubmit ( $appData, $appGlobals, $appChain ) {
+function drForm_process_submit ( $appData, $appGlobals, $appChain ) {
     kernel_processBannerSubmits( $appGlobals, $appChain );
 
     //$appChain->chn_form_savePostedData();
@@ -68,14 +69,12 @@ function drForm_initData( $appData, $appGlobals, $appChain ) {
 }
 
 function drForm_initHtml( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->set_theme( 'theme-select' );
-    $appEmitter->set_title('Enter Points');
-    $appGlobals->gb_appMenu_init($appChain, $appEmitter, $appData->apd_roster_program);
-    $appEmitter->set_menu_customize( $appChain, $appGlobals, '$results' );
-   kcmRosterLib_setBannerSubTitle($appEmitter,$appGlobals, $appData->apd_roster_program,'Enter Points');
-    //$appGlobals->gb_appMenu_init($appChain, $appEmitter, $appData->apd_roster_program);
-    //$appEmitter->set_menu_customize( $appChain, $appGlobals  );
-    $appEmitter->emit_nrLine('');
+    $appEmitter->emit_options->set_theme( 'theme-select' );
+    $appEmitter->emit_options->set_title('Enter Points');
+    $appGlobals->gb_ribbonMenu_Initialize($appChain, $appEmitter, $appData->apd_roster_program);
+    $appGlobals->gb_menu->drMenu_customize( '$results' );
+    kcmRosterLib_setBannerSubTitle($appEmitter,$appGlobals, $appData->apd_roster_program,'Enter Points');
+     $appEmitter->emit_nrLine('');
 }
 
 function drForm_initFields( $appData, $appGlobals, $appChain ) {
@@ -84,14 +83,8 @@ function drForm_initFields( $appData, $appGlobals, $appChain ) {
      //game_kidButtons_define($appGlobals, 'gaWin');
 }
 
-function drForm_outputPage ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->krnEmit_output_htmlHead  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyStart ( $appData, $appGlobals, $appChain, $this );
-    $appEmitter->krnEmit_output_ribbons  ( $appData, $appGlobals, $appChain, $this );
-    $this->drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputFooter  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyEnd  ( $appData, $appGlobals, $appChain, $this );
+function drForm_process_output ( $appData, $appGlobals, $appChain, $appEmitter ) {
+    $appGlobals->gb_output_form ( $appData, $appChain, $appEmitter, $this );
 }
 
 function drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter ) {
@@ -116,9 +109,9 @@ function drForm_outputFooter ( $appData, $appGlobals, $appChain, $appEmitter ) {
 //@  Step 2
 //@@@@@@@@@@@@@@@@@@@@
 
-class appForm_points_enter extends Draff_Form {
+class appForm_points_enter extends kcmKernel_Draff_Form {
 
-function drForm_processSubmit ( $appData, $appGlobals, $appChain ) {
+function drForm_process_submit ( $appData, $appGlobals, $appChain ) {
     kernel_processBannerSubmits( $appGlobals, $appChain, $submit );
 
     if ($appChain->chn_submit[0] == 'cancel') {
@@ -189,14 +182,8 @@ function drForm_processSubmit ( $appData, $appGlobals, $appChain ) {
 //    $this->appChain->chn_stream_destroy();
 //}
 
-function drForm_outputPage ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->krnEmit_output_htmlHead  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyStart ( $appData, $appGlobals, $appChain, $this );
-    $appEmitter->krnEmit_output_ribbons  ( $appData, $appGlobals, $appChain, $this );
-    $this->drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputFooter  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyEnd  ( $appData, $appGlobals, $appChain, $this );
+function drForm_process_output ( $appData, $appGlobals, $appChain, $appEmitter ) {
+    $appGlobals->gb_output_form ( $appData, $appChain, $appEmitter, $this );
 }
 
 function drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter ) {
@@ -218,16 +205,12 @@ function drForm_initData( $appData, $appGlobals, $appChain ) {
 }
 
 function drForm_initHtml( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->set_theme( 'theme-select' );
-    $appEmitter->set_title('Enter Points');
-    $appGlobals->gb_appMenu_init($appChain, $appEmitter, $appData->apd_roster_program);
-    $appEmitter->set_menu_customize( $appChain, $appGlobals, '$results' );
+    $appEmitter->emit_options->set_theme( 'theme-select' );
+    $appEmitter->emit_options->set_title('Enter Points');
+    $appGlobals->gb_ribbonMenu_Initialize($appChain, $appEmitter, $appData->apd_roster_program);
+    $appGlobals->gb_menu->drMenu_customize ( '$results' );
     kcmRosterLib_setBannerSubTitle($appEmitter,$appGlobals, $appData->apd_roster_program,'Enter Points');
-    //$appGlobals->gb_appMenu_init($appChain, $appEmitter, $appData->apd_roster_program);
-   // $appEmitter->set_menu_customize( $appChain, $appGlobals  );
-
-
-    // $appEmitter->zone_messages($appChain, $form);
+     // $appEmitter->zone_messages($appChain, $form);
 }
 
 function drForm_initFields( $appData, $appGlobals, $appChain ) {
@@ -309,7 +292,7 @@ function drForm_outputFooter ( $appData, $appGlobals, $appChain, $appEmitter ) {
 
 }  // end class
 
-class appForm_points_edit extends Draff_Form {
+class appForm_points_edit extends kcmKernel_Draff_Form {
 public $edit_kidPeriodId;
 public $edit_points;
 public $edit_catCombo;
@@ -317,7 +300,7 @@ public $edit_catKey;
 public $edit_catValue;
 public $edit_pointsCombo;
 
-function drForm_processSubmit ( $appData, $appGlobals, $appChain ) {
+function drForm_process_submit ( $appData, $appGlobals, $appChain ) {
     kernel_processBannerSubmits( $appGlobals, $appChain, $submit );
     if ($submit == '@cancel') {
        $appChain->chn_launch_cancelChain(1,'');
@@ -366,13 +349,11 @@ function drForm_initData( $appData, $appGlobals, $appChain ) {
 }
 
 function drForm_initHtml( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->set_theme( 'theme-select' );
-    $appEmitter->set_title('Enter Points');
-    $appGlobals->gb_appMenu_init($appChain, $appEmitter, $appData->apd_roster_program);
-    $appEmitter->set_menu_customize( $appChain, $appGlobals, '$results' );
+    $appEmitter->emit_options->set_theme( 'theme-select' );
+    $appEmitter->emit_options->set_title('Enter Points');
+    $appGlobals->gb_ribbonMenu_Initialize($appChain, $appEmitter, $appData->apd_roster_program);
+    $appGlobals->gb_menu->drMenu_customize( '$results' );
     kcmRosterLib_setBannerSubTitle($appEmitter,$appGlobals, $appData->apd_roster_program,'Edit Points');
-    //$appGlobals->gb_appMenu_init($appChain, $appEmitter, $appData->apd_roster_program);
-    //$appEmitter->set_menu_customize( $appChain, $appGlobals  );
 }
 
 function drForm_initFields( $appData, $appGlobals, $appChain ) {
@@ -387,14 +368,8 @@ function drForm_initFields( $appData, $appGlobals, $appChain ) {
     $this->drForm_addField( new Draff_Button( '@cancel' , 'Cancel') );
 }
 
-function drForm_outputPage ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->krnEmit_output_htmlHead  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyStart ( $appData, $appGlobals, $appChain, $this );
-    $appEmitter->krnEmit_output_ribbons  ( $appData, $appGlobals, $appChain, $this );
-    $this->drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputFooter  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyEnd  ( $appData, $appGlobals, $appChain, $this );
+function drForm_process_output ( $appData, $appGlobals, $appChain, $appEmitter ) {
+    $appGlobals->gb_output_form ( $appData, $appChain, $appEmitter, $this );
 }
 
 function drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter ) {
@@ -444,9 +419,9 @@ function drForm_outputFooter ( $appData, $appGlobals, $appChain, $appEmitter ) {
 
 }  // end class
 
-class appForm_points_history extends Draff_Form {  // specify winner
+class appForm_points_history extends kcmKernel_Draff_Form {  // specify winner
 
-function drForm_processSubmit ( $appData, $appGlobals, $appChain ) {
+function drForm_process_submit ( $appData, $appGlobals, $appChain ) {
     kernel_processBannerSubmits( $appGlobals, $appChain, $submit );
 
     $appChain->chn_form_savePostedData();
@@ -466,14 +441,12 @@ function drForm_initData( $appData, $appGlobals, $appChain ) {
 }
 
 function drForm_initHtml( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->set_theme( 'theme-report' );
-    $appEmitter->set_title('Enter Points');
-    $appGlobals->gb_appMenu_init($appChain, $appEmitter, $appData->apd_roster_program);
-    $appEmitter->set_menu_customize( $appChain, $appGlobals, '$results' );
+    $appEmitter->emit_options->set_theme( 'theme-report' );
+    $appEmitter->emit_options->set_title('Enter Points');
+    $appGlobals->gb_ribbonMenu_Initialize($appChain, $appEmitter, $appData->apd_roster_program);
+    $appGlobals->gb_menu->drMenu_customize( '$results' );
     kcmRosterLib_setBannerSubTitle($appEmitter,$appGlobals, $appData->apd_roster_program,'Points History');
-    //$appGlobals->gb_appMenu_init($appChain, $appEmitter, $appData->apd_roster_program);
-    //$appEmitter->set_menu_customize( $appChain, $appGlobals  );
-
+ 
 }
 
 function drForm_initFields( $appData, $appGlobals, $appChain ) {
@@ -537,14 +510,8 @@ function outReport($appData, $appEmitter, $form, $appGlobals) {
     $appEmitter->table_end();
 }
 
-function drForm_outputPage ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->krnEmit_output_htmlHead  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyStart ( $appData, $appGlobals, $appChain, $this );
-    $appEmitter->krnEmit_output_ribbons  ( $appData, $appGlobals, $appChain, $this );
-    $this->drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputFooter  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyEnd  ( $appData, $appGlobals, $appChain, $this );
+function drForm_process_output ( $appData, $appGlobals, $appChain, $appEmitter ) {
+    $appGlobals->gb_output_form ( $appData, $appChain, $appEmitter, $this );
 }
 
 function drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter ) {
@@ -564,7 +531,7 @@ function drForm_outputFooter ( $appData, $appGlobals, $appChain, $appEmitter ) {
 
 }  // end class
 
-class appData_pointResults extends draff_appData {
+class application_data extends draff_appData {
 public $apd_roster_program;
 public $apd_roster_period;
 public $apd_kidPeriodId;
@@ -643,10 +610,10 @@ function com_initialize($appGlobals) {
 
 rc_session_initialize();
 
-$appGlobals = new kcmRoster_globals();
+$appChain = new Draff_Chain(  'kcmKernel_emitter' );
+$appChain->chn_register_appGlobals( $appGlobals = new kcmRoster_globals());
+$appChain->chn_register_appData( $appData = new application_data());
 $appGlobals->gb_forceLogin ();
-$appData = new appData_pointResults($appGlobals);
-$appChain = new Draff_Chain( $appData, $appGlobals, 'kcmKernel_emitter' );
 
 $appData->apd_roster_program = new pPr_program_extended_forRoster($appGlobals);
 $appData->apd_roster_program->rst_load_rosterData($appGlobals, $appChain);

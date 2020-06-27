@@ -189,7 +189,7 @@ function kcmRosterLib_getCombo_classDates($appGlobals, $roster, $option = NULL) 
 function kcmRosterLib_kidList_checkboxes_define($form, $appGlobals, $roster, $checked=array()) {
     foreach ($roster->rst_cur_period->perd_kidPeriodMap as $kidPeriodId => $kidPeriod) {
         $kid = $roster->rst_get_kid($kidPeriod->kidPer_kidId);
-        $name = $draff_emitter_engine::getString_sizedMemo($kid->rstKid_uniqueName,10);
+        $name = $Draff_Emitter_Html::getString_sizedMemo($kid->rstKid_uniqueName,10);
         $fieldId =  '@kidCheck_' . $kidPeriod->kidPer_kidPeriodId;
         $value = array_search($kidPeriod->kidPer_kidPeriodId,$checked)===FALSE ? 0 : 1;
         $form->drForm_addField( new Draff_Combo( $fieldId , $name, $value,'1','0','draff-checkbox-select') );
@@ -229,7 +229,7 @@ function kcmRosterLib_kidList_buttons_define($form, $appGlobals, $roster, $field
         if ($kidPeriod->kidPer_kidId != $excludeKid) {
             //$kid = $roster->rst_get_kidObject(ROSTERKEY_KIDPERIODID,$kidPeriodId);
             $kid = $roster->rst_get_kid($kidPeriod->kidPer_kidId);
-            $name = Draff_Emitter_Engine::getString_sizedMemo($kid->rstKid_uniqueName,10);
+            $name = Draff_Emitter_Html::getString_sizedMemo($kid->rstKid_uniqueName,10);
             //$cl = 'draff-button-select' .kcm2_lib::klGetCssFontSizeSuffix($kidPeriod->kidPer_kidObject->rstKid_uniqueName,'draff-button-select');
             //$appGlobals->gb_form->define_button( array($fieldIdPrefix, $kidPeriod->kidPer_kidPeriodId) , $kidPeriod->kidPer_kidObject->rstKid_uniqueName , array('propType'=>'inputTag','class'=>$cl) );
             $id = $fieldIdPrefix . '_' .  $kidPeriod->kidPer_kidPeriodId;

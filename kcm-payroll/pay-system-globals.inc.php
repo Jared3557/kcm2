@@ -27,7 +27,7 @@ const PAY_PERIODOPEN_SPECIAL = 99;
 
 //// Task Origin Codes
 //const RC_JOB_ORIGIN_SCHEDULE    = 10;  // schedule item - no overrides (except maybe hadEquipment and hadBadge as these don't effect pay calculations)
-//const RC_JOB_ORIGIN_SM          = 20;  // schedule item overridden by site manager 
+//const RC_JOB_ORIGIN_SM          = 20;  // schedule item overridden by site manager
 //const RC_JOB_ORIGIN_STAFF       = 30;  // staff new record or overrides
 //const RC_JOB_ORIGIN_TRAVEL      = 40;  // travel record  (one per transaction - no correction records, used only by payroll master)
 //const RC_JOB_ORIGIN_SALARY      = 50;  // salary record  (one per transaction - no correction records, used only by payroll master)
@@ -54,9 +54,9 @@ const PAY_RATEMETHOD_SALARY          = 3;
 const PAY_RATEMETHOD_OVERRIDE_RATE   = 21;
 const PAY_RATEMETHOD_OVERRIDE_AMOUNT = 22;
 
-const PAY_REFRESH_SAVE_ALWAYS     = 1;  
-const PAY_REFRESH_SAVE_CHANGED    = 2;  
-const PAY_REFRESH_SAVE_NEVER      = 3;  
+const PAY_REFRESH_SAVE_ALWAYS     = 1;
+const PAY_REFRESH_SAVE_CHANGED    = 2;
+const PAY_REFRESH_SAVE_NEVER      = 3;
 
 // The EVTADJUST constants are the minutes to convert event time to individual's scheduled time (SM=site manager, CO = other coaches)
 CONST EVTADJUST_CLASS_BEFORE_SM   = 25; // minutes to be paid for before class start for site managers
@@ -108,17 +108,17 @@ function __construct() {
     $this-> gb_synchronize();
     //set_error_handler(array($this,'gb_errorTrap'), E_ALL);
     $this->gbKrn_add_cssFile( 'kcm/kcm-payroll/pay-css.css', 'all','../../');   // this may override some rsm styles such as background color on main panels
-    $this->gb_banner_image_system = 'kcm_banner_payroll.gif'; 
+    $this->gb_banner_image_system = 'kcm_banner_payroll.gif';
 }
 
 function gb_synchronize($employeeId=NULL) {
     if ( class_exists ('payData_synchronizer') ) {
         $syncEngine = new payData_synchronizer($this);
-        $syncEngine->sync_synchronize($this, $this->gb_period_current->prd_dateStart,$this->gb_period_current->prd_dateEnd, $employeeId); 
-    //    $syncEngine->sync_synchronize($this, `2014-01-01`,'2020-06-01'); 
-    }   
+        $syncEngine->sync_synchronize($this, $this->gb_period_current->prd_dateStart,$this->gb_period_current->prd_dateEnd, $employeeId);
+    //    $syncEngine->sync_synchronize($this, `2014-01-01`,'2020-06-01');
+    }
 }
-    
+
 function gb_load_global_employees($employeeId=NULL) {
     if ( count($this->gb_employeeArray) >= 30 or ( ($employeeId!==NULL) and isset($this->gb_employeeArray[$employeeId] ) )  ){
         return;  // already loaded
@@ -160,7 +160,7 @@ function pay_getUserInfo() {
             echo 'Invalid user name ' . $s;
             return;
         }
-        $row=$result->fetch_array(); 
+        $row=$result->fetch_array();
         $this->pay_proxy_StaffId = $row['sLI:@StaffId'];
         $this->krnUser_loginId = $row['sLI:LoginId'];
         $this->pay_proxyStaffName = $row['sLI:LoginName'];
@@ -168,62 +168,62 @@ function pay_getUserInfo() {
         //$this->sec_user_setSecurityLevels($this->krnUser_loginId, FALSE);   // not original loginId so cannot be SysAdmin
     }
 }
-    
-function gb_appMenu_init($chain, $emitter) {  //  $appGlobals , $currentKey=NULL) {
+
+function gb_ribbonMenu_Initialize($chain, $emitter) {  //  $appGlobals , $currentKey=NULL) {
     $menu = $emitter->emit_menu;
 
     $period = $this->gb_period_current;
     if ( $period == NULL) {
-        $menu->menu_addLevel_top_start();
-        $menu->menu_addGroup_start('ls','Lists');
+        $menu->drMenu_addLevel_top_start();
+        $menu->drMenu_addGroup_start('ls','Lists');
         if ( $this->gb_proxyIsPayMaster) {
-            $menu->menu_addItem($chain,'pmu-setPeriod','Set-Up<br>Pay Periods','pay-setup-payPeriods.php'); 
+            $menu->drMenu_addItem($chain,'pmu-setPeriod','Set-Up<br>Pay Periods','pay-setup-payPeriods.php');
         }
-        $menu->menu_addGroup_end('ls');
-        $menu->menu_addLevel_top_end();
+        $menu->drMenu_addGroup_end('ls');
+        $menu->drMenu_addLevel_top_end();
         if ( $this->gb_proxyIsPayMaster) {
-            $menu->menu_markTopLevelItem('pmu-setPeriod');
+            $menu->drMenu_markTopLevelItem('pmu-setPeriod');
         }
         return;
     }
 
-    $menu->menu_addLevel_top_start();
-    $menu->menu_addGroup_start('ls','Lists');
-    $menu->menu_addItem($chain, 'pmu-home','Payroll<br>Home','pay-home.php'); 
- //   $this->emit_menu->menu_addItem($chain,'exit','Exit<br>(to Gateway)','gateway-home.php',NULL); 
+    $menu->drMenu_addLevel_top_start();
+    $menu->drMenu_addGroup_start('ls','Lists');
+    $menu->drMenu_addItem($chain, 'pmu-home','Payroll<br>Home','pay-home.php');
+ //   $this->emit_menu->drMenu_addItem($chain,'exit','Exit<br>(to Gateway)','gateway-home.php',NULL);
      if ( $this->gb_proxyIsPayMaster) {
-        $menu->menu_addItem($chain,'pmu-rptLedger','Earning Details<br>Report','pay-report-ledger.php',NULL); 
-        $menu->menu_addItem($chain,'pmu-rptCheck','Gross Pay<br>Report','pay-report-checkRegister.php',NULL); 
-        $menu->menu_addItem($chain,'pmu-setStaff',  'Employee<br>Setup','pay-setup-employee.php',NULL); 
-        $menu->menu_addItem($chain,'pmu-setPeriod','Pay Period<br>Setup','pay-setup-payPeriods.php',NULL); 
-        $menu->menu_addItem($chain,'pmu-setProxy','Set<br>Proxy','pay-setup-proxy.php', array('disable'=>'yes') ); 
-        $menu->menu_markTopLevelItem('pmu-setProxy');
-    }    
+        $menu->drMenu_addItem($chain,'pmu-rptLedger','Earning Details<br>Report','pay-report-ledger.php');
+        $menu->drMenu_addItem($chain,'pmu-rptCheck','Gross Pay<br>Report','pay-report-checkRegister.php');
+        $menu->drMenu_addItem($chain,'pmu-setStaff',  'Employee<br>Setup','pay-setup-employee.php');
+        $menu->drMenu_addItem($chain,'pmu-setPeriod','Pay Period<br>Setup','pay-setup-payPeriods.php');
+        $menu->drMenu_addItem($chain,'pmu-setProxy','Set<br>Proxy','pay-setup-proxy.php', array('disable'=>'yes') );
+        $menu->drMenu_markTopLevelItem('pmu-setProxy');
+    }
     else {
-        $menu->menu_addItem($chain,'pmu-rptLedger','View Previous<br>Pay Periods','pay-report-ledger.php'); 
-        $menu->menu_addItem($chain,'pmu-rptLedger','View Previous<br>Pay Periods','pay-report-ledger.php'); 
+        $menu->drMenu_addItem($chain,'pmu-rptLedger','View Previous<br>Pay Periods','pay-report-ledger.php');
+        $menu->drMenu_addItem($chain,'pmu-rptLedger','View Previous<br>Pay Periods','pay-report-ledger.php');
         if ( ($this->gb_loginIsPayMaster) and ( ! $this->gb_proxyIsPayMaster) ) {
-            $menu->menu_addItem($chain,'pmu-setProxy','Disable<br>Proxy','pay-setup-proxy.php?disable=yes'); 
-        }   
+            $menu->drMenu_addItem($chain,'pmu-setProxy','Disable<br>Proxy','pay-setup-proxy.php?disable=yes');
+        }
   }
-    $menu->menu_addGroup_end('ls');
-    $menu->menu_addLevel_top_end();
+    $menu->drMenu_addGroup_end('ls');
+    $menu->drMenu_addLevel_top_end();
 
-    $menu->menu_addLevel_toggled_start();
-    $menu->menu_markTopLevelItem('pmu-home');
-    $menu->menu_markTopLevelItem('exit');
-    $menu->menu_markTopLevelItem('pmu-setStaff');
-    $menu->menu_markTopLevelItem('pmu-setPeriod');
-    $menu->menu_markTopLevelItem('pmu-rptLedger');
-    $menu->menu_markTopLevelItem('pmu-rptCheck');
-    $menu->menu_markTopLevelItem('pmu-setProxy');
-    $menu->menu_addLevel_toggled_end();
+    $menu->drMenu_addLevel_toggled_start();
+    $menu->drMenu_markTopLevelItem('pmu-home');
+    $menu->drMenu_markTopLevelItem('exit');
+    $menu->drMenu_markTopLevelItem('pmu-setStaff');
+    $menu->drMenu_markTopLevelItem('pmu-setPeriod');
+    $menu->drMenu_markTopLevelItem('pmu-rptLedger');
+    $menu->drMenu_markTopLevelItem('pmu-rptCheck');
+    $menu->drMenu_markTopLevelItem('pmu-setProxy');
+    $menu->drMenu_addLevel_toggled_end();
     //if ( $currentKey!==NULL) {
-    //  $menu->menu_markCurrentItem($currentKey);
-    //}    
+    //  $menu->drMenu_markCurrentItem($currentKey);
+    //}
 }
 
-//function gb_errorTrap() { 
+//function gb_errorTrap() {
 //    $this->gb_errorCount++;
 //    return FALSE;
 //}
@@ -232,23 +232,23 @@ function gb_appMenu_init($chain, $emitter) {  //  $appGlobals , $currentKey=NULL
 
 class pay_security_user  extends kcmKernel_security_user {
 
-public $krnUser_isPayrollManager = FALSE; // used to allow certain features 
-//public $sec_isSystemMaster = FALSE; // used to allow certain features 
-//public $sec_viewerOffice = FALSE; // used to allow certain features 
-//public $sec_viewerMaster = FALSE; // used to allow certain features 
+public $krnUser_isPayrollManager = FALSE; // used to allow certain features
+//public $sec_isSystemMaster = FALSE; // used to allow certain features
+//public $sec_viewerOffice = FALSE; // used to allow certain features
+//public $sec_viewerMaster = FALSE; // used to allow certain features
 //public $sec_isLive = FALSE; // is live system - maybe should be in parent object
 
 function __construct($appGlobals, $actualUser=NULL) {
     parent::__construct($appGlobals, $actualUser);
  //????@@@/// Probably needed for proxy   if ( $actualUser!=NULL) {
  //????@@@/// Probably needed for proxy       $this->krnUser_setProxyUser($chain, $db, $sql, $actualUser); // only done if applicable
- //????@@@/// Probably needed for proxy   }    
-    $row = $this->krnUser_getRights($appGlobals);  
+ //????@@@/// Probably needed for proxy   }
+    $row = $this->krnUser_getRights($appGlobals);
     $payAccess = $row['sRD:fiPayrollAccess'];
-    $this->krnUser_isPayrollManager = ($payAccess == 3); 
+    $this->krnUser_isPayrollManager = ($payAccess == 3);
     
 }
 
 } // end class
-    
+
 ?>

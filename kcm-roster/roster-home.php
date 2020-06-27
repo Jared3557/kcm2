@@ -9,13 +9,14 @@ include_once( '../../rc_admin.inc.php' );
 include_once( '../../rc_database.inc.php' );
 include_once( '../../rc_messages.inc.php' );
 
-include_once( '../draff/draff-functions.inc.php' );
-include_once( '../draff/draff-objects.inc.php' );
 include_once( '../draff/draff-chain.inc.php' );
+include_once( '../draff/draff-database.inc.php');
 include_once( '../draff/draff-emitter.inc.php' );
 include_once( '../draff/draff-form.inc.php' );
+include_once( '../draff/draff-functions.inc.php' );
+include_once( '../draff/draff-page.inc.php' );
+include_once( '../draff/draff-menu.inc.php' );
 
-include_once( '../kcm-kernel/kernel-emitter.inc.php');
 include_once( '../kcm-kernel/kernel-functions.inc.php');
 include_once( '../kcm-kernel/kernel-objects.inc.php');
 include_once( '../kcm-kernel/kernel-globals.inc.php');
@@ -30,11 +31,11 @@ include_once( 'roster-system-data-roster.inc.php');
 include_once( 'roster-system-data-tally.inc.php' );
 include_once( '../draff/draff-emitter-dom-engine.inc.php' );
 
-Class appForm_rosterHome extends Draff_Form {
+Class appForm_rosterHome extends kcmKernel_Draff_Form {
     private $reportEmit;
     public $semesterTally;
 
-function drForm_processSubmit ( $scriptData, $appGlobals, $chain, $submit ) {
+function drForm_process_submit ( $scriptData, $appGlobals, $chain, $submit ) {
     kernel_processBannerSubmits( $appGlobals, $chain, $submit );
     $chain->chn_form_savePostedData();
     $chain->chn_ValidateAndRedirectIfError();
@@ -46,19 +47,17 @@ function drForm_initData( $appData, $appGlobals, $appChain ) {
 }
 
 public function drForm_initHtml( $scriptData, $appGlobals, $chain, $emitter ) {
-    $appEmitter->set_theme( 'theme-select' );
-    $appEmitter->set_title('Enter '.$appData->apd_chess_gameTypeDesc.' Results');
-    $appGlobals->gb_appMenu_init($appChain, $appEmitter, $appData->apd_roster_program);
-    $appEmitter->set_menu_customize( $appChain, $appGlobals, '$results', $appData->apd_chess_gameTypeMenuKey );
+    $appEmitter->emit_options->set_theme( 'theme-select' );
+    $appEmitter->emit_options->set_title('Enter '.$appData->apd_chess_gameTypeDesc.' Results');
+    $appGlobals->gb_ribbonMenu_Initialize($appChain, $appEmitter, $appData->apd_roster_program);
+    $appGlobals->gb_menu->drMenu_customize('$results', $appData->apd_chess_gameTypeMenuKey );
     kcmRosterLib_setBannerSubTitle($emitter,$appGlobals, $scriptData->sd_roster_program,'Home');
-    $appGlobals->gb_appMenu_init($chain, $emitter, $scriptData->sd_roster_program);
-    $emitter->set_menu_customize( $appChain, $appGlobals );
-    $emitter->addOption_styleTag('.co-period','width:10pt;border:1pt;');
-    $emitter->addOption_styleTag('.co-first','width:30pt;border:1pt;');
-    $emitter->addOption_styleTag('.co-last','width:30pt;border:1pt;');
-    $emitter->addOption_styleTag('.co-grade','width:10pt;border:1pt;');
-    $emitter->addOption_styleTag('.co-games','width:10pt;border:1pt;');
-    $emitter->addOption_styleTag('.co-percent','width:10pt;border:1pt;');
+    $emitter->emit_options->addOption_styleTag('.co-period','width:10pt;border:1pt;');
+    $emitter->emit_options->addOption_styleTag('.co-first','width:30pt;border:1pt;');
+    $emitter->emit_options->addOption_styleTag('.co-last','width:30pt;border:1pt;');
+    $emitter->emit_options->addOption_styleTag('.co-grade','width:10pt;border:1pt;');
+    $emitter->emit_options->addOption_styleTag('.co-games','width:10pt;border:1pt;');
+    $emitter->emit_options->addOption_styleTag('.co-percent','width:10pt;border:1pt;');
 
  //   $scriptData->com_htmlOut_endOfPage($chain, $scriptData,$emitter, $form, $appGlobals);
 
@@ -67,14 +66,8 @@ public function drForm_initHtml( $scriptData, $appGlobals, $chain, $emitter ) {
 function drForm_initFields( $scriptData, $appGlobals, $chain ) {
 }
 
-function drForm_outputPage ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->krnEmit_output_htmlHead  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyStart ( $appData, $appGlobals, $appChain, $this );
-    $appEmitter->krnEmit_output_ribbons  ( $appData, $appGlobals, $appChain, $this );
-    $this->drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputFooter  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyEnd  ( $appData, $appGlobals, $appChain, $this );
+function drForm_process_output ( $appData, $appGlobals, $appChain, $appEmitter ) {
+    $appGlobals->gb_output_form ( $appData, $appChain, $appEmitter, $this );
 }
 
 function drForm_outputHeader ( $scriptData, $appGlobals, $chain, $emitter ) {
@@ -293,7 +286,7 @@ function outGame($emitter, $show, $scgt) {
 
 } // end class
 
-class appData_rosterHome extends draff_appData {
+class application_data extends draff_appData {
 //public  $com_scores;
 public $sd_roster_program;
 public $kcmEmitter = NULL;
@@ -313,16 +306,16 @@ function sd_formData_validate( $appGlobals, $chain ) {
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 //@     Main Program                   @
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
 rc_session_initialize();
 
-$appGlobals = new kcmRoster_globals();
+$chain = new Draff_Chain( 'kcmKernel_emitter' );
+$appChain->chn_register_appGlobals( $appGlobals = new kcmRoster_globals());
+$appChain->chn_register_appData( $appData = new application_data());
 $appGlobals->gb_forceLogin ();
 
-$scriptData = new appData_rosterHome();
-$chain = new Draff_Chain( $scriptData, $appGlobals, 'kcmKernel_emitter' );
-
-$scriptData->sd_roster_program = new pPr_program_extended_forRoster($appGlobals);
-$scriptData->sd_roster_program->rst_load_rosterData($appGlobals, $chain);
+$appData->sd_roster_program = new pPr_program_extended_forRoster($appGlobals);
+$appData->sd_roster_program->rst_load_rosterData($appGlobals, $chain);
 
 $chain->chn_form_register(1,'appForm_rosterHome');
 $chain->chn_form_launch(); // proceed to current step

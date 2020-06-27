@@ -9,13 +9,14 @@ include_once( '../../rc_admin.inc.php' );
 include_once( '../../rc_database.inc.php' );
 include_once( '../../rc_messages.inc.php' );
 
-include_once( '../draff/draff-functions.inc.php' );
-include_once( '../draff/draff-objects.inc.php' );
 include_once( '../draff/draff-chain.inc.php' );
+include_once( '../draff/draff-database.inc.php');
 include_once( '../draff/draff-emitter.inc.php' );
 include_once( '../draff/draff-form.inc.php' );
+include_once( '../draff/draff-functions.inc.php' );
+include_once( '../draff/draff-menu.inc.php' );
+include_once( '../draff/draff-page.inc.php' );
 
-include_once( '../kcm-kernel/kernel-emitter.inc.php');
 include_once( '../kcm-kernel/kernel-functions.inc.php');
 include_once( '../kcm-kernel/kernel-objects.inc.php');
 include_once( '../kcm-kernel/kernel-globals.inc.php');
@@ -41,27 +42,31 @@ CONST DRFFORM_SMREPORT_EDIT   = 4;
 //==============================
 //=============================================
 
-class appForm_events_select extends Draff_Form {
+class appForm_events_select extends kcmKernel_Draff_Form {
 
-function drForm_processSubmit ( $appData, $appGlobals, $appChain ) {
-    kernel_processBannerSubmits( $appGlobals, $appChain );
-    if ($appChain->chn_submit[0]=='progId' ) {
-        $appChain->chn_status->ses_set('#editProgramId',$appChain->chn_submit[1]);
-        // could save record desc here (name with duplicate checking)
-        $appChain->chn_form_launch(DRFFORM_PROGRAM_EDIT);
+    function drForm_process_submit ( $appData, $appGlobals, $appChain ) {
+        kernel_processBannerSubmits( $appGlobals, $appChain );
+        if ($appChain->chn_submit[0]=='progId' ) {
+            $appChain->chn_status->ses_set('#editProgramId',$appChain->chn_submit[1]);
+            // could save record desc here (name with duplicate checking)
+            $appChain->chn_form_launch(DRFFORM_PROGRAM_EDIT);
+        }
+        switch ($appChain->chn_submit[0]) {
+            case 'category':
+                $appChain->chn_status->ses_set('#eventCategory',$appChain->chn_submit[1]);
+                $appChain->chn_form_launch(DRFFORM_EVENTS_SELECT);
+                break;
+            case 'sbtSemesters':
+                $appChain->chn_form_launch(DRFFORM_SEMESTERS_SELECT);
+                break;
+        }
     }
-    switch ($appChain->chn_submit[0]) {
-        case 'category':
-            $appChain->chn_status->ses_set('#eventCategory',$appChain->chn_submit[1]);
-            $appChain->chn_form_launch(DRFFORM_EVENTS_SELECT);
-            break;
-        case 'sbtSemesters':
-            $appChain->chn_form_launch(DRFFORM_SEMESTERS_SELECT);
-            break;
+    
+    function drForm_process_output ( $appData, $appGlobals, $appChain, $appEmitter ) {
+        $appGlobals->gb_output_form ( $appData, $appChain, $appEmitter, $this );
     }
-}
-
-function drForm_initData( $appData, $appGlobals, $appChain ) {
+    
+    function drForm_initData( $appData, $appGlobals, $appChain ) {
     $appData->apd_init_always( $appGlobals, $appChain );
     if ($appChain->chn_url_rsmMode== '2') {
         $appData->apd_events_joinerAllPrograms = $appData->apd_events_fetchJoinerAllEvents( $appGlobals );
@@ -73,89 +78,75 @@ function drForm_initData( $appData, $appGlobals, $appChain ) {
     }
 }
 
-function drForm_initFields( $appData, $appGlobals, $appChain ) {
-    foreach ($appData->apd_events_joinerPrograms as $key => $program) {
-        $id = 'progId_' . $key;
-        $desc = $program->prog_programName;
-        if (  $appData->apd_events_catOfType[$program->prog_progType] == $appData->apd_events_catToView ) {
-            $this->drForm_addField( new Draff_Button(  $id , $desc ) );
+    function drForm_initFields( $appData, $appGlobals, $appChain ) {
+        foreach ($appData->apd_events_joinerPrograms as $key => $program) {
+            $id = 'progId_' . $key;
+            $desc = $program->prog_programName;
+            if (  $appData->apd_events_catOfType[$program->prog_progType] == $appData->apd_events_catToView ) {
+                $this->drForm_addField( new Draff_Button(  $id , $desc ) );
+            }
         }
-    }
-    foreach ($appData->apd_events_catDesc as $index => $desc) {
-        $catCount = ' (' . $appData->apd_events_catCount[$index] . ')';
-        $this->drForm_addField( new Draff_Button(  'category_' . $index, $desc . $catCount ) );
-    }
-    $this->drForm_addField( new Draff_Button(  'sbtSemesters' , 'Change' ) );
-}
-
-function drForm_initHtml( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->set_theme( 'theme-select' );
-    $appEmitter->set_title('My Events');
-    $appEmitter->set_menu_standard($appChain, $appGlobals);
-    $menuKey =($appChain->chn_url_rsmMode== '2') ? 'ls-ae' : 'ls-me';
-    $appEmitter->set_menu_customize( $appChain, $appGlobals, $menuKey  );
-//    $appEmitter->set_title('My Events');
-//    $appEmitter->set_menu_standard($appChain, $appGlobals);
-//    $appEmitter->set_menu_customize( $appChain, $appGlobals  );
-}
-
-function drForm_outputPage ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->krnEmit_output_htmlHead  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyStart ( $appData, $appGlobals, $appChain, $this );
-    $appEmitter->krnEmit_output_ribbons  ( $appData, $appGlobals, $appChain, $this );
-    $this->drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputFooter  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyEnd  ( $appData, $appGlobals, $appChain, $this );
-}
-
-function drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter ) {
-   $appEmitter->zone_start('zone-content-header theme-header');
-    print PHP_EOL.'<div style="float:left;display:table-cell;margin-left:10px;text-align:center;margin-right:20px;">';
-    if ($appChain->chn_url_rsmMode== '2') {
-        if ($appData->apd_semesters_year>1) {
-            $s = '<h1>'.rc_getSemesterNameFromCode($appData->apd_semesters_semesterCode) . ' - ' . $appData->apd_semesters_year.'</h1>';
-            $appEmitter->content_block($s);
-            $appEmitter->content_block('@sbtSemesters');
+        foreach ($appData->apd_events_catDesc as $index => $desc) {
+            $catCount = ' (' . $appData->apd_events_catCount[$index] . ')';
+            $this->drForm_addField( new Draff_Button(  'category_' . $index, $desc . $catCount ) );
         }
-        else {
-            $s = '<h1>Current Semester(s)</h1>';
-            $appEmitter->content_block($s);
-            $appEmitter->content_block('@sbtSemesters');
+        $this->drForm_addField( new Draff_Button(  'sbtSemesters' , 'Change' ) );
+    }
+    
+    function drForm_initHtml( $appData, $appGlobals, $appChain, $appEmitter ) {
+        $appEmitter->emit_options->set_theme( 'theme-select' );
+        $appEmitter->emit_options->set_title('My Events');
+        $appGlobals->gb_ribbonMenu_Initialize($appChain, $appGlobals);
+        $appGlobals->gb_menu->drMenu_customize( );
+    }
+    
+    function drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter ) {
+       $appEmitter->zone_start('zone-content-header theme-header');
+        print PHP_EOL.'<div style="float:left;display:table-cell;margin-left:10px;text-align:center;margin-right:20px;">';
+        if ($appChain->chn_url_rsmMode== '2') {
+            if ($appData->apd_semesters_year>1) {
+                $s = '<h1>'.rc_getSemesterNameFromCode($appData->apd_semesters_semesterCode) . ' - ' . $appData->apd_semesters_year.'</h1>';
+                $appEmitter->content_block($s);
+                $appEmitter->content_block('@sbtSemesters');
+            }
+            else {
+                $s = '<h1>Current Semester(s)</h1>';
+                $appEmitter->content_block($s);
+                $appEmitter->content_block('@sbtSemesters');
+            }
         }
-    }
-    print PHP_EOL.'</div>';
-    foreach ($appData->apd_events_catDesc as $index => $desc) {
-        $appEmitter->content_block( '@category_' . $index );
-    }
-   $appEmitter->zone_end('zone-content-header theme-select');
-}
-
-function drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->zone_start('zone-content-scrollable theme-select');
-   //foreach ($appData->apd_events_joinerMyPrograms as $program) {
-   //     $key = '@myEventId_' . $program->prog_programId;
-   //     $appEmitter->row_start('rpt-grid-row');
-   //     $appEmitter->content_block($key);
-   //     $appEmitter->row_end();
-   // }
-    foreach ($appData->apd_events_joinerPrograms as $key => $program) {
-        $id = 'progId_' . $key;
-        if (  $appData->apd_events_catOfType[$program->prog_progType] == $appData->apd_events_catToView ) {
-            $appEmitter->content_field($id);
+        print PHP_EOL.'</div>';
+        foreach ($appData->apd_events_catDesc as $index => $desc) {
+            $appEmitter->content_block( '@category_' . $index );
         }
+       $appEmitter->zone_end('zone-content-header theme-select');
     }
-   $appEmitter->zone_end();
-}
-
-function drForm_outputFooter ( $appData, $appGlobals, $appChain, $appEmitter ) {
-}
+    
+    function drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter ) {
+        $appEmitter->zone_start('zone-content-scrollable theme-select');
+       //foreach ($appData->apd_events_joinerMyPrograms as $program) {
+       //     $key = '@myEventId_' . $program->prog_programId;
+       //     $appEmitter->row_start('rpt-grid-row');
+       //     $appEmitter->content_block($key);
+       //     $appEmitter->row_end();
+       // }
+        foreach ($appData->apd_events_joinerPrograms as $key => $program) {
+            $id = 'progId_' . $key;
+            if (  $appData->apd_events_catOfType[$program->prog_progType] == $appData->apd_events_catToView ) {
+                $appEmitter->content_field($id);
+            }
+        }
+       $appEmitter->zone_end();
+    }
+    
+    function drForm_outputFooter ( $appData, $appGlobals, $appChain, $appEmitter ) {
+    }
 
 } // end class
 
-class appForm_semesters_select extends Draff_Form {
+class appForm_semesters_select extends kcmKernel_Draff_Form {
 
-function drForm_processSubmit ( $appData, $appGlobals, $appChain ) {
+function drForm_process_submit ( $appData, $appGlobals, $appChain ) {
     if ($appChain->chn_submit[0]=='cancel' ) {
         $appChain->chn_form_launch(DRFFORM_EVENTS_SELECT);
     }
@@ -181,13 +172,10 @@ function drForm_initData( $appData, $appGlobals, $appChain ) {
 }
 
 function drForm_initHtml( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->set_theme( 'theme-panel' );
-    $appEmitter->set_title('My Events - All Semesters');
-    $appEmitter->set_menu_standard($appChain, $appGlobals);
-    $appEmitter->set_menu_customize( $appChain, $appGlobals  );
-    //$appEmitter->set_title('My Events - All Semesters');
-    //$appEmitter->set_menu_standard($appChain, $appGlobals);
-    //$appEmitter->set_menu_customize( $appChain, $appGlobals  );
+    $appEmitter->emit_options->set_theme( 'theme-panel' );
+    $appEmitter->emit_options->set_title('My Events - All Semesters');
+    $appGlobals->gb_ribbonMenu_Initialize($appChain, $appGlobals);
+    $appGlobals->gb_menu->drMenu_customize();
 }
 
 function drForm_initFields( $appData, $appGlobals, $appChain ) {
@@ -201,14 +189,8 @@ function drForm_initFields( $appData, $appGlobals, $appChain ) {
     $this->drForm_addField( new Draff_Button( 'cancel' , 'Cancel') );
 }
 
-function drForm_outputPage ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->krnEmit_output_htmlHead  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyStart ( $appData, $appGlobals, $appChain, $this );
-    $appEmitter->krnEmit_output_ribbons  ( $appData, $appGlobals, $appChain, $this );
-    $this->drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputFooter  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyEnd  ( $appData, $appGlobals, $appChain, $this );
+function drForm_process_output ( $appData, $appGlobals, $appChain, $appEmitter ) {
+    $appGlobals->gb_output_form ( $appData, $appChain, $appEmitter, $this );
 }
 
 function drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter ) {
@@ -269,9 +251,9 @@ function drForm_outputFooter ( $appData, $appGlobals, $appChain, $appEmitter ) {
 //==============================
 //=============================================
 
-class appForm_program_edit extends Draff_Form {
+class appForm_program_edit extends kcmKernel_Draff_Form {
 
-function drForm_processSubmit ( $appData, $appGlobals, $appChain ) {
+function drForm_process_submit ( $appData, $appGlobals, $appChain ) {
     if ($appChain->chn_submit[0]=='cancel' ) {
         $appChain->chn_form_launch(DRFFORM_EVENTS_SELECT);
     }
@@ -280,7 +262,7 @@ function drForm_processSubmit ( $appData, $appGlobals, $appChain ) {
     if ( $appChain->chn_submit[0] == 'kcm2') {
         $periodId = $appData->apd_get_minPeriod($appGlobals, $appChain->chn_submit[1]);
         // wrong url
-        $appChain->chn_url_redirect('../kcm-roster/roster-results-games.php',  FALSE, array('PrId'=>$appChain->chn_submit[1],'PeId'=>$periodId,'rsmMode'=>'3'));
+        $appChain->chn_url_redirect('../kcm-roster/roster-results-games.php',  FALSE, array('PrId'=>$appChain->chn_submit[1],'PeId'=>$periodId,'drfMode'=>'3'));
         return;
     }
     if ( $appChain->chn_submit[0] == 'kcm1') {
@@ -317,10 +299,10 @@ function drForm_initData( $appData, $appGlobals, $appChain ) {
 }
 
 function drForm_initHtml( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->set_theme( 'theme-panel' );
-    $appEmitter->set_title('My Events');
-    $appEmitter->set_menu_standard($appChain, $appGlobals);
-    $appEmitter->set_menu_customize( $appChain, $appGlobals  );
+    $appEmitter->emit_options->set_theme( 'theme-panel' );
+    $appEmitter->emit_options->set_title('My Events');
+    $appGlobals->gb_ribbonMenu_Initialize($appChain, $appGlobals);
+    $appGlobals->gb_menu->drMenu_customize( );
 }
 
 function drForm_initFields( $appData, $appGlobals, $appChain ) {
@@ -351,14 +333,8 @@ function drForm_initFields( $appData, $appGlobals, $appChain ) {
     $this->drForm_addField( new Draff_Button( 'cancel' , 'Cancel') );
 }
 
-function drForm_outputPage ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->krnEmit_output_htmlHead  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyStart ( $appData, $appGlobals, $appChain, $this );
-    $appEmitter->krnEmit_output_ribbons  ( $appData, $appGlobals, $appChain, $this );
-    $this->drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputFooter  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyEnd  ( $appData, $appGlobals, $appChain, $this );
+function drForm_process_output ( $appData, $appGlobals, $appChain, $appEmitter ) {
+    $appGlobals->gb_output_form ( $appData, $appChain, $appEmitter, $this );
 }
 
 function drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter ) {
@@ -428,11 +404,11 @@ function drForm_outputFooter ( $appData, $appGlobals, $appChain, $appEmitter ) {
 
 } // end class
 
-class appForm_smReport_edit extends Draff_Form {
+class appForm_smReport_edit extends kcmKernel_Draff_Form {
 
 public $sem_semesters;
 
-function drForm_processSubmit ( $appData, $appGlobals, $appChain ) {
+function drForm_process_submit ( $appData, $appGlobals, $appChain ) {
     $command = $appChain->chn_submit[0];
     if ($command=='cancel' ) {
         $appChain->chn_form_launch(DRFFORM_PROGRAM_EDIT);
@@ -472,13 +448,10 @@ function drForm_initData( $appData, $appGlobals, $appChain ) {
 }
 
 function drForm_initHtml( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->set_theme( 'theme-panel' );
-    $appEmitter->set_title('My Events - All Semesters');
-    $appEmitter->set_menu_standard($appChain, $appGlobals);
-    $appEmitter->set_menu_customize( $appChain, $appGlobals  );
-   //$appEmitter->set_title('My Events - All Semesters');
-    //$appEmitter->set_menu_standard($appChain, $appGlobals);
-    //$appEmitter->set_menu_customize( $appChain, $appGlobals  );
+    $appEmitter->emit_options->set_theme( 'theme-panel' );
+    $appEmitter->emit_options->set_title('My Events - All Semesters');
+    $appGlobals->gb_ribbonMenu_Initialize($appChain, $appGlobals);
+    $appGlobals->gb_menu->drMenu_customize();
     $appData->apd_smReport_editReport->stdRpt_initStyles($appEmitter);
     $this->drForm_addField( new Draff_Button( 'cancel' , 'Cancel') );
 }
@@ -487,14 +460,8 @@ function drForm_initFields( $appData, $appGlobals, $appChain ) {
     $appData->apd_smReport_editReport->stdRpt_initFormFields($appData,$this);
 }
 
-function drForm_outputPage ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->krnEmit_output_htmlHead  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyStart ( $appData, $appGlobals, $appChain, $this );
-    $appEmitter->krnEmit_output_ribbons  ( $appData, $appGlobals, $appChain, $this );
-    $this->drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputFooter  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyEnd  ( $appData, $appGlobals, $appChain, $this );
+function drForm_process_output ( $appData, $appGlobals, $appChain, $appEmitter ) {
+    $appGlobals->gb_output_form ( $appData, $appChain, $appEmitter, $this );
 }
 
 function drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter ) {
@@ -554,30 +521,30 @@ function __construct() {
 }
 
 function stdRpt_initStyles($appEmitter) {
-    $appEmitter->addOption_styleTag('table.co-table','width:50rem');
-    $appEmitter->addOption_styleTag('table.smrTable','border-collapse:collapse; border-spacing:0; empty-cells:show; border:2px; table-layout:fixed; margin-top: 8pt;');
-    $appEmitter->addOption_styleTag('td','border:1px solid #666666; padding: 0.4em; font-size: 1em; font-weight:normal; vertical-align:top;');
-    $appEmitter->addOption_styleTag('td.com_headColor','background-color: #ddddff;');
-    $appEmitter->addOption_styleTag('div.smrHeadDiv','font-size:1.4em; font-weight:bold;');
-    $appEmitter->addOption_styleTag('.smrTimeInput','width: 60pt;');
-    $appEmitter->addOption_styleTag('td.sSt_name','width: 13em;');
-    $appEmitter->addOption_styleTag('td.staff_time','width: 5em;');
-    $appEmitter->addOption_styleTag('td.staff_equip','width: 4em;');
-    $appEmitter->addOption_styleTag('td.staff_badge','width: 4em;');
-    $appEmitter->addOption_styleTag('td.staff_schNote',' width: 20em; min-width: 14em; max-width: 35em;');
-    $appEmitter->addOption_styleTag('td.ev_schNote','');
-    $appEmitter->addOption_styleTag('textarea.ev_schNote','background-color: #eeeeee; width: 95%;');
-    $appEmitter->addOption_styleTag('td.notes_edit','width: 30em;');
-    $appEmitter->addOption_styleTag('textarea.notes_edit','width: 100%; height: 15em; font: 0.9em;');
-    $appEmitter->addOption_styleTag('button','font-size: 1.2em;');
-    $appEmitter->addOption_styleTag('button.submitCom','');
-    $appEmitter->addOption_styleTag('button.submitInc',' margin-left: 5em;');
-    $appEmitter->addOption_styleTag('button.submitOth','margin-left: 5em;');
-    $appEmitter->addOption_styleTag('td.error','color: red; font-weight:bold;');
-    $appEmitter->addOption_styleTag('.error input','background-color: #ffcccc; color: black;');
-    $appEmitter->addOption_styleTag('.error textarea','background-color: #ffcccc; color: black;');
-    $appEmitter->addOption_styleTag('td.absent','color: blue; font-weight:bold;');
-    $appEmitter->addOption_styleTag('.absent input','background-color: #ccccff; color: blue;');
+    $appEmitter->emit_options->addOption_styleTag('table.co-table','width:50rem');
+    $appEmitter->emit_options->addOption_styleTag('table.smrTable','border-collapse:collapse; border-spacing:0; empty-cells:show; border:2px; table-layout:fixed; margin-top: 8pt;');
+    $appEmitter->emit_options->addOption_styleTag('td','border:1px solid #666666; padding: 0.4em; font-size: 1em; font-weight:normal; vertical-align:top;');
+    $appEmitter->emit_options->addOption_styleTag('td.com_headColor','background-color: #ddddff;');
+    $appEmitter->emit_options->addOption_styleTag('div.smrHeadDiv','font-size:1.4em; font-weight:bold;');
+    $appEmitter->emit_options->addOption_styleTag('.smrTimeInput','width: 60pt;');
+    $appEmitter->emit_options->addOption_styleTag('td.sSt_name','width: 13em;');
+    $appEmitter->emit_options->addOption_styleTag('td.staff_time','width: 5em;');
+    $appEmitter->emit_options->addOption_styleTag('td.staff_equip','width: 4em;');
+    $appEmitter->emit_options->addOption_styleTag('td.staff_badge','width: 4em;');
+    $appEmitter->emit_options->addOption_styleTag('td.staff_schNote',' width: 20em; min-width: 14em; max-width: 35em;');
+    $appEmitter->emit_options->addOption_styleTag('td.ev_schNote','');
+    $appEmitter->emit_options->addOption_styleTag('textarea.ev_schNote','background-color: #eeeeee; width: 95%;');
+    $appEmitter->emit_options->addOption_styleTag('td.notes_edit','width: 30em;');
+    $appEmitter->emit_options->addOption_styleTag('textarea.notes_edit','width: 100%; height: 15em; font: 0.9em;');
+    $appEmitter->emit_options->addOption_styleTag('button','font-size: 1.2em;');
+    $appEmitter->emit_options->addOption_styleTag('button.submitCom','');
+    $appEmitter->emit_options->addOption_styleTag('button.submitInc',' margin-left: 5em;');
+    $appEmitter->emit_options->addOption_styleTag('button.submitOth','margin-left: 5em;');
+    $appEmitter->emit_options->addOption_styleTag('td.error','color: red; font-weight:bold;');
+    $appEmitter->emit_options->addOption_styleTag('.error input','background-color: #ffcccc; color: black;');
+    $appEmitter->emit_options->addOption_styleTag('.error textarea','background-color: #ffcccc; color: black;');
+    $appEmitter->emit_options->addOption_styleTag('td.absent','color: blue; font-weight:bold;');
+    $appEmitter->emit_options->addOption_styleTag('.absent input','background-color: #ccccff; color: blue;');
 }
 
 function stdRpt_initFormFields($appData, $form) {
@@ -996,15 +963,11 @@ function apd_get_minPeriod($appGlobals, $programId) {
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 rc_session_initialize();
 
-$appGlobals = new kcmGateway_globals();
+$appChain = new Draff_Chain( 'kcmKernel_emitter' );
+$appChain->chn_register_appGlobals( $appGlobals = new kcmGateway_globals());
+$appChain->chn_register_appData( new application_data());
 $appGlobals->gb_forceLogin ();
-$appData = new application_data();
 
-//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-//@         Process Page               @
-//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
-$appChain = new Draff_Chain( $appData, $appGlobals, 'kcmKernel_emitter' );
 $appChain->chn_form_register(DRFFORM_EVENTS_SELECT     ,'appForm_events_select');
 $appChain->chn_form_register(DRFFORM_SEMESTERS_SELECT  ,'appForm_semesters_select');
 $appChain->chn_form_register(DRFFORM_SMREPORT_EDIT    ,'appForm_smReport_edit');

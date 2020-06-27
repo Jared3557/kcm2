@@ -10,13 +10,14 @@ include_once( '../../rc_database.inc.php' );
 include_once( '../../rc_messages.inc.php' );
 include_once( '../../rc_job-appData-functions.inc.php' );
 
-include_once( '../draff/draff-functions.inc.php' );
-include_once( '../draff/draff-objects.inc.php' );
 include_once( '../draff/draff-chain.inc.php' );
+include_once( '../draff/draff-database.inc.php');
 include_once( '../draff/draff-emitter.inc.php' );
 include_once( '../draff/draff-form.inc.php' );
+include_once( '../draff/draff-functions.inc.php' );
+include_once( '../draff/draff-menu.inc.php' );
+include_once( '../draff/draff-page.inc.php' );
 
-include_once( '../kcm-kernel/kernel-emitter.inc.php');
 include_once( '../kcm-kernel/kernel-functions.inc.php');
 include_once( '../kcm-kernel/kernel-objects.inc.php');
 include_once( '../kcm-kernel/kernel-globals.inc.php');
@@ -31,7 +32,7 @@ include_once( 'pay-report-checkRegister.inc.php');
 
 //=====================================================================
 
-Class appForm_payHome_selectEmployee extends Draff_Form {
+Class appForm_payHome_selectEmployee extends kcmKernel_Draff_Form {
 public $who_staffStatus;
 //public $who_payrollSummary;
 public $who_employeeBatch;
@@ -39,7 +40,7 @@ public $pmHome_ledgerReport;
 public $pmHome_checkReport;
 
 
-function drForm_processSubmit ( $appData , $appGlobals,  $appChain, $submit ) { // who
+function drForm_process_submit ( $appData , $appGlobals,  $appChain, $submit ) { // who
     kernel_processBannerSubmits( $appGlobals, $appChain );
     $appChain->chn_form_savePostedData();
     if ( substr($submit,0,6) == '@step_' ) {
@@ -136,13 +137,13 @@ function drForm_initData( $appData, $appGlobals, $appChain ) {
 }
 
 function drForm_initHtml( $appData,  $appGlobals, $appChain, $appEmitter ) { // who
-    $appEmitter->set_theme( 'theme-report' );
-    $appEmitter->set_title('Payroll - ???');
-    $appEmitter->set_menu_standard( $appChain, $appGlobals );
-    $appEmitter->set_menu_customize( $appChain, $appGlobals  );
-    $appEmitter->set_title('Home');
-    $appGlobals->gb_appMenu_init($appChain, $appEmitter);
-    $appEmitter->set_menu_customize( $appChain, $appGlobals );
+    $appEmitter->emit_options->set_theme( 'theme-report' );
+    $appEmitter->emit_options->set_title('Payroll - ???');
+    $appGlobals->gb_ribbonMenu_Initialize( $appChain, $appGlobals );
+    $appGlobals->gb_menu->drMenu_customize( );
+    $appEmitter->emit_options->set_title('Home');
+    $appGlobals->gb_menu->drMenu_customize();
+    $appGlobals->gb_menu->drMenu_customize();
     $period = $appGlobals->gb_period_current;;
     $employeeBatch = new payData_employee_batch;
     $employeeBatch->epyBat_read_summary( $appGlobals );
@@ -178,14 +179,14 @@ function drForm_initHtml( $appData,  $appGlobals, $appChain, $appEmitter ) { // 
     $appEmitter->payEmit_output_start( $appGlobals ,$appChain,$form,'Payroll Home', 'Payroll Home');
     //$appEmitter->zone_menu_toggled();
 
-    //$appEmitter->addOption_styleTag('table.who-footer-table', 'margin:18pt 0pt 6pt 0pt;border:0px none blue;');
-    //$appEmitter->addOption_styleTag('td.who-td', 'border:0px none blue;');
-    //$appEmitter->addOption_styleTag('td.whoCur-td', 'border:0px none blue; background-color:#ddffdd');
-    //$appEmitter->addOption_styleTag('div.who-status-block', 'display:inline-block;  margin:5pt;  border: 1px solid black;');
-    //$appEmitter->addOption_styleTag('div.who-status-title', 'display:inline-block; text-align:center; font-size:16pt; width:100%; font-weight:bold;background-color:#ddffdd;border-bottom:3px double #999999');
-    //$appEmitter->addOption_styleTag('div.who-status-desc', 'display:inline-block; font-size:14pt;padding:1pt 4pt 1pt 4pt;');
-    $appEmitter->addOption_styleTag('button.but-open',  'background-color:#ffcccc;');
-    $appEmitter->addOption_styleTag('button.but-close', 'background-color:#ccffcc;');
+    //$appEmitter->emit_options->addOption_styleTag('table.who-footer-table', 'margin:18pt 0pt 6pt 0pt;border:0px none blue;');
+    //$appEmitter->emit_options->addOption_styleTag('td.who-td', 'border:0px none blue;');
+    //$appEmitter->emit_options->addOption_styleTag('td.whoCur-td', 'border:0px none blue; background-color:#ddffdd');
+    //$appEmitter->emit_options->addOption_styleTag('div.who-status-block', 'display:inline-block;  margin:5pt;  border: 1px solid black;');
+    //$appEmitter->emit_options->addOption_styleTag('div.who-status-title', 'display:inline-block; text-align:center; font-size:16pt; width:100%; font-weight:bold;background-color:#ddffdd;border-bottom:3px double #999999');
+    //$appEmitter->emit_options->addOption_styleTag('div.who-status-desc', 'display:inline-block; font-size:14pt;padding:1pt 4pt 1pt 4pt;');
+    $appEmitter->emit_options->addOption_styleTag('button.but-open',  'background-color:#ffcccc;');
+    $appEmitter->emit_options->addOption_styleTag('button.but-close', 'background-color:#ccffcc;');
 
     switch ( $payCycleStep ) {
         case 1:
@@ -218,14 +219,8 @@ function drForm_initFields( $appData, $appGlobals, $appChain, $form ) { // who
     // buttons are printed directly without defining them
 }
 
-function drForm_outputPage ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->krnEmit_output_htmlHead  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyStart ( $appData, $appGlobals, $appChain, $this );
-    $appEmitter->krnEmit_output_ribbons  ( $appData, $appGlobals, $appChain, $this );
-    $this->drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputFooter  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyEnd  ( $appData, $appGlobals, $appChain, $this );
+function drForm_process_output ( $appData, $appGlobals, $appChain, $appEmitter ) {
+    $appGlobals->gb_output_form ( $appData, $appChain, $appEmitter, $this );
 }
 
 function drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter ) {
@@ -411,19 +406,19 @@ function who_footer_emitStepCell( $thisStep , $title1 , $title2 , $desc , $butto
 }
 
 function who_footer_initCss( $appEmitter ) {
-    $appEmitter->addOption_styleTag('table.step-table', 'margin:18pt 0pt 6pt 0pt;border:0px none blue;font-size:12pt;');
-    $appEmitter->addOption_styleTag('td.step-td', 'border:0px none blue;font-size:12pt;');
+    $appEmitter->emit_options->addOption_styleTag('table.step-table', 'margin:18pt 0pt 6pt 0pt;border:0px none blue;font-size:12pt;');
+    $appEmitter->emit_options->addOption_styleTag('td.step-td', 'border:0px none blue;font-size:12pt;');
 
-    $appEmitter->addOption_styleTag('div.step-block', 'display:inline-block;  padding: 0pt; margin:5pt;  border: 1px solid black;font-size:12pt;');
-    $appEmitter->addOption_styleTag('div.step-title', 'background-color:#dddddd; color:#aaaaaa; display:inline-block; text-align:center; font-size:12pt; width:100%; font-weight:bold;border-bottom:3px double #999999;');
-    $appEmitter->addOption_styleTag('div.step-desc',  'background-color:#cccccc; color:#aaaaaa; display:inline-block; font-size:14pt;width:100%;');
+    $appEmitter->emit_options->addOption_styleTag('div.step-block', 'display:inline-block;  padding: 0pt; margin:5pt;  border: 1px solid black;font-size:12pt;');
+    $appEmitter->emit_options->addOption_styleTag('div.step-title', 'background-color:#dddddd; color:#aaaaaa; display:inline-block; text-align:center; font-size:12pt; width:100%; font-weight:bold;border-bottom:3px double #999999;');
+    $appEmitter->emit_options->addOption_styleTag('div.step-desc',  'background-color:#cccccc; color:#aaaaaa; display:inline-block; font-size:14pt;width:100%;');
 
-    $appEmitter->addOption_styleTag('div.step-block-cur', 'display:inline-block;  margin:5pt;  border: 3px double black;font-size:12pt;');
-    $appEmitter->addOption_styleTag('div.step-title-cur', 'background-color:#ccffcc;display:inline-block; text-align:center; width:100%;font-size:16pt; font-weight:bold;border-bottom:3px double #999999;font-size:12pt;');
-    $appEmitter->addOption_styleTag('div.step-desc-cur',  'background-color:#eeffee;display:inline-block; text-align:center;font-size:14pt;width:100%;font-size:12pt;');
+    $appEmitter->emit_options->addOption_styleTag('div.step-block-cur', 'display:inline-block;  margin:5pt;  border: 3px double black;font-size:12pt;');
+    $appEmitter->emit_options->addOption_styleTag('div.step-title-cur', 'background-color:#ccffcc;display:inline-block; text-align:center; width:100%;font-size:16pt; font-weight:bold;border-bottom:3px double #999999;font-size:12pt;');
+    $appEmitter->emit_options->addOption_styleTag('div.step-desc-cur',  'background-color:#eeffee;display:inline-block; text-align:center;font-size:14pt;width:100%;font-size:12pt;');
 
-    $appEmitter->addOption_styleTag('button.but-open',  'background-color:#ffcccc;font-size:12pt;');
-    $appEmitter->addOption_styleTag('button.but-close', 'background-color:#ccffcc;font-size:12pt;');
+    $appEmitter->emit_options->addOption_styleTag('button.but-open',  'background-color:#ffcccc;font-size:12pt;');
+    $appEmitter->emit_options->addOption_styleTag('button.but-close', 'background-color:#ccffcc;font-size:12pt;');
 }
 
 function who_closePayPeriod( $appGlobals ) {
@@ -492,7 +487,7 @@ function who_periodGetMatch( $appGlobals , $startDate, $endDate ) {
 
 //=====================================================================
 
-Class appForm_payHome_editLedger extends Draff_Form {
+Class appForm_payHome_editLedger extends kcmKernel_Draff_Form {
 public $ledger_param_staffId;
 //public $ledger_staffObject;
 public $ledger_payrollEmployee;
@@ -521,7 +516,7 @@ public $ledger_taskGroupId;
 //function drForm_validate( $appGlobals, $appChain , $appData ) {   // bundle
 //}
 //
-function drForm_processSubmit( $appData , $appGlobals,  $appChain, $submit ) {  // bundle
+function drForm_process_submit( $appData , $appGlobals,  $appChain, $submit ) {  // bundle
     kernel_processBannerSubmits( $appGlobals, $appChain, $submit );
     if ( $appChain->chn_submit[0] == '@cancel' ) {
         $appChain->chn_curStream_Clear();
@@ -621,13 +616,13 @@ function drForm_initData( $appData, $appGlobals, $appChain ) {
 }
 
 function drForm_initHtml($appData, $appGlobals, $appChain, $appEmitter ) {  // bundle
-    $appEmitter->set_theme( 'theme-report' );
-    $appEmitter->set_title('Payroll - ???');
-    $appEmitter->set_menu_standard( $appChain, $appGlobals );
-    $appEmitter->set_menu_customize( $appChain, $appGlobals  );
-    $appEmitter->set_title('Home');
-    $appGlobals->gb_appMenu_init($appChain, $appEmitter);
-   $appEmitter->set_menu_customize( $appChain, $appGlobals );
+    $appEmitter->emit_options->set_theme( 'theme-report' );
+    $appEmitter->emit_options->set_title('Payroll - ???');
+    $appGlobals->gb_ribbonMenu_Initialize( $appChain, $appGlobals );
+    $appGlobals->gb_menu->drMenu_customize();
+    $appEmitter->emit_options->set_title('Home');
+    $appGlobals->gb_ribbonMenu_Initialize($appChain, $appEmitter);
+    $appGlobals->gb_menu->drMenu_customize();
     $appEmitter = new kcmPay_emitter($appGlobals, $form);
 
     $pmHome_payLedger = new reportStandard_earningDetails;
@@ -670,14 +665,8 @@ function drForm_initFields( $appData, $appGlobals, $appChain ) {  // bundle
     }
 }
 
-function drForm_outputPage ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->krnEmit_output_htmlHead  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyStart ( $appData, $appGlobals, $appChain, $this );
-    $appEmitter->krnEmit_output_ribbons  ( $appData, $appGlobals, $appChain, $this );
-    $this->drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputFooter  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyEnd  ( $appData, $appGlobals, $appChain, $this );
+function drForm_process_output ( $appData, $appGlobals, $appChain, $appEmitter ) {
+    $appGlobals->gb_output_form ( $appData, $appChain, $appEmitter, $this );
 }
 
 function drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter ) {
@@ -693,7 +682,7 @@ function drForm_outputFooter ( $appData, $appGlobals, $appChain, $appEmitter ) {
 
 //=====================================================================
 
-Class appForm_payHome_editPayItem extends Draff_Form {
+Class appForm_payHome_editPayItem extends kcmKernel_Draff_Form {
 
 public $edit_param_action;
 public $edit_param_employeeId;
@@ -859,7 +848,7 @@ public $edit_error_array;
 //    }
 //}
 
-function drForm_processSubmit ( $appData , $appGlobals,  $appChain ) {  // edit
+function drForm_process_submit ( $appData , $appGlobals,  $appChain ) {  // edit
     kernel_processBannerSubmits( $appGlobals, $appChain );
     $sub = explode('_',$submit);
     $submit = $sub[0];
@@ -904,13 +893,13 @@ function drForm_initData( $appData, $appGlobals, $appChain ) {
 }
 
 function drForm_initHtml($appData, $appGlobals, $appChain, $appEmitter ) {  // edit
-    $appEmitter->set_theme( 'theme-report' );
-    $appEmitter->set_title('Payroll - ???');
-    $appEmitter->set_menu_standard( $appChain, $appGlobals );
-    $appEmitter->set_menu_customize( $appChain, $appGlobals  );
-    $appEmitter->set_title('Home');
-    $appGlobals->gb_appMenu_init($appChain, $appEmitter);
-    $appEmitter->set_menu_customize( $appChain, $appGlobals );
+    $appEmitter->emit_options->set_theme( 'theme-report' );
+    $appEmitter->emit_options->set_title('Payroll - ???');
+    $appGlobals->gb_ribbonMenu_Initialize( $appChain, $appGlobals );
+    $appGlobals->gb_menu->drMenu_customize();
+    $appEmitter->emit_options->set_title('Home');
+    $appGlobals->gb_ribbonMenu_Initialize($appChain, $appEmitter);
+    $appGlobals->gb_menu->drMenu_customize();
     $outReport_ledgerEdit = new reportStandard_ledgerEdit;
 
     $appEmitter = new kcmPay_emitter($appGlobals, $form);
@@ -1303,14 +1292,8 @@ private function edit_validate_explanation($item ) {
     // $this->com_mustExplain  @overExpain
 }
 
-function drForm_outputPage ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->krnEmit_output_htmlHead  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyStart ( $appData, $appGlobals, $appChain, $this );
-    $appEmitter->krnEmit_output_ribbons  ( $appData, $appGlobals, $appChain, $this );
-    $this->drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputFooter  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyEnd  ( $appData, $appGlobals, $appChain, $this );
+function drForm_process_output ( $appData, $appGlobals, $appChain, $appEmitter ) {
+    $appGlobals->gb_output_form ( $appData, $appChain, $appEmitter, $this );
 }
 
 function drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter ) {
@@ -1329,7 +1312,7 @@ function drForm_outputFooter ( $appData, $appGlobals, $appChain, $appEmitter ) {
 
 //=====================================================================
 
-class appData_payHome extends draff_appData {
+class application_data extends draff_appData {
 
 //---  user information
 public $apd_user_proxy;
@@ -1362,15 +1345,11 @@ function apd_formData_validate( $appGlobals, $appChain ) {
 
 rc_session_initialize();
 
-$appGlobals = new kcmPay_globals();
+$appChain = new Draff_Chain( 'kcmKernel_emitter' );
+$appChain->chn_register_appGlobals( $appGlobals = new kcmPay_globals());
+$appChain->chn_register_appData( $appData = new application_data($appGlobals));
 $appGlobals->gb_forceLogin ();
-$appData = new appData_payHome($appGlobals);
 
-//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-//@         Process Page               @
-//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
-$appChain = new Draff_Chain( $appData, $appGlobals, 'kcmKernel_emitter' );
 if ( ($appGlobals->gb_proxyIsPayMaster) ) {
     $appData->apd_first_step = 1;
     $appData->apd_ledger_step = 2;

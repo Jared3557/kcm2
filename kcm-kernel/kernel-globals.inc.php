@@ -2,7 +2,7 @@
 
 // kernel-globals.inc.php
 
-// security COmmon to kcm, payroll, gateway, etc
+// security Common to kcm, payroll, gateway, etc
 // these classes will be extended for specific security requirements for each system
 
 define ('DRAFF_TYPE_LIVE', RC_LIVE);
@@ -19,29 +19,24 @@ abstract class kcmKernel_globals {
 public $gb_user;   // current user who can be proxy, usually same as gb_owner, security levels are never higher than gb_owner
 public $gb_owner;  // current user who has logged on - use this one for modBy field
 public $gb_isLoggedIn;
-public $gb_system_home; // '../kcm-gateway/kcm2-gateway.php'
-public $gb_system_name; // 'KCM' - used for login title such as KCM Login
 public $gb_db = NULL;
 public $gb_sql = NULL;
 public $gb_pdo;
-//public $gb_chain;   //??????????? results in circular reference - need to eliminate
 public $gb_systemTitle = '';
 public $gb_banner_image_kidchess = 'kcm_banner_kidchess.gif';
 public $gb_banner_image_system = ''; // gateway, roster, etc
-public $gb_emitterClassName = '';
 public $gb_cssFile_htmlCode = array();   // html code for css files for this system
 public $gb_isExport = FALSE;
 public $gb_session_events;
 public $gb_session_proxy;
-public $gb_session_security;  //???? used
+public $gb_banner;
 
-abstract function gb_appMenu_init($chain, $emitter, $overrides=NULL);
+abstract function gb_ribbonMenu_Initialize($chain, $emitter, ...$overrides);
 
-function __construct($systemTitle, $imageFileName, $emitterName) {
+function __construct($systemTitle, $imageFileName) {
     // do in kcm kernel
    // $session = draff_get_session();
     register_shutdown_function( "fatal_handler" );
-    $this->gb_session_security = new Draff_SessionNode(array('@kcmSecurity'));
     $this->gb_session_events = new Draff_SessionNode(array('@kcmSecurity','@events'));
     $this->gb_session_proxy = new Draff_SessionNode(array('@kcmSecurity','@proxy'));
   //  $session->ses_addPath(SESSION_SECURITY, SESSION_DRAFF_TYPE_ROOT,  SESSION_SECURITY);
@@ -49,26 +44,35 @@ function __construct($systemTitle, $imageFileName, $emitterName) {
   //  $session->ses_addPath(SESSION_SECURITY_PROXY,  SESSION_SECURITY, SESSION_SECURITY_PROXY);
     $this->gb_systemTitle      = $systemTitle;
     $this->gb_logoImageFile    = $imageFileName;
-    $this->gb_emitterClassName = $emitterName;
+    $this->gb_banner = new KcmKernel_Banner;
   //  $this->gb_db               = rc_getGlobalDatabaseObject();  // to be eliminated
   //  $this->gb_sql              = new krnLib_sql_database($this->gb_db);   // to be eliminated
-    $this->gb_pdo              =  new raccon_database_engine;
+    //$this->gb_pdo              =  new raccon_database_engine;
+    if (rc_isAdmin()) {
+        $dbuser = RC_DB_USER_ADMIN;
+        $dbpass = RC_DB_PW_ADMIN;
+    }
+    else {
+        $dbuser = RC_DB_USER_NOT_ADMIN;
+        $dbpass = RC_DB_PW_NOT_ADMIN;
+    }
+    $this->gb_pdo =  new draff_database_engine(RC_DB_DATABASE_HOST, RC_DB_DATABASE_NAME, $dbuser, $dbpass, 'utf8_unicode_ci');
     $this->rsmDbe_modWho = $_SESSION['Admin']['StaffId'] ?? '';  //??????????????
     //$this->gb_chain            = new Draff_Chain();
     //--- Define Standard Kcm-Gateway css files
   //&&&&& $this->gbKrn_add_cssFile( 'css/rc_common.css', 'all','../../'); //&&&&&
     $this->gbKrn_add_cssFile( 'kcm/kcm-kernel/kernel-styleSheet.css','all','../../');
     $this->gbKrn_add_cssFile( 'kcm/draff/draff-styleSheet.css', 'all','../../');
+
 }
 
 // function krnGb_setSystemStrings($systemTitle, $imageFileName, $emitterName) {
 //     $this->gb_systemTitle      = $systemTitle;
 //     $this->gb_logoImageFile    = $imageFileName;
-//     $this->gb_emitterClassName = $emitterName;
 // }
 
 function gb_forceLogin () {
-    $loginAuthorization = new kcmKernel_login_authorization;
+    $loginAuthorization = new kcmKernel_security_authorizeLogin;
     $loginAuthorization->krnLogin_forceLogin ($this);
 }
 
@@ -77,70 +81,47 @@ function gbKrn_add_cssFile($cssPath, $media="all", $levelStr="") {
     $this->gb_cssFile_htmlCode[] = "<link rel='stylesheet' type='text/css' media='{$media}' href='{$levelStr}{$cssPath}?v={$timestamp}'>";
 }
 
-function gb_getNow() {
+ function gb_addGlobalEmitterOptions($emitter) {
+    $emitter->emit_options->addOption_styleFile( 'kcm/kcm-kernel/kernel-styleSheet.css','all','../../');
+    $emitter->emit_options->addOption_styleFile( 'kcm/draff/draff-styleSheet.css', 'all','../../');
+   }
+    
+    function gb_getNow() {
     // need to use this function in more places ???????????????????????????
     // need to use the proxy to ovedrride the current date/time
     // do not use this function for logging, etc
 	return date( "Y-m-d H:i:s" );
 }
 
+    function gb_set_title($bannerTitle1, $bannerTitle2='',$pageTitle='') {
+        $this->krmEmit_bannerTitle1 = $bannerTitle1;
+        $this->krmEmit_bannerTitle2 = $bannerTitle2;
+        $this->krmEmit_pageTitle = empty($pageTitle) ? $bannerTitle1 : $pageTitle ;  // for bookmarks, tabs, etc
+    }
+    
+    function gb_output_form ( $appData, $appChain, $appEmitter, $form ) {
+        $appEmitter = $appChain->chn_register_emitter(new Draff_Emitter_Html($form));
+        $this->gb_addGlobalEmitterOptions($appEmitter);
+        $form->drForm_form_addErrors( $appChain );  // move errors from session to current form ???? is here the best place
+        $form->drForm_initData( $appChain->chn_app_data, $appChain->chn_app_globals, $appChain );
+        $form->drForm_initFields( $appChain->chn_app_data, $appChain->chn_app_globals, $appChain );
+        $form->drForm_initHtml( $appChain->chn_app_data, $appChain->chn_app_globals, $appChain, $appChain->chn_app_emitter );
+        $appEmitter->zone_htmlHead();
+        $appEmitter->zone_body_start($appChain, $form);
+        $appEmitter->drOutputIfNotReport(PHP_EOL.'<div class="zone-ribbon-group">');  // div so css can hide when printing
+        $this->gb_banner->krnEmit_banner_output($this, $appEmitter);
+        $appEmitter->zone_messages($appChain, $form);
+        $this->gb_menu->drMenu_emit_menu($appEmitter);
+        $appEmitter->drOutputIfNotReport(print PHP_EOL.'</div>');
+        $form->drForm_outputHeader ( $appData, $this, $appChain, $appEmitter );
+        $form->drForm_outputContent ( $appData, $this, $appChain, $appEmitter );
+        $form->drForm_outputFooter  ( $appData, $this, $appChain, $appEmitter );
+        $appEmitter->zone_body_end();
+    }
+
+
 } // end class
 
-class kcmKernel_security_events {
-
-function krnSecure_isEventAuthorized($kcmGlobals, $programId, $userId=NULL) {
-    // return TRUE or FALSE
-    // save in session so can quickly retrieve ?????
-    if ( empty($userId) ) {
-        $userId = $kcmGlobals->gb_user->krnUser_staffId; // use proxy if applicable - rc_getStaffId();
-    }
-    // if is-admin (and in admin mode, i.e. not my-schedule, etc) then
-        // authorized
-    // else
-    // Search authorization table (fast)
-    // if school-dow in table then authorized
-    // Search schedule (slower)
-    // if on schedule within short date range then authorized
-
-}
-
-function krnSecure_getAllAuthorizedEvents($kcmGlobals, $userId=NULL, $schoolId=NULL, $dow=NULL, $year=NULL, $semeseter=NULL) {
-    if ( empty($userId) ) {
-        $userId = $kcmGlobals->gb_user->krnUser_staffId; // use proxy if applicable - rc_getStaffId();
-    }
-    //???? need is-admin flag
-    // if is-admin then get all
-    // else
-        // Search authorization table (fast)
-        // Search schedule
-    // return list of programs
-}
-
-function krnSecure_getMyAuthorizedEvents($kcmGlobals, $userId=NULL, $schoolId=NULL, $dow=NULL, $year=NULL, $semeseter=NULL) {
-    if ( empty($userId) ) {
-        $userId = $kcmGlobals->gb_user->krnUser_staffId; // use proxy if applicable - rc_getStaffId();
-    }
-    //???? need is-admin flag
-    // if is-admin then get all
-    // else
-        // Search authorization table (fast)
-        // Search schedule
-    // return list of programs
-}
-
-function krnSecure_authorizedEvents($kcmGlobals, $userId=NULL, $isMyEvents, $schoolId=NULL, $dow=NULL, $year=NULL, $semeseter=NULL) {
-    if ( empty($userId) ) {
-        $userId = $kcmGlobals->gb_user->krnUser_staffId; // use proxy if applicable - rc_getStaffId();
-    }
-    //???? need is-admin flag
-    // if is-admin then get all
-    // else
-        // Search authorization table (fast)
-        // Search schedule
-    // return list of programs
-}
-
-} // end class
 
 class kcmKernel_security_user {
 public $krnUser_nowDate        = NULL;
@@ -237,7 +218,7 @@ function krnUser_getRights($krnGlobals) {
 
 } // end class
 
-class kcmKernel_login_authorization {
+class kcmKernel_security_authorizeLogin {
 
 function krnLogin_forceLogin ($kernelGlobals) {
     $fn = basename($_SERVER['PHP_SELF']);
@@ -260,13 +241,14 @@ function krnLogin_forceLogin ($kernelGlobals) {
 }
 
 function krnLogin_process_login($kernelGlobals) {
-        $emitter = new $kernelGlobals->gb_emitterClassName($kernelGlobals,'draff-html-default');
-        $emitter->zone_htmlHead($kernelGlobals->gb_systemTitle . 'Kidchess Coach Login');
+        $emitter = new Draff_Emitter_Html (NULL); // $kernelGlobals,'draff-html-default');
+        $emitter->emit_options->set_title('\'Kidchess Coach Login\'');
+        $emitter->zone_htmlHead();
 		print PHP_EOL;
 		print PHP_EOL . '<body class="draff-zone-body-normal">';
         $url = rc_reconstructURL();
  	    print PHP_EOL . PHP_EOL . "<form class='draff-zone-form-normal' action='../../admin?do=login' method='post' autocomplete='off'>\n";
-        $emitter->krnEmit_banner_output($kernelGlobals, 'Kidchess Coach Login');
+        $kernelGlobals->gb_banner->krnEmit_banner_output($kernelGlobals, $emitter );
         rc_clearMessages();
 		print PHP_EOL . PHP_EOL .'<div class="zone-content-scrollable theme-panel">';
         $this->kernel_showAdminLoginPage('../../');
@@ -330,8 +312,9 @@ function krnLogin_process_editProfile() {
     $windowTitle = "";
     $this->wph_emit_html_head();
     $emitter = new kcmKernel_emitter(NULL,'draff-html-default');
+    $emitter->emit_options->emtSetTitle('Edit User Profile');  // used in one other place
     $emitter->zone_body_start();
-    $emitter->krnEmit_banner_output($this, 'Edit User Profile');
+    $emitter->krnEmit_banner_output($this, $emitter);
     $emitter->zone_start('draff-zone-content-default');
     rc_showAdminProfilePage('../');
     $emitter->zone_end();
@@ -341,21 +324,106 @@ function krnLogin_process_editProfile() {
 
 } // end class
 
-class raccon_database_engine extends draff_database_engine {
+class KcmKernel_Banner {
 
-function __construct() {
-	if (rc_isAdmin()) {
-		$dbuser = RC_DB_USER_ADMIN;
-		$dbpass = RC_DB_PW_ADMIN;
-	}
-	else {
-		$dbuser = RC_DB_USER_NOT_ADMIN;
-		$dbpass = RC_DB_PW_NOT_ADMIN;
-	}
-    parent::__construct(RC_DB_DATABASE_HOST, RC_DB_DATABASE_NAME, $dbuser, $dbpass, 'utf8_unicode_ci');
+    function krnEmit_banner_output($kernelGlobals, $emitter) {
+        $this->krnEmit_banner_start($kernelGlobals);
+        $this->krnEmit_banner_cell_logo('../kcm-kernel/images/'.$kernelGlobals->gb_banner_image_system);
+        $this->krnEmit_banner_cell_proxyStatus($kernelGlobals);
+        $this->krnEmit_banner_cell_title($emitter);
+        $this->krnEmit_banner_cell_logo('../kcm-kernel/images/'.$kernelGlobals->gb_banner_image_kidchess);
+        $this->krnEmit_banner_cell_login($kernelGlobals, $emitter);
+        $this->krnEmit_banner_end();
+    }
+    
+    private function krnEmit_banner_start($kernelGlobals) {
+        $overlay = defined('RC_BACKGROUND_IMAGE') ? " style='background-image: url(" . '"../' . RC_BACKGROUND_IMAGE . '"' . "); background-repeat:repeat;'" : '';
+        print PHP_EOL . PHP_EOL .'<div class="zone-ribbon theme-banner" '. $this->krnEmit_banner_getSystemBackgroundStyle() . '>';
+        print PHP_EOL . '<table class="kcmKrn-banner-table">';
+        print PHP_EOL . '<tr>';
+    }
+    
+    private function krnEmit_banner_cell_logo($imageFileName) {
+        print PHP_EOL;
+        print PHP_EOL . '<td class="kcmKrn-banner-icon"><img src="'.$imageFileName.'"></td>';  // no overlay
+    }
+    
+    private function krnEmit_banner_cell_title($emitter) {
+        print PHP_EOL . '<td class="kcmKrn-banner-title"'.$this->krnEmit_banner_getSystemBackgroundStyle().'">';
+        print PHP_EOL . '  ' . $emitter->emit_options->emtTitleLong;
+        print PHP_EOL . '  </td>';
+    }
+    
+    private function krnEmit_banner_cell_proxyStatus($kernelGlobals) {
+        if ( $kernelGlobals === NULL) {
+            return;
+        }
+        $actualUser = $kernelGlobals->gb_owner;
+        $proxyUser = $kernelGlobals->gb_user;
+        if ( ($actualUser==NULL) or ($proxyUser === NULL) ) {
+            return;
+        }
+        $different = FALSE;
+        $this->krnEmit_banner_proxy_compare($different,$actualUser->krnUser_staffId,$proxyUser->krnUser_staffId);
+        $this->krnEmit_banner_proxy_compare($different,$actualUser->krnUser_nowDate,$proxyUser->krnUser_nowDate);
+        $this->krnEmit_banner_proxy_compare($different,$actualUser->krnUser_nowDateTime,$proxyUser->krnUser_nowDateTime);
+        if ( !$different) {
+            return;
+        }
+        print PHP_EOL . '<td class="kcmKrn-banner-proxy"'.$this->krnEmit_banner_getSystemBackgroundStyle().'>';
+        print PHP_EOL . '<div class=kcmKrn-banner-proxy-title>Proxy</div>';
+        $pre = '';
+        if ( $proxyUser->krnUser_nowDate !=$actualUser->krnUser_nowDate) {
+            print PHP_EOL . $pre . draff_dateAsString($proxyUser->krnUser_nowDate,'F j, Y') . ' ('.draff_dateAsString($proxyUser->krnUser_nowDate,'l') . ')';
+            $pre = '<br>';
+        }
+        if ( $proxyUser->krnUser_nowTime !=$actualUser->krnUser_nowTime) {
+            print PHP_EOL . $pre . draff_timeAsString($proxyUser->krnUser_nowTime);
+            $pre = '<br>';
+        }
+        if ( $proxyUser->krnUser_loginId!=$actualUser->krnUser_loginId) {
+            print $pre.$proxyUser->krnUser_staffLongName;
+        }
+        print PHP_EOL . '</td>';
+    }
+    
+    private function krnEmit_banner_cell_login($kernelGlobals, $emitter) {
+        print PHP_EOL;
+        print PHP_EOL . '<td class="kcmKrn-banner-login"'.$this->krnEmit_banner_getSystemBackgroundStyle().'>';
+        if ( $kernelGlobals!=NULL) {
+            if ( $kernelGlobals->gb_isLoggedIn) {
+                print PHP_EOL."Logged in: <span class='font-weight-bold'>{$_SESSION['Admin']['LoginName']}</span>";
+                print PHP_EOL.'<br>';
+                if ($emitter->emit_options->emtTitleLong != 'Edit User Profile') {
+                    $homeScript = $url=strtok(rc_reconstructURL(),'?');    ;
+                    print PHP_EOL . kernel_regMakeLinkButton( "Log out",'banner-logout' );
+                    print PHP_EOL . kernel_regMakeLinkButton( "Edit Profile",'banner-profile' );
+                }
+            }
+            else {
+                print PHP_EOL."Need to log in</span>";
+            }
+        }
+        print PHP_EOL . '</td>';
+    }
+    
+    private function krnEmit_banner_end() {
+        print PHP_EOL . '</tr>';
+        print PHP_EOL . '</table>';
+        print PHP_EOL . '</div>';
+        print PHP_EOL ;
+    }
+    
+    private function krnEmit_banner_proxy_compare(&$dif, $value1, $value2) {
+        if ( $value1 != $value2)
+            $dif = TRUE;
+    }
+    
+    private function krnEmit_banner_getSystemBackgroundStyle() {
+        return defined('RC_BACKGROUND_IMAGE') ? " style='background-image: url(" . '"../../' . RC_BACKGROUND_IMAGE . '"' . "); background-repeat:repeat;'" : '';
+    }
+    
 }
-
-} // end class
 
 function fatal_handler() {
     $errfile = "unknown file";
@@ -369,11 +437,11 @@ function fatal_handler() {
         $errline = $error["line"];
         $errstr  = $error["message"];
 
-        print fmt_error( $errno, $errstr, $errfile, $errline);
+        print fatal_error( $errno, $errstr, $errfile, $errline);
     }
 }
 
-function fmt_error( $errno, $errstr, $errfile, $errline ) {
+function fatal_error( $errno, $errstr, $errfile, $errline ) {
     //$trace = print_r( debug_backtrace( false ), true );
 // $trace = debug_backtrace( false );
     $trace = '';
@@ -436,5 +504,41 @@ function fmt_error( $errno, $errstr, $errfile, $errline ) {
 //            </tr>
     return $content;
 }
+
+abstract class kcmKernel_Draff_Form extends Draff_Form {
+
+    abstract protected function drForm_initData( $appData, $appGlobals, $appChain );
+    abstract protected function drForm_initFields( $scriptData, $appGlobals, $chain );
+    abstract protected function drForm_initHtml( $scriptData, $appGlobals, $chain, $emitter );
+    abstract protected function drForm_outputHeader ( $scriptData, $appGlobals, $chain, $emitter );
+    abstract protected function drForm_outputContent ( $scriptData, $appGlobals, $chain, $emitter );
+    abstract protected function drForm_outputFooter ( $scriptData, $appGlobals, $chain, $emitter );
+    
+//    from parent
+//    abstract protected function drForm_process_submit ( $scriptData, $appGlobals, $chain );
+//    abstract protected function drForm_process_output ( $scriptData, $appGlobals, $chain, $emitter );
+
+//    function kcmKernel_process_standard_output (  $appData, $appGlobals, $appChain, $appEmitter ) {
+//        $appEmitter = $appChain->chn_register_emitter(new Draff_Emitter_Html($form));
+//        $appGlobals->gb_addGlobalEmitterOptions($appEmitter);
+//        $this->drForm_form_addErrors( $appChain );  // move errors from session to current form ???? is here the best place
+//        $this->drForm_initData( $appChain->chn_app_data, $appChain->chn_app_globals, $appChain );
+//        $this->drForm_initFields( $appChain->chn_app_data, $appChain->chn_app_globals, $appChain );
+//        $this->drForm_initHtml( $appChain->chn_app_data, $appChain->chn_app_globals, $appChain, $appChain->chn_app_emitter );
+//        $appEmitter->zone_htmlHead();
+//        $appEmitter->zone_body_start($appChain, $form);
+//        $appEmitter->drOutputIfNotReport(PHP_EOL.'<div class="zone-ribbon-group">');  // div so css can hide when printing
+//        $appGlobals->gb_banner->krnEmit_banner_output($appGlobals, $appEmitter);
+//        $appEmitter->zone_messages($appChain, $this);
+//        $appGlobals->gb_menu->drMenu_emit_menu($appEmitter);
+//        $appEmitter->drOutputIfNotReport(print PHP_EOL.'</div>');
+//        $form->drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter );
+//        $form->drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter );
+//        $form->drForm_outputFooter  ( $appData, $appGlobals, $appChain, $appEmitter );
+//        $appEmitter->zone_body_end();
+//    }
+
+}
+
 
 ?>

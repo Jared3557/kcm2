@@ -9,13 +9,14 @@ include_once( '../../rc_admin.inc.php' );
 include_once( '../../rc_database.inc.php' );
 include_once( '../../rc_messages.inc.php' );
 
-include_once( '../draff/draff-functions.inc.php' );
-include_once( '../draff/draff-objects.inc.php' );
 include_once( '../draff/draff-chain.inc.php' );
+include_once( '../draff/draff-database.inc.php');
 include_once( '../draff/draff-emitter.inc.php' );
 include_once( '../draff/draff-form.inc.php' );
+include_once( '../draff/draff-functions.inc.php' );
+include_once( '../draff/draff-menu.inc.php' );
+include_once( '../draff/draff-page.inc.php' );
 
-include_once( '../kcm-kernel/kernel-emitter.inc.php');
 include_once( '../kcm-kernel/kernel-functions.inc.php');
 include_once( '../kcm-kernel/kernel-objects.inc.php');
 include_once( '../kcm-kernel/kernel-globals.inc.php');
@@ -29,10 +30,10 @@ include_once( '../kcm-kernel/kernel-commonForm-setProxy.inc.php' ); // just for 
 //=   Below are funcs and classes  ==
 //===================================
 
-class appForm_setupProxy_edit extends appForm_shared_setProxy_edit {  // which extends Draff_Form
+class appForm_setupProxy_edit extends appForm_shared_setProxy_edit {  // which extends kcmKernel_Draff_Form
 
-function drForm_processSubmit ( $appData, $appGlobals, $appChain ) {
-    parent::drForm_processSubmit( $appData, $appGlobals, $appChain);
+function drForm_process_submit ( $appData, $appGlobals, $appChain ) {
+    parent::drForm_process_submit( $appData, $appGlobals, $appChain);
 }
 
 function drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter ) {
@@ -47,9 +48,9 @@ function drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter ) 
 }
 
 function drForm_initHtml( $appData, $appGlobals, $appChain, $appEmitter ) {
-	$appEmitter->set_title('Setup Proxy');
-    $appEmitter->set_menu_standard($appChain, $appGlobals);
-    $appEmitter->set_menu_customize( $appChain, $appGlobals  );
+	$appEmitter->emit_options->set_title('Setup Proxy');
+    $appGlobals->gb_ribbonMenu_Initialize($appChain, $appGlobals);
+    $appGlobals->gb_menu->drMenu_customize();
     parent::drForm_initHtml($appData, $appGlobals, $appChain, $appEmitter);
 }
 
@@ -57,8 +58,8 @@ function drForm_initFields( $appData, $appGlobals, $appChain ) {
     parent::drForm_initFields($appData, $appGlobals, $appChain);
 }
 
-function drForm_outputPage ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    parent::drForm_outputPage($appData, $appGlobals, $appChain, $appEmitter);
+function drForm_process_output ( $appData, $appGlobals, $appChain, $appEmitter ) {
+    parent::drForm_process_output($appData, $appGlobals, $appChain, $appEmitter);
 }
 
 function drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter ) {
@@ -71,7 +72,7 @@ function drForm_outputFooter ( $appData, $appGlobals, $appChain, $appEmitter ) {
 
 } // end class
 
-class appData_setProxy extends appData_commonSetProxy { // Unusual extends
+class application_data extends appData_commonSetProxy { // Unusual extends
 public $apd_edit_commonProxy;
 
 //function sd_edit_getData( $appGlobals, $appChain ) {
@@ -98,15 +99,11 @@ function com_save_element($appChain, $key, $value) {
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 rc_session_initialize();
 
-$appGlobals = new kcmGateway_globals();
+$appChain = new Draff_Chain(  'kcmKernel_emitter' );
+$appChain->chn_register_appGlobals( $appGlobals = new kcmGateway_globals());
+$appChain->chn_register_appData( new application_data());
 $appGlobals->gb_forceLogin ();
-$appData = new appData_setProxy;
 
-//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-//@         Process Page               @
-//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
-$appChain = new Draff_Chain( $appData, $appGlobals, 'kcmKernel_emitter' );
 $appChain->chn_form_register(1,'appForm_setupProxy_edit');
 $appChain->chn_form_launch(NULL); // proceed to current step
 

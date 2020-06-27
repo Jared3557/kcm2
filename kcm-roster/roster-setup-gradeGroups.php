@@ -9,13 +9,14 @@ include_once( '../../rc_admin.inc.php' );
 include_once( '../../rc_database.inc.php' );
 include_once( '../../rc_messages.inc.php' );
 
-include_once( '../draff/draff-functions.inc.php' );
-include_once( '../draff/draff-objects.inc.php' );
 include_once( '../draff/draff-chain.inc.php' );
+include_once( '../draff/draff-database.inc.php');
 include_once( '../draff/draff-emitter.inc.php' );
 include_once( '../draff/draff-form.inc.php' );
+include_once( '../draff/draff-functions.inc.php' );
+include_once( '../draff/draff-menu.inc.php' );
+include_once( '../draff/draff-page.inc.php' );
 
-include_once( '../kcm-kernel/kernel-emitter.inc.php');
 include_once( '../kcm-kernel/kernel-functions.inc.php');
 include_once( '../kcm-kernel/kernel-objects.inc.php');
 include_once( '../kcm-kernel/kernel-globals.inc.php');
@@ -29,7 +30,7 @@ include_once( 'roster-system-data-roster.inc.php');
 //=   Below are funcs and classes  ==
 //===================================
 
-class appForm_setupGradeGroups_main extends Draff_Form {
+class appForm_setupGradeGroups_main extends kcmKernel_Draff_Form {
 
 //function step_init_submit_accept( $appData, $appGlobals, $appChain ) {
 //    $appData->apd_initialize($appGlobals);
@@ -55,7 +56,7 @@ class appForm_setupGradeGroups_main extends Draff_Form {
 //    $appChain->chn_step_executeNext(1);
 //}
 
-function drForm_processSubmit ( $appData, $appGlobals, $appChain ) {
+function drForm_process_submit ( $appData, $appGlobals, $appChain ) {
     kernel_processBannerSubmits( $appGlobals, $appChain, $submit );
 
     $appChain->chn_form_savePostedData();
@@ -68,14 +69,11 @@ function drForm_initData( $appData, $appGlobals, $appChain ) {
 }
 
 function drForm_initHtml( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->set_theme( 'theme-panel' );
-    $appEmitter->set_title('Setup Grade Groups');
-    $appGlobals->gb_appMenu_init($appChain, $appEmitter, $appData->apd_roster_program );
-    $appEmitter->set_menu_customize( $appChain, $appGlobals  );
-    //kcmRosterLib_setBannerSubTitle($appEmitter,$appGlobals, $appData->apd_roster_program,'Grade Groups');
-    //$appGlobals->gb_appMenu_init($appChain, $appEmitter, $appData->apd_roster_program);
-    //$appEmitter->set_menu_customize( $appChain, $appGlobals  );
-}
+    $appEmitter->emit_options->set_theme( 'theme-panel' );
+    $appEmitter->emit_options->set_title('Setup Grade Groups');
+    $appGlobals->gb_ribbonMenu_Initialize($appChain, $appEmitter, $appData->apd_roster_program );
+    $appGlobals->gb_menu->drMenu_customize();
+ }
 
 function drForm_initFields( $appData, $appGlobals, $appChain ) {
     $this->drForm_addField( new Draff_Combo(  '@groups' , $appData->apd_list_gradeGroup_value, $appData->apd_list_gradeGroup_array))
@@ -83,14 +81,8 @@ function drForm_initFields( $appData, $appGlobals, $appChain ) {
     $this->drForm_addField( new Draff_Button(  '@save' , 'Save' ) );
 }
 
-function drForm_outputPage ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->krnEmit_output_htmlHead  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyStart ( $appData, $appGlobals, $appChain, $this );
-    $appEmitter->krnEmit_output_ribbons  ( $appData, $appGlobals, $appChain, $this );
-    $this->drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputFooter  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyEnd  ( $appData, $appGlobals, $appChain, $this );
+function drForm_process_output ( $appData, $appGlobals, $appChain, $appEmitter ) {
+    $appGlobals->gb_output_form ( $appData, $appChain, $appEmitter, $this );
 }
 
 function drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter ) {
@@ -148,7 +140,7 @@ function drForm_outputFooter ( $appData, $appGlobals, $appChain, $appEmitter ) {
 
 }  // end widget class
 
-class appData_gradeGroupsSetup extends draff_appData {
+class application_data extends draff_appData {
 public $apd_roster_program;
 public $apd_list_gradeGroup_value;
 public $apd_list_gradeGroup_array;
@@ -212,10 +204,10 @@ function apd_saveGradeGroups($appGlobals, $appData) {
 
 rc_session_initialize();
 
-$appGlobals = new kcmRoster_globals();
+$appChain = new Draff_Chain(  'kcmKernel_emitter' );
+$appChain->chn_register_appGlobals( $appGlobals = new kcmRoster_globals());
+$appChain->chn_register_appData( $appData = new application_data());
 $appGlobals->gb_forceLogin ();
-$appData = new appData_gradeGroupsSetup;
-$appChain = new Draff_Chain( $appData, $appGlobals, 'kcmKernel_emitter' );
 
 $appData->apd_roster_program = new pPr_program_extended_forRoster($appGlobals);
 $appData->apd_roster_program->rst_load_rosterData($appGlobals, $appChain);

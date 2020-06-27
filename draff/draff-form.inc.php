@@ -31,6 +31,10 @@ abstract class Draff_Form {
         $this->drForm_className = $stepName;
     }
     
+    abstract protected function drForm_process_submit ( $scriptData, $appGlobals, $chain );
+ 
+    abstract protected function drForm_process_output ( $scriptData, $appGlobals, $chain, $emitter );
+    
     function drForm_addField ( $field ) {
         $this->drForm_fields[$field->drField_id ] = $field;
     }
@@ -141,15 +145,6 @@ abstract class Draff_Form {
             return $fieldId ;
         }
     }
-    
-    abstract protected function drForm_processSubmit ( $scriptData, $appGlobals, $chain );
-    abstract protected function drForm_initData( $appData, $appGlobals, $appChain );
-    abstract protected function drForm_initFields( $scriptData, $appGlobals, $chain );
-    abstract protected function drForm_initHtml( $scriptData, $appGlobals, $chain, $emitter );
-    abstract protected function drForm_outputPage ( $scriptData, $appGlobals, $chain, $emitter );
-    abstract protected function drForm_outputHeader ( $scriptData, $appGlobals, $chain, $emitter );
-    abstract protected function drForm_outputContent ( $scriptData, $appGlobals, $chain, $emitter );
-    abstract protected function drForm_outputFooter ( $scriptData, $appGlobals, $chain, $emitter );
     
 } // end class
 

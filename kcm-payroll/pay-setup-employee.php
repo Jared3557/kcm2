@@ -10,14 +10,14 @@ include_once( '../../rc_database.inc.php' );
 include_once( '../../rc_messages.inc.php' );
 include_once( '../../rc_job-appData-functions.inc.php' );
 
-include_once( '../draff/draff-functions.inc.php' );
-include_once( '../draff/draff-objects.inc.php' );
 include_once( '../draff/draff-chain.inc.php' );
+include_once( '../draff/draff-database.inc.php');
 include_once( '../draff/draff-emitter.inc.php' );
 include_once( '../draff/draff-form.inc.php' );
-include_once( '../draff/draff-appEmitter-dom-engine.inc.php' );
+include_once( '../draff/draff-functions.inc.php' );
+include_once( '../draff/draff-menu.inc.php' );
+include_once( '../draff/draff-page.inc.php' );
 
-include_once( '../kcm-kernel/kernel-emitter.inc.php');
 include_once( '../kcm-kernel/kernel-functions.inc.php');
 include_once( '../kcm-kernel/kernel-objects.inc.php');
 include_once( '../kcm-kernel/kernel-globals.inc.php');
@@ -26,7 +26,7 @@ include_once( 'pay-system-payData.inc.php' );
 include_once( 'pay-system-appEmitter.inc.php' );
 include_once( 'pay-system-globals.inc.php' );
 
-Class appForm_employeeSetup_select extends Draff_Form {
+Class appForm_employeeSetup_select extends kcmKernel_Draff_Form {
 
 //function step_init_submit_accept( $appData, $appGlobals, $appChain ) {
 //}
@@ -34,7 +34,7 @@ Class appForm_employeeSetup_select extends Draff_Form {
 //function drForm_validate( $appData, $appGlobals, $appChain ) {
 //}
 
-function drForm_processSubmit ( $appData, $appGlobals, $appChain ) {
+function drForm_process_submit ( $appData, $appGlobals, $appChain ) {
     kernel_processBannerSubmits($appChain,$submit);
     $appChain->chn_form_savePostedData();
     $staffId = $this->step_init_submit_suffix;
@@ -53,20 +53,14 @@ function drForm_initFields( $appData, $appGlobals, $appChain ) {
 }
 
 function drForm_initHtml( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->set_title('Employee Setup');
-    $appGlobals->gb_appMenu_init($appChain, $appEmitter);
-    $appEmitter->set_menu_customize( $appChain, $appGlobals );
+    $appEmitter->emit_options->set_title('Employee Setup');
+    $appGlobals->gb_ribbonMenu_Initialize($appChain, $appEmitter);
+    $appGlobals->gb_menu->drMenu_customize();
 
 }
 
-function drForm_outputPage ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->krnEmit_output_htmlHead  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyStart ( $appData, $appGlobals, $appChain, $this );
-    $appEmitter->krnEmit_output_ribbons  ( $appData, $appGlobals, $appChain, $this );
-    $this->drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputFooter  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyEnd  ( $appData, $appGlobals, $appChain, $this );
+function drForm_process_output ( $appData, $appGlobals, $appChain, $appEmitter ) {
+    $appGlobals->gb_output_form ( $appData, $appChain, $appEmitter, $this );
 }
 
 function drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter ) {
@@ -86,7 +80,7 @@ function drForm_outputFooter ( $appData, $appGlobals, $appChain, $appEmitter ) {
 
 } // end class
 
-Class appForm_employeeSetup_edit extends Draff_Form {
+Class appForm_employeeSetup_edit extends kcmKernel_Draff_Form {
 public $edit_staffId;
 public $edit_employeeId;
 
@@ -107,7 +101,7 @@ public $edit_employeeId;
 //    }
 //}
 
-function drForm_processSubmit ( $appData, $appGlobals, $appChain ) {
+function drForm_process_submit ( $appData, $appGlobals, $appChain ) {
     kernel_processBannerSubmits( $appGlobals, $appChain, $submit );
     if ( $submit == '@cancel') {
         $appData->edit_staffId = $this->step_getShared('#staffId', 0);
@@ -136,13 +130,13 @@ function drForm_initData( $appData, $appGlobals, $appChain ) {
 }
 
 function drForm_initHtml( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->set_theme( 'theme-report' );
-    $appEmitter->set_title('Payroll - ???');
-    $appEmitter->set_menu_standard( $appChain, $appGlobals );
-    $appEmitter->set_menu_customize( $appChain, $appGlobals  );
-    $appEmitter->set_title('');
-    $appGlobals->gb_appMenu_init($appChain, $appEmitter);
-    $appEmitter->set_menu_customize( $appChain, $appGlobals );
+    $appEmitter->emit_options->set_theme( 'theme-report' );
+    $appEmitter->emit_options->set_title('Payroll - ???');
+    $appGlobals->gb_ribbonMenu_Initialize( $appChain, $appGlobals );
+    $appGlobals->gb_menu->drMenu_customize( );
+    $appEmitter->emit_options->set_title('');
+    $appGlobals->gb_ribbonMenu_Initialize($appChain, $appEmitter);
+    $appGlobals->gb_menu->drMenu_customize();
 
     $appEmitter = new kcmPay_emitter($appGlobals, $form);
     $appEmitter->payEmit_init( $appGlobals, $appChain  ,'pmu-setStaff');
@@ -171,14 +165,8 @@ function drForm_initFields( $appData, $appGlobals, $appChain ) {
     $this->drForm_addField( new Draff_Button( '@cancel' , 'Cancel') );
 }
 
-function drForm_outputPage ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->krnEmit_output_htmlHead  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyStart ( $appData, $appGlobals, $appChain, $this );
-    $appEmitter->krnEmit_output_ribbons  ( $appData, $appGlobals, $appChain, $this );
-    $this->drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputFooter  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyEnd  ( $appData, $appGlobals, $appChain, $this );
+function drForm_process_output ( $appData, $appGlobals, $appChain, $appEmitter ) {
+    $appGlobals->gb_output_form ( $appData, $appChain, $appEmitter, $this );
 }
 
 function drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter ) {
@@ -192,7 +180,7 @@ function drForm_outputFooter ( $appData, $appGlobals, $appChain, $appEmitter ) {
 
 } // end class
 
-class apdData_employeeSetup extends draff_appData {
+class application_data extends draff_appData {
 
 function __construct() {
 }
@@ -209,11 +197,11 @@ class stdReport_staffRatesList {
 private $rateRpt_employees;
 
 function stdReport_init_styles($appEmitter) {
-   $appEmitter->addOption_styleTag('td.hd-rates','border:1pt; text-align:center; padding: 10pt 4pt 10pt 4pt;');
-   $appEmitter->addOption_styleTag('.r-name','width:160pt;border:1pt; padding: 10pt 4pt 10pt 4pt; vertical-align:middle;');
-   $appEmitter->addOption_styleTag('.r-rate','width:80pt;border:1pt; padding: 10pt 12pt 10pt 4pt; vertical-align:middle;text-align: right;');
-   $appEmitter->addOption_styleTag('.r-edit','width:60pt;border:1pt; padding: 2pt 4pt 2pt 4pt; vertical-align:middle;');
-   $appEmitter->addOption_styleTag('span.r-short','margin-left:12pt;');
+   $appEmitter->emit_options->addOption_styleTag('td.hd-rates','border:1pt; text-align:center; padding: 10pt 4pt 10pt 4pt;');
+   $appEmitter->emit_options->addOption_styleTag('.r-name','width:160pt;border:1pt; padding: 10pt 4pt 10pt 4pt; vertical-align:middle;');
+   $appEmitter->emit_options->addOption_styleTag('.r-rate','width:80pt;border:1pt; padding: 10pt 12pt 10pt 4pt; vertical-align:middle;text-align: right;');
+   $appEmitter->emit_options->addOption_styleTag('.r-edit','width:60pt;border:1pt; padding: 2pt 4pt 2pt 4pt; vertical-align:middle;');
+   $appEmitter->emit_options->addOption_styleTag('span.r-short','margin-left:12pt;');
 }
 
 function sReport_getData( $appGlobals ) {
@@ -262,11 +250,11 @@ function stdReport_output($appEmitter, $appGlobals, $form) {
 class stdReport_staffRatesEdit {
 
 function stdReport_init_styles($appEmitter) {
-    $appEmitter->addOption_styleTag('table.payTable', 'background-color:white;');
-    $appEmitter->addOption_styleTag('td.source', 'font-size:10pt;vertical-align:middle;');
-    $appEmitter->addOption_styleTag('td.status', 'font-size:10pt;vertical-align:middle;');
-    $appEmitter->addOption_styleTag('td.lastRow', 'font-size:10pt; pt;vertical-align:middle;background-color:#eeffee');
-    $appEmitter->addOption_styleTag('button.small', 'font-size:10pt;padding:1pt 6pt 1pt 6pt;border-radius: 4pt;min-height: 0pt;min-width: 0pt;');
+    $appEmitter->emit_options->addOption_styleTag('table.payTable', 'background-color:white;');
+    $appEmitter->emit_options->addOption_styleTag('td.source', 'font-size:10pt;vertical-align:middle;');
+    $appEmitter->emit_options->addOption_styleTag('td.status', 'font-size:10pt;vertical-align:middle;');
+    $appEmitter->emit_options->addOption_styleTag('td.lastRow', 'font-size:10pt; pt;vertical-align:middle;background-color:#eeffee');
+    $appEmitter->emit_options->addOption_styleTag('button.small', 'font-size:10pt;padding:1pt 6pt 1pt 6pt;border-radius: 4pt;min-height: 0pt;min-width: 0pt;');
 
 }
 
@@ -316,16 +304,11 @@ function stdReport_output($appEmitter, $appGlobals, $form, $staff) {
 
 rc_session_initialize();
 
-$appGlobals = new kcmPay_globals();
+$appChain = new Draff_Chain(  'kcmKernel_emitter' );
+$appChain->chn_register_appGlobals( $appGlobals = new kcmPay_globals());
+$appChain->chn_register_appData( new application_data());
 $appGlobals->gb_forceLogin ();
-$appData = new apdData_employeeSetup($appGlobals);
 
-
-//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-//@         Process Page               @
-//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
-$appChain = new Draff_Chain( $appData, $appGlobals, 'kcmKernel_emitter' );
 $appChain->chn_form_register(1,'appForm_employeeSetup_select');
 $appChain->chn_form_register(2,'appForm_employeeSetup_edit');
 $appData->com_staffId = draff_urlArg_getOptional('stid', 0);

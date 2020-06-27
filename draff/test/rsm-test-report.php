@@ -7,19 +7,19 @@ include_once( '../../../rc_admin.inc.php' );
 include_once( '../../../rc_database.inc.php' );
 //include_once( '../../../rc_rsm-message-errors.inc.php' );
 
-include_once( '../../rsm/rsm-emitter.inc.php' ); 
-// include_once( '../rsm/rsm-form.inc.php' ); 
-include_once( '../../rsm/rsm-functions.inc.php' ); 
+include_once( '../../rsm/rsm-emitter.inc.php' );
+// include_once( '../rsm/rsm-form.inc.php' );
+include_once( '../../rsm/rsm-functions.inc.php' );
 
-include_once( '../rsm-emitter-dom-engine.inc.php' ); 
-include_once( '../rsm-emitter-dom-export.inc.php' ); 
+include_once( '../rsm-emitter-dom-engine.inc.php' );
+include_once( '../rsm-emitter-dom-export.inc.php' );
 
 
 //$test = 'h';
 //$test = 'e';
 //$test = 'h';
 $test = 'a'; // all in test mode
-$test = 'h'; 
+$test = 'h';
 
 rc_session_initialize();
 
@@ -37,7 +37,7 @@ rpt_test_cssEngine();
 //        $emitter->zone_body_end();
 //        //$emitter->zone_core_container_end();
 //    }
-//    
+//
 //    if ( $test == 'e') {
 //        $report->export_as_excel($test == 'E');
 //    }
@@ -46,7 +46,7 @@ rpt_test_cssEngine();
 //        $report->export_as_pdf($test == 'P');
 //    }
 //    if ( $test == 'a'){
-//        $emitter->zone_htmlHead('Kcm Menu');
+//        $emitter->zone_htmlHead();
 //        $emitter->zone_body_start('rsm-zone-body-standard');
 //        print '<br><hr>HTML<hr>';
 //        $report->export_as_html();
@@ -81,7 +81,7 @@ $report->head_add_cssStyle ( 'td.rpt-even', 'border-bottom:3px solid black;');
 $report->head_add_cssStyle (  'thead', 'border:4px solid red; vertical-align:top;background-color:#cccccc;');
 
 if ( $test == 'h') {
-    $report->zone_htmlHead('Test RSM Report');
+    $report->zone_htmlHead();
     $report->zone_body_start('rsm-zone-body-standard');
 }
 
@@ -90,7 +90,7 @@ if ( $test == 'h') {
     //$emitter->zone_core_container_start('sy-genre-default', $chain);
     //$emitter->zone_core_scrollArea_start('sy-genre-default');
   //  print '<h2>WIP - test of Report Object</h2><br><hr style="height:2px;width:100%;background-color:black;"><br>';
-    
+  
   //  $report->rpt_page_header_start('xxx');
   //  //$report->table_start('rpt-table',2);
   //  $report->column_define('@name','rpt-name');
@@ -197,13 +197,13 @@ if ( $test == 'h') {
     $report->row_end();
 
 //    $report->table_body_end();
-    
+
 //    $report->table_row_all_Cells('','aaa','111-222-3333','5 aaa','2011-01-01','01:01:01','2011-01-01 01:01:01');
 //    $report->table_row_all_Cells('','eee','111-222-3333 ext 12','1 eee','2015-02-02','14:02:02','2012-02-02 14:02:02');
 //    $report->table_row_all_Cells('','bbb','111-222-3333','4 bbb','2012-02-02','14:02:02','2012-02-02 14:02:02');
 //    $report->table_row_all_Cells('','ddd','111-222-3333',array('2',RPT_NEW_LINE,'bbb'),'2014-02-02','14:02:02','2012-02-02 14:02:02');
-//    $specsDate = array ( 'id'=>'@date','type'=>RPT_TYPE_DATE, 'format'=>'D, M j, Y');  
-//    $specsTime = array ( 'id'=>'@time','type'=>RPT_TYPE_TIME);  
+//    $specsDate = array ( 'id'=>'@date','type'=>RPT_TYPE_DATE, 'format'=>'D, M j, Y');
+//    $specsTime = array ( 'id'=>'@time','type'=>RPT_TYPE_TIME);
 //    $parcelDateDiv = $report->rpt_create_div_parcel('rpt-segDate','2013-02-02',$specsDate);
 //    $parcelTimeDiv = $report->rpt_create_div_parcel('rpt-segTime','14:02:02',$specsTime);
 //    $parcelWhenDiv = $report->rpt_create_div_parcel('rpt-segWhen',array($parcelDateDiv,$parcelTimeDiv)); // root
@@ -239,11 +239,11 @@ if ( $test == 'h') {
 //    $report->table_row_all_Cells('','zzzz','3 ccc','3333','77777');
 //    $report->table_body_end();
 //    $report->table_end();
-//    
-//    
-//    
-//    
-//    
+//
+//
+//
+//
+//
 //    $report->table_start('@table2','rpt-table');
 //    $report->column_define('@name','rpt-name');
 //    $report->column_define('@address','rpt-addr');
@@ -265,8 +265,8 @@ if ( $test == 'h') {
 //    $report->table_row_all_Cells('','zzzz','3 ccc','3333','77777');
 //    $report->table_body_end();
 //    $report->table_end();
-    
-    
+
+
 //   exit;  // why is this needed ?????????????
 ?>
 

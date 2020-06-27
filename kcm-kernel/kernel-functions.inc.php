@@ -8,8 +8,8 @@ function kernel_array_concat($array, $prefix, $suffix) {
     $newArray = array();
     foreach( $array as $value ) {
         $newArray[] = $prefix . $value . $suffix;
-    }  
-    return $newArray;    
+    }
+    return $newArray;
 }
 
 function krnLib_assert($isTrue, $error, $line=NULL) {
@@ -19,7 +19,7 @@ function krnLib_assert($isTrue, $error, $line=NULL) {
         }
         print '<br><hr>Programming (assert) Error:<br><br>'.$error.'<br><hr><br>';
         exit;
-    }    
+    }
 }
 
 function krnLib_getSchoolName( $schoolName, $uniquifier=NULL ) {
@@ -68,20 +68,21 @@ function kernel_processBannerSubmits( $appGlobals, $chain ) {
 	    unset( $_SESSION['Admin'] );
 	    unset( $_SESSION['Post']['Admin'] );
 		$url = rc_reconstructURL();
-        rc_redirectToURL($url); 
+        rc_redirectToURL($url);
 	}
 	if ($chain->chn_submit[0]=='banner-profile') {
         $emitter = new kcmKernel_emitter($appGlobals, NULL);
-        $emitter->zone_htmlHead($emitter->krmEmit_bannerTitle1);
+        $emitter->emit_options->emtSetTitle('Edit Profile');
+        $emitter->zone_htmlHead();
         $emitter->zone_body_start($chain, NULL);
-        $emitter->krnEmit_banner_output($appGlobals, 'Edit Profile', '', 'profile');
+        $emitter->krnEmit_banner_output($appGlobals, $emitter ); // '', 'profile');  //??????????
         $emitter->zone_start('zone-content-scrollable theme-panel');
         rc_showAdminProfilePage('../../');
         $emitter->zone_end();
         $emitter->zone_body_end();
 		// need to logout  -- is this the best way???
 		//$url = rc_reconstructURL();
-        //rc_redirectToURL($url); 
+        //rc_redirectToURL($url);
 	}
 }
 
@@ -92,15 +93,15 @@ function kernel_processBannerSubmits( $appGlobals, $chain ) {
 //             $field= '`'.$field.'`';
 //     }
 // }
-    
+
 function krnLib_getAuthorizationDateRange($dateOverride = NULL) {
     //????? future enhancement - in calling sql check date to only authourize first week or two of previous/next semester's event
-    //?????      so multiple semesters for an event only happens on the first/last week of viewing that event 
-    //?????      otherwise can access other semesters of event using roster access table    
+    //?????      so multiple semesters for an event only happens on the first/last week of viewing that event
+    //?????      otherwise can access other semesters of event using roster access table
     $dateToday = empty($dateOverride) ? date_create( "today" ) : date_create( $dateOverride );
     while (date_format( $dateToday, 'N' ) != 1) {  //1=Monday
         date_modify( $dateToday, '-1 day' );
-    }    
+    }
     $todaySql = date_format($dateToday,'Y-m-d');
     $monthDay  = substr($todaySql,5,5);;
     $year = substr($todaySql,0,4);
@@ -116,7 +117,7 @@ function krnLib_getAuthorizationDateRange($dateOverride = NULL) {
        $dateEnd = date_create(  ($year+1) . '-02-05' );
     }
     else {
-        $afterDays  ='+21'; ;  
+        $afterDays  ='+21'; ;
     	$dateEnd   = clone $dateToday;
         date_modify( $dateEnd, $afterDays . ' day' );
     }
@@ -141,5 +142,32 @@ function kcm_fetch_selectMap_staff($appGlobals, $isCombo = FALSE ) {
     }
     return $staffSelect;
  }
+
+function krnEmit_reportTitleRow($appEmitter, $title, $colSpan)  {  //?? moved from kernel emitter
+    $s1 = '<div class="draff-report-top-left"></div>';
+    $s2 = '<div class="draff-report-top-middle">'.$title.'</div>';
+    $s3 = '<div class="draff-report-top-right">'.draff_dateTimeAsString(rc_getNow(),'M j, Y' ).'</div>';
+    $appEmitter->row_start();
+    $appEmitter->cell_block($s1 . $s2 . $s3 ,'draff-report-top', 'colspan="'.$colSpan.'"');
+    $appEmitter->row_end();
+}
+
+function krnEmit_recordEditTitleRow($appEmitter,$title, $colSpan)  {  //?? moved from kernel emitter
+    // used once in roster-results-games
+    // $s1 = '<div class="draff-report-top-left"></div>';
+    $s2 = '<div class="draff-report-top-middle">'.$title.'</div>';
+    //   $s3 = '<div class="draff-report-top-right">'.draff_dateTimeAsString(rc_getNow(),'M j, Y' ).'</div>';
+    $appEmitter->row_start();
+    $appEmitter->cell_block($title ,'draff-edit-top', 'colspan="'.$colSpan.'"');
+    $appEmitter->row_end();
+}
+
+function krnEmit_button_editSubmit($caption, $value) {  //?? moved from kernel emitter
+    // used twice in set security
+    // submit for editing - so all are consistent - (design choices:Edit button - caption - caption button that looks like link)
+    //?????????? if report should not be coded as button ??????????????????????
+    //$cellClass = empty($cellClass) ? '' : ' class="'.$class.'"';
+    return '<button type="submit" class="kcmKrn-button-editLink" name="submit" value="'.$value.'">'  . $caption . '</button>';
+}
 
 ?>

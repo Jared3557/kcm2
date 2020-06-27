@@ -62,28 +62,22 @@ function chkReg_stdReport_output($emitter, $appGlobals, $period) {
 }
 
 function chkReg_stdReport_init_styles($emitter) {
-    $emitter->addOption_styleTag('table.payTable', 'background-color:white;font-size:16pt;');
-    $emitter->addOption_styleTag('tr.detail', 'background-color:white');
-    $emitter->addOption_styleTag('tr.cr-first','border-top:8px double #aaaaaa;');
- //   $emitter->addOption_styleTag('tr.cr-normal','border-top:1px solid #aaaaaa;');
-    $emitter->addOption_styleTag('td.cr-name','border-top: none;border-bottom:none;');
-    $emitter->addOption_styleTag('tr.head', 'background-color:#ccffcc');
-    $emitter->addOption_styleTag('td.name', '');
-    $emitter->addOption_styleTag('td.rate', 'text-align: right;');
-    $emitter->addOption_styleTag('td.time', 'text-align: right;');
-    $emitter->addOption_styleTag('td.pay', 'text-align: right;');
-    $emitter->addOption_styleTag('td.totalDesc', 'background-color:#ccffcc;');
-    $emitter->addOption_styleTag('td.totalPay', 'background-color:#ccffcc;text-align: right;');
+    $emitter->emit_options->addOption_styleTag('table.payTable', 'background-color:white;font-size:16pt;');
+    $emitter->emit_options->addOption_styleTag('tr.detail', 'background-color:white');
+    $emitter->emit_options->addOption_styleTag('tr.cr-first','border-top:8px double #aaaaaa;');
+ //   $emitter->emit_options->addOption_styleTag('tr.cr-normal','border-top:1px solid #aaaaaa;');
+    $emitter->emit_options->addOption_styleTag('td.cr-name','border-top: none;border-bottom:none;');
+    $emitter->emit_options->addOption_styleTag('tr.head', 'background-color:#ccffcc');
+    $emitter->emit_options->addOption_styleTag('td.name', '');
+    $emitter->emit_options->addOption_styleTag('td.rate', 'text-align: right;');
+    $emitter->emit_options->addOption_styleTag('td.time', 'text-align: right;');
+    $emitter->emit_options->addOption_styleTag('td.pay', 'text-align: right;');
+    $emitter->emit_options->addOption_styleTag('td.totalDesc', 'background-color:#ccffcc;');
+    $emitter->emit_options->addOption_styleTag('td.totalPay', 'background-color:#ccffcc;text-align: right;');
 }
 
-function drForm_outputPage ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->krnEmit_output_htmlHead  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyStart ( $appData, $appGlobals, $appChain, $this );
-    $appEmitter->krnEmit_output_ribbons  ( $appData, $appGlobals, $appChain, $this );
-    $this->drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputFooter  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyEnd  ( $appData, $appGlobals, $appChain, $this );
+function drForm_process_output ( $appData, $appGlobals, $appChain, $appEmitter ) {
+    $appGlobals->gb_output_form ( $appData, $appChain, $appEmitter, $this );
 }
 
 function drForm_outputHeader ( $scriptData, $appGlobals, $chain, $emitter ) {

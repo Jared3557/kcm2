@@ -1,6 +1,6 @@
 <?php
 
-//--- draff-objects.inc.php ---
+//--- draff-database.inc.php ---
 
 const DB_MODE_BASIC    = 1;
 const DB_MODE_DETAILS  = 2;

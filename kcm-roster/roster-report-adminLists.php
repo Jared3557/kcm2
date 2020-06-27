@@ -11,14 +11,14 @@ include_once( '../../rc_messages.inc.php' );
 
 //include_once( 'roster-system-data-tally.inc.php' );
 
-include_once( '../draff/draff-functions.inc.php' );
-include_once( '../draff/draff-objects.inc.php' );
 include_once( '../draff/draff-chain.inc.php' );
+include_once( '../draff/draff-database.inc.php');
 include_once( '../draff/draff-emitter.inc.php' );
 include_once( '../draff/draff-form.inc.php' );
-//include_once( '../draff/draff-emitter-dom-engine.inc.php' );
+include_once( '../draff/draff-functions.inc.php' );
+include_once( '../draff/draff-menu.inc.php' );
+include_once( '../draff/draff-page.inc.php' );
 
-include_once( '../kcm-kernel/kernel-emitter.inc.php');
 include_once( '../kcm-kernel/kernel-functions.inc.php');
 include_once( '../kcm-kernel/kernel-objects.inc.php');
 include_once( '../kcm-kernel/kernel-globals.inc.php');
@@ -54,9 +54,9 @@ include_once('../../lib/excel/rc_excel/rc_PHPExcel.inc.php');
 //@  Step 1
 //@@@@@@@@@@@@@@@@@@@@
 
-class appForm_kcm1_tallyReport extends Draff_Form {  // specify winner
+class appForm_kcm1_tallyReport extends kcmKernel_Draff_Form {  // specify winner
 
-function drForm_processSubmit ( $appData, $appGlobals, $appChain ) {
+function drForm_process_submit ( $appData, $appGlobals, $appChain ) {
     $appData->apd_formData_get( $appGlobals, $appChain );
     $appData->apd_reportFilters->rf_form_processExportSubmit( $appData->apd_tallyReport, $appGlobals, $appChain, $submit );
 }
@@ -66,20 +66,18 @@ function drForm_initData( $appData, $appGlobals, $appChain ) {
 }
 
 function drForm_initHtml( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->set_theme( 'theme-select' );
-    $appEmitter->set_title('Setup Point Categories');
-    $appGlobals->gb_appMenu_init($appChain, $appEmitter, $appData->apd_roster_program );
-    $appEmitter->set_menu_customize( $appChain, $appGlobals  );
+    $appEmitter->emit_options->set_theme( 'theme-select' );
+    $appEmitter->emit_options->set_title('Setup Point Categories');
+    $appGlobals->gb_ribbonMenu_Initialize($appChain, $appEmitter, $appData->apd_roster_program );
+    $appGlobals->gb_menu->drMenu_customize();
     kcmRosterLib_setBannerSubTitle($appEmitter,$appGlobals, $appData->apd_roster_program,'Admin Lists');
     if ($appData->apd_isExport) {
         return;
     }
-    $appGlobals->gb_appMenu_init($appChain, $appEmitter, $appData->apd_roster_program);
-    $appEmitter->set_menu_customize( $appChain, $appGlobals );
-    $appEmitter->addOption_styleFile('kcm-roster/kcm1css/kcm-common_css.css','all','../');
-    $appEmitter->addOption_styleFile('kcm-roster/kcm1css/kcm-common_screen.css','all','../');
-    $appEmitter->addOption_styleFile('kcm-roster/kcm1css/kcm-common_print.css','all','../');
-    $appEmitter->addOption_styleFile('kcm-roster/kcm1css/kcm-rpt-NameLabels.css','all','../');
+    $appEmitter->emit_options->addOption_styleFile('kcm-roster/kcm1css/kcm-common_css.css','all','../');
+    $appEmitter->emit_options->addOption_styleFile('kcm-roster/kcm1css/kcm-common_screen.css','all','../');
+    $appEmitter->emit_options->addOption_styleFile('kcm-roster/kcm1css/kcm-common_print.css','all','../');
+    $appEmitter->emit_options->addOption_styleFile('kcm-roster/kcm1css/kcm-rpt-NameLabels.css','all','../');
 }
 
 function drForm_initFields( $appData, $appGlobals, $appChain ) {
@@ -87,14 +85,8 @@ function drForm_initFields( $appData, $appGlobals, $appChain ) {
     $appData->apd_reportFilters->rf_form_initControls($this);
 }
 
-function drForm_outputPage ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->krnEmit_output_htmlHead  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyStart ( $appData, $appGlobals, $appChain, $this );
-    $appEmitter->krnEmit_output_ribbons  ( $appData, $appGlobals, $appChain, $this );
-    $this->drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputFooter  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyEnd  ( $appData, $appGlobals, $appChain, $this );
+function drForm_process_output ( $appData, $appGlobals, $appChain, $appEmitter ) {
+    $appGlobals->gb_output_form ( $appData, $appChain, $appEmitter, $this );
 }
 
 function drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter ) {
@@ -124,7 +116,7 @@ function drForm_outputFooter ( $appData, $appGlobals, $appChain, $appEmitter ) {
 
 }  // end class
 
-class appData_AdminReports extends draff_appData {
+class application_data extends draff_appData {
 public $apd_roster_program;
 public $apd_tallyReport;
 public $apd_isExport = FALSE;
@@ -678,10 +670,10 @@ function getTransferredKids($db, $prevSemesterProgramId) {
 
 rc_session_initialize();
 
-$appGlobals = new kcmRoster_globals();
+$appChain = new Draff_Chain( 'kcmKernel_emitter' );
+$appChain->chn_register_appGlobals( $appGlobals = new kcmRoster_globals());
+$appChain->chn_register_appData( $appData = new application_data());
 $appGlobals->gb_forceLogin ();
-$appData = new appData_AdminReports;
-$appChain = new Draff_Chain( $appData, $appGlobals, 'kcmKernel_emitter' );
 
 $appData->apd_roster_program = new pPr_program_extended_forRoster($appGlobals);
 $appData->apd_roster_program->rst_load_rosterData($appGlobals, $appChain);

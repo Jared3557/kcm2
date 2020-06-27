@@ -9,13 +9,14 @@ include_once( '../../rc_admin.inc.php' );
 include_once( '../../rc_database.inc.php' );
 include_once( '../../rc_messages.inc.php' );
 
-include_once( '../draff/draff-functions.inc.php' );
-include_once( '../draff/draff-objects.inc.php' );
 include_once( '../draff/draff-chain.inc.php' );
+include_once( '../draff/draff-database.inc.php');
 include_once( '../draff/draff-emitter.inc.php' );
 include_once( '../draff/draff-form.inc.php' );
+include_once( '../draff/draff-functions.inc.php' );
+include_once( '../draff/draff-menu.inc.php' );
+include_once( '../draff/draff-page.inc.php' );
 
-include_once( '../kcm-kernel/kernel-emitter.inc.php');
 include_once( '../kcm-kernel/kernel-functions.inc.php');
 include_once( '../kcm-kernel/kernel-objects.inc.php');
 include_once( '../kcm-kernel/kernel-globals.inc.php');
@@ -28,9 +29,9 @@ const WID_ADMIN    = 3;
 const WID_CONTACTS = 4;
 const WID_SCHOOLS  = 5;
 
-Class appForm_usefulLinks_view extends Draff_Form {
+Class appForm_usefulLinks_view extends kcmKernel_Draff_Form {
 
-function drForm_processSubmit ( $appData, $appGlobals, $appChain ) {
+function drForm_process_submit ( $appData, $appGlobals, $appChain ) {
     kernel_processBannerSubmits( $appGlobals, $appChain, $submit );
 }
 
@@ -38,23 +39,17 @@ function drForm_initData( $appData, $appGlobals, $appChain ) {
 }
 
 function drForm_initHtml( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->set_theme( 'theme-panel' );
-    $appEmitter->set_title('Useful Links');
-    $appEmitter->set_menu_standard($appChain, $appGlobals);
-    $appEmitter->set_menu_customize( $appChain, $appGlobals  );
+    $appEmitter->emit_options->set_theme( 'theme-panel' );
+    $appEmitter->emit_options->set_title('Useful Links');
+    $appGlobals->gb_ribbonMenu_Initialize($appChain, $appGlobals);
+    $appGlobals->gb_menu->drMenu_customize();
 }
 
 function drForm_initFields( $appData, $appGlobals, $appChain ) {
 }
 
-function drForm_outputPage ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->krnEmit_output_htmlHead  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyStart ( $appData, $appGlobals, $appChain, $this );
-    $appEmitter->krnEmit_output_ribbons  ( $appData, $appGlobals, $appChain, $this );
-    $this->drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputFooter  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyEnd  ( $appData, $appGlobals, $appChain, $this );
+function drForm_process_output ( $appData, $appGlobals, $appChain, $appEmitter ) {
+    $appGlobals->gb_output_form ( $appData, $appChain, $appEmitter, $this );
 }
 
 function drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter ) {
@@ -159,15 +154,15 @@ function __construct() {
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 rc_session_initialize();
 
-$appGlobals = new kcmGateway_globals();
-$appGlobals->gb_forceLogin ();
-$appData = new application_data();
-
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 //@         Process Page               @
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-$appChain = new Draff_Chain( $appData, $appGlobals, 'kcmKernel_emitter' );
+$appChain = new Draff_Chain(  'kcmKernel_emitter' );
+$appChain->chn_register_appGlobals( $appGlobals = new kcmGateway_globals());
+$appChain->chn_register_appData( new application_data());
+$appGlobals->gb_forceLogin ();
+
 $appChain->chn_form_register(1,'appForm_usefulLinks_view');
 $appChain->chn_form_launch(); // proceed to current step
 

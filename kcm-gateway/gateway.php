@@ -9,13 +9,14 @@ include_once( '../../rc_admin.inc.php' );
 include_once( '../../rc_database.inc.php' );
 include_once( '../../rc_messages.inc.php' );
 
-include_once( '../draff/draff-functions.inc.php' );
-include_once( '../draff/draff-objects.inc.php' );
 include_once( '../draff/draff-chain.inc.php' );
+include_once( '../draff/draff-database.inc.php');
 include_once( '../draff/draff-emitter.inc.php' );
 include_once( '../draff/draff-form.inc.php' );
+include_once( '../draff/draff-functions.inc.php' );
+include_once( '../draff/draff-menu.inc.php' );
+include_once( '../draff/draff-page.inc.php' );
 
-include_once( '../kcm-kernel/kernel-emitter.inc.php');
 include_once( '../kcm-kernel/kernel-functions.inc.php');
 include_once( '../kcm-kernel/kernel-objects.inc.php');
 include_once( '../kcm-kernel/kernel-globals.inc.php');
@@ -39,9 +40,9 @@ CONST DRFFORM_PANEL_SMREPORT  = 22;
 //=============
 //==============================
 //=============================================
-Class appForm_mySchedule extends Draff_Form {
+Class appForm_mySchedule extends kcmKernel_Draff_Form {
 
-function drForm_processSubmit ( $appData, $appGlobals, $appChain ) {
+function drForm_process_submit ( $appData, $appGlobals, $appChain ) {
     if ($appChain->chn_submit[0] == 'week') {
         $appChain->chn_status->ses_set('#schedAction', $appChain->chn_submit[1]);
         $appChain->chn_form_launch(1);
@@ -75,35 +76,25 @@ function drForm_initData( $appData, $appGlobals, $appChain ) {
 }
 
 function drForm_initHtml( $appData, $appGlobals, $appChain, $appEmitter ) {
-//    $appEmitter->set_theme( 'theme-report' );
-//    $appEmitter->set_title('Weekly Schedule');
-//    $appEmitter->set_menu_standard($appChain, $appGlobals);
-//    $appEmitter->set_menu_customize( $appChain, $appGlobals );
     $appData->apd_view_getData( $appGlobals );
-    $appEmitter->set_theme( 'theme-legacy' );
-    $appEmitter->set_title('Weekly Schedule');
-    $appEmitter->set_menu_standard($appChain, $appGlobals);
-    $appEmitter->set_menu_customize( $appChain, $appGlobals, 'ls-sd'  );
-    $appEmitter->addOption_styleFile('css/krLib/krLib-schedule-output.css','all','../../');
+    $appEmitter->emit_options->set_theme( 'theme-legacy' );
+    $appEmitter->emit_options->set_title('Weekly Schedule');
+    $appGlobals->gb_ribbonMenu_Initialize($appChain, $appGlobals);
+    $appGlobals->gb_menu->drMenu_customize( 'ls-sd'  );
+    $appEmitter->emit_options->addOption_styleFile('css/krLib/krLib-schedule-output.css','all','../../');
     $dateCss = 'background-color:white;font-size:1.1em;max-width:6em; min-width:6em;';
-    $appEmitter->addOption_styleTag('table.scTable','background-color:white;font-size:0.7em;width:95%;max-width:1900px;min-width:400px;');
-    $appEmitter->addOption_styleTag('td.sch_date',$dateCss);
-    $appEmitter->addOption_styleTag('td.sch_date_scIsSameFirst',$dateCss);
-    $appEmitter->addOption_styleTag('div.xdraff-zone-header','font-size:0.5em;background-color:#c2f6ef');
+    $appEmitter->emit_options->addOption_styleTag('table.scTable','background-color:white;font-size:0.7em;width:95%;max-width:1900px;min-width:400px;');
+    $appEmitter->emit_options->addOption_styleTag('td.sch_date',$dateCss);
+    $appEmitter->emit_options->addOption_styleTag('td.sch_date_scIsSameFirst',$dateCss);
+    $appEmitter->emit_options->addOption_styleTag('div.xdraff-zone-header','font-size:0.5em;background-color:#c2f6ef');
 }
 
 
 function drForm_initFields( $appData, $appGlobals, $appChain ) {
 }
 
-function drForm_outputPage ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->krnEmit_output_htmlHead  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyStart ( $appData, $appGlobals, $appChain, $this );
-    $appEmitter->krnEmit_output_ribbons  ( $appData, $appGlobals, $appChain, $this );
-    $this->drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputFooter  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyEnd  ( $appData, $appGlobals, $appChain, $this );
+function drForm_process_output ( $appData, $appGlobals, $appChain, $appEmitter ) {
+    $appGlobals->gb_output_form ( $appData, $appChain, $appEmitter, $this );
 }
 
 function drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter ) {
@@ -142,16 +133,16 @@ function drForm_outputFooter ( $appData, $appGlobals, $appChain, $appEmitter ) {
 //==============================
 //=============================================
 
-class appForm_panel_event extends Draff_Form {
+class appForm_panel_event extends kcmKernel_Draff_Form {
 
-function drForm_processSubmit ( $appData, $appGlobals, $appChain ) {
+function drForm_process_submit ( $appData, $appGlobals, $appChain ) {
     kernel_processBannerSubmits( $appGlobals, $appChain );
     $appData->apd_common_processSubmit( $appGlobals, $appChain );
     //$appData->apd_getData_myProgram( $appGlobals, $appChain )
     if ( $appChain->chn_submit[0] == '@kcm2') {
         $periodId = $appData->apd_get_minPeriod($appGlobals, $appChain->chn_submit[1]);
         // wrong url
-        $appChain->chn_url_redirect('../kcm-roster/roster-results-games.php',  FALSE, array('PrId'=>$appChain->chn_submit[1],'PeId'=>$periodId,'rsmMode'=>'3'));
+        $appChain->chn_url_redirect('../kcm-roster/roster-results-games.php',  FALSE, array('PrId'=>$appChain->chn_submit[1],'PeId'=>$periodId,'drfMode'=>'3'));
         return;
     }
     if ( $appChain->chn_submit[0] == '@kcm1') {
@@ -186,13 +177,10 @@ function drForm_initData( $appData, $appGlobals, $appChain ) {
 }
 
 function drForm_initHtml( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->set_theme( 'theme-panel' );
-    $appEmitter->set_title('My Events');
-    $appEmitter->set_menu_standard($appChain, $appGlobals);
-    $appEmitter->set_menu_customize( $appChain, $appGlobals  );
-//    $appEmitter->set_title('My Events');
-//    $appEmitter->set_menu_standard($appChain, $appGlobals);
-//    $appEmitter->set_menu_customize( $appChain, $appGlobals  );
+    $appEmitter->emit_options->set_theme( 'theme-panel' );
+    $appEmitter->emit_options->set_title('My Events');
+    $appGlobals->gb_ribbonMenu_Initialize($appChain, $appGlobals);
+    $appGlobals->gb_menu->drMenu_customize();
 }
 
 function drForm_initFields( $appData, $appGlobals, $appChain ) {
@@ -213,14 +201,8 @@ function drForm_initFields( $appData, $appGlobals, $appChain ) {
     }
 }
 
-function drForm_outputPage ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->krnEmit_output_htmlHead  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyStart ( $appData, $appGlobals, $appChain, $this );
-    $appEmitter->krnEmit_output_ribbons  ( $appData, $appGlobals, $appChain, $this );
-    $this->drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputFooter  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyEnd  ( $appData, $appGlobals, $appChain, $this );
+function drForm_process_output ( $appData, $appGlobals, $appChain, $appEmitter ) {
+    $appGlobals->gb_output_form ( $appData, $appChain, $appEmitter, $this );
 }
 
 function drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter ) {
@@ -276,11 +258,11 @@ function drForm_outputFooter ( $appData, $appGlobals, $appChain, $appEmitter ) {
 
 } // end class
 
-class appForm_panel_smReport extends Draff_Form {
+class appForm_panel_smReport extends kcmKernel_Draff_Form {
 
 public $sem_semesters;
 
-function drForm_processSubmit ( $appData, $appGlobals, $appChain ) {
+function drForm_process_submit ( $appData, $appGlobals, $appChain ) {
     kernel_processBannerSubmits( $appGlobals, $appChain, $submit );
     $appData->apd_common_processSubmit( $appGlobals, $appChain, $submit );
     // test for cancel
@@ -304,13 +286,10 @@ function drForm_initData( $appData, $appGlobals, $appChain ) {
 }
 
 function drForm_initHtml( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->set_theme( 'theme-panel' );
-    $appEmitter->set_title('My Events - All Semesters');
-    $appEmitter->set_menu_standard($appChain, $appGlobals);
-    $appEmitter->set_menu_customize( $appChain, $appGlobals  );
-   //$appEmitter->set_title('My Events - All Semesters');
-    //$appEmitter->set_menu_standard($appChain, $appGlobals);
-    //$appEmitter->set_menu_customize( $appChain, $appGlobals  );
+    $appEmitter->emit_options->set_theme( 'theme-panel' );
+    $appEmitter->emit_options->set_title('My Events - All Semesters');
+    $appGlobals->gb_ribbonMenu_Initialize($appChain, $appGlobals);
+    $appGlobals->gb_menu->drMenu_customize();
     $appData->apd_smReport_editReport->stdRpt_initStyles($appEmitter);
 }
 
@@ -319,7 +298,7 @@ function drForm_initFields( $appData, $appGlobals, $appChain ) {
     $appData->apd_smReport_editReport->stdRpt_initFormFields($appData,$this);
     $appData->apd_common_initControls ( $appGlobals, $appChain, $this );
     //foreach ($this->sem_semesters as $key => $desc) {
-        // $name = $draff_emitter_engine::getString_sizedMemo($staff->st_name,10);
+        // $name = $Draff_Emitter_Html::getString_sizedMemo($staff->st_name,10);
      //   $name = $staff->st_name;
      //   $id = '@staffId_' .  $staff->st_staffId;
     //    $this->drForm_define_button( $key , $desc );
@@ -327,14 +306,8 @@ function drForm_initFields( $appData, $appGlobals, $appChain ) {
     //application_data::common_standardFooter_define($form);
 }
 
-function drForm_outputPage ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->krnEmit_output_htmlHead  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyStart ( $appData, $appGlobals, $appChain, $this );
-    $appEmitter->krnEmit_output_ribbons  ( $appData, $appGlobals, $appChain, $this );
-    $this->drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputFooter  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyEnd  ( $appData, $appGlobals, $appChain, $this );
+function drForm_process_output ( $appData, $appGlobals, $appChain, $appEmitter ) {
+    $appGlobals->gb_output_form ( $appData, $appChain, $appEmitter, $this );
 }
 
 function drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter ) {
@@ -385,9 +358,9 @@ function drForm_outputFooter ( $appData, $appGlobals, $appChain, $appEmitter ) {
 
 } // end class
 
-class appForm_events_viewDetails extends Draff_Form {
+class appForm_events_viewDetails extends kcmKernel_Draff_Form {
 
-function drForm_processSubmit ( $appData, $appGlobals, $appChain ) {
+function drForm_process_submit ( $appData, $appGlobals, $appChain ) {
     kernel_processBannerSubmits( $appGlobals, $appChain, $submit );
 }
 
@@ -402,26 +375,17 @@ function drForm_initData( $appData, $appGlobals, $appChain ) {
 //}
 
 function drForm_initHtml( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->set_theme( 'theme-panel' );
-    $appEmitter->set_title('My Events');
-    $appEmitter->set_menu_standard($appChain, $appGlobals);
-    $appEmitter->set_menu_customize( $appChain, $appGlobals  );
-    //$appEmitter->set_title('My Events');
-    //$appEmitter->set_menu_standard($appChain, $appGlobals);
-    //$appEmitter->set_menu_customize( $appChain, $appGlobals  );
+    $appEmitter->emit_options->set_theme( 'theme-panel' );
+    $appEmitter->emit_options->set_title('My Events');
+    $appGlobals->gb_ribbonMenu_Initialize($appChain, $appGlobals);
+    $appGlobals->gb_menu->drMenu_customize();
 }
 
 function drForm_initFields( $appData, $appGlobals, $appChain ) {
 }
 
-function drForm_outputPage ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->krnEmit_output_htmlHead  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyStart ( $appData, $appGlobals, $appChain, $this );
-    $appEmitter->krnEmit_output_ribbons  ( $appData, $appGlobals, $appChain, $this );
-    $this->drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputFooter  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyEnd  ( $appData, $appGlobals, $appChain, $this );
+function drForm_process_output ( $appData, $appGlobals, $appChain, $appEmitter ) {
+    $appGlobals->gb_output_form ( $appData, $appChain, $appEmitter, $this );
 }
 
 function drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter ) {
@@ -442,30 +406,30 @@ function __construct() {
 }
 
 function stdRpt_initStyles($appEmitter) {
-    $appEmitter->addOption_styleTag('table.co-table','width:50rem');
-    $appEmitter->addOption_styleTag('table.smrTable','border-collapse:collapse; border-spacing:0; empty-cells:show; border:2px; table-layout:fixed; margin-top: 8pt;');
-    $appEmitter->addOption_styleTag('td','border:1px solid #666666; padding: 0.4em; font-size: 1em; font-weight:normal; vertical-align:top;');
-    $appEmitter->addOption_styleTag('td.com_headColor','background-color: #ddddff;');
-    $appEmitter->addOption_styleTag('div.smrHeadDiv','font-size:1.4em; font-weight:bold;');
-    $appEmitter->addOption_styleTag('.smrTimeInput','width: 60pt;');
-    $appEmitter->addOption_styleTag('td.sSt_name','width: 13em;');
-    $appEmitter->addOption_styleTag('td.staff_time','width: 5em;');
-    $appEmitter->addOption_styleTag('td.staff_equip','width: 4em;');
-    $appEmitter->addOption_styleTag('td.staff_badge','width: 4em;');
-    $appEmitter->addOption_styleTag('td.staff_schNote',' width: 20em; min-width: 14em; max-width: 35em;');
-    $appEmitter->addOption_styleTag('td.ev_schNote','');
-    $appEmitter->addOption_styleTag('textarea.ev_schNote','background-color: #eeeeee; width: 95%;');
-    $appEmitter->addOption_styleTag('td.notes_edit','width: 30em;');
-    $appEmitter->addOption_styleTag('textarea.notes_edit','width: 100%; height: 15em; font: 0.9em;');
-    $appEmitter->addOption_styleTag('button','font-size: 1.2em;');
-    $appEmitter->addOption_styleTag('button.submitCom','');
-    $appEmitter->addOption_styleTag('button.submitInc',' margin-left: 5em;');
-    $appEmitter->addOption_styleTag('button.submitOth','margin-left: 5em;');
-    $appEmitter->addOption_styleTag('td.error','color: red; font-weight:bold;');
-    $appEmitter->addOption_styleTag('.error input','background-color: #ffcccc; color: black;');
-    $appEmitter->addOption_styleTag('.error textarea','background-color: #ffcccc; color: black;');
-    $appEmitter->addOption_styleTag('td.absent','color: blue; font-weight:bold;');
-    $appEmitter->addOption_styleTag('.absent input','background-color: #ccccff; color: blue;');
+    $appEmitter->emit_options->addOption_styleTag('table.co-table','width:50rem');
+    $appEmitter->emit_options->addOption_styleTag('table.smrTable','border-collapse:collapse; border-spacing:0; empty-cells:show; border:2px; table-layout:fixed; margin-top: 8pt;');
+    $appEmitter->emit_options->addOption_styleTag('td','border:1px solid #666666; padding: 0.4em; font-size: 1em; font-weight:normal; vertical-align:top;');
+    $appEmitter->emit_options->addOption_styleTag('td.com_headColor','background-color: #ddddff;');
+    $appEmitter->emit_options->addOption_styleTag('div.smrHeadDiv','font-size:1.4em; font-weight:bold;');
+    $appEmitter->emit_options->addOption_styleTag('.smrTimeInput','width: 60pt;');
+    $appEmitter->emit_options->addOption_styleTag('td.sSt_name','width: 13em;');
+    $appEmitter->emit_options->addOption_styleTag('td.staff_time','width: 5em;');
+    $appEmitter->emit_options->addOption_styleTag('td.staff_equip','width: 4em;');
+    $appEmitter->emit_options->addOption_styleTag('td.staff_badge','width: 4em;');
+    $appEmitter->emit_options->addOption_styleTag('td.staff_schNote',' width: 20em; min-width: 14em; max-width: 35em;');
+    $appEmitter->emit_options->addOption_styleTag('td.ev_schNote','');
+    $appEmitter->emit_options->addOption_styleTag('textarea.ev_schNote','background-color: #eeeeee; width: 95%;');
+    $appEmitter->emit_options->addOption_styleTag('td.notes_edit','width: 30em;');
+    $appEmitter->emit_options->addOption_styleTag('textarea.notes_edit','width: 100%; height: 15em; font: 0.9em;');
+    $appEmitter->emit_options->addOption_styleTag('button','font-size: 1.2em;');
+    $appEmitter->emit_options->addOption_styleTag('button.submitCom','');
+    $appEmitter->emit_options->addOption_styleTag('button.submitInc',' margin-left: 5em;');
+    $appEmitter->emit_options->addOption_styleTag('button.submitOth','margin-left: 5em;');
+    $appEmitter->emit_options->addOption_styleTag('td.error','color: red; font-weight:bold;');
+    $appEmitter->emit_options->addOption_styleTag('.error input','background-color: #ffcccc; color: black;');
+    $appEmitter->emit_options->addOption_styleTag('.error textarea','background-color: #ffcccc; color: black;');
+    $appEmitter->emit_options->addOption_styleTag('td.absent','color: blue; font-weight:bold;');
+    $appEmitter->emit_options->addOption_styleTag('.absent input','background-color: #ccccff; color: blue;');
 }
 
 function stdRpt_initFormFields($appData, $form) {
@@ -738,9 +702,9 @@ function apd_get_minPeriod($appGlobals, $programId) {
 
 function com_htmlOut_startOfPage($appChain, $appData, $appEmitter, $form, $appGlobals, $subTitle) {
     //$appEmitter->gwyEmit_kernelOverride_webPage_init( $appGlobals, $appChain,'??','ls*');  // includes adding of css files
-    $appEmitter->addOption_styleTag('table.loc-programs', 'margin: 10pt 10pt 10pt 10pt; background-color:white;');
-    $appEmitter->addOption_styleTag('td.loc-programs-sel', 'font:14pt; font-weight:bold; padding: 4pt 12pt 4pt 12pt; background-color:white;min-width:210pt;');
-    $appEmitter->addOption_styleTag('td.loc-programs', 'font:14pt; font-weight:bold; padding: 4pt 12pt 4pt 12pt; background-color:white;');
+    $appEmitter->emit_options->addOption_styleTag('table.loc-programs', 'margin: 10pt 10pt 10pt 10pt; background-color:white;');
+    $appEmitter->emit_options->addOption_styleTag('td.loc-programs-sel', 'font:14pt; font-weight:bold; padding: 4pt 12pt 4pt 12pt; background-color:white;min-width:210pt;');
+    $appEmitter->emit_options->addOption_styleTag('td.loc-programs', 'font:14pt; font-weight:bold; padding: 4pt 12pt 4pt 12pt; background-color:white;');
 }
 
 static function common_standardFilters_define($form) {
@@ -793,7 +757,11 @@ $appData = new application_data();
 //@         Process Page               @
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-$appChain = new Draff_Chain( $appData, $appGlobals, 'kcmKernel_emitter' );
+$appChain = new Draff_Chain( 'kcmKernel_emitter' );
+$appChain->chn_register_appGlobals( $appGlobals = new kcmGateway_globals());
+$appChain->chn_register_appData( new application_data());
+$appGlobals->gb_forceLogin ();
+
 $appChain->chn_form_register(DRFFORM_MY_SCHEDULE,'appForm_mySchedule');
 $appChain->chn_form_register(DRFFORM_PANEL_SMREPORT,'appForm_panel_smReport');
 $appChain->chn_form_register(DRFFORM_PANEL_EVENT,'appForm_panel_event');

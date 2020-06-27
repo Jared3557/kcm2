@@ -3,7 +3,7 @@
 // racKcmAdmin_security.php
 
 // todo:
-//    eliminate old expired data
+//    eliminate old expired data - how often
 
 ob_start();  // output buffering (needed for redirects, draff-appHeader changes)- or use hide ????
 
@@ -12,13 +12,14 @@ include_once( '../../rc_admin.inc.php' );
 include_once( '../../rc_database.inc.php' );
 include_once( '../../rc_messages.inc.php' );
 
-include_once( '../draff/draff-functions.inc.php' );
-include_once( '../draff/draff-objects.inc.php' );
 include_once( '../draff/draff-chain.inc.php' );
+include_once( '../draff/draff-database.inc.php');
 include_once( '../draff/draff-emitter.inc.php' );
 include_once( '../draff/draff-form.inc.php' );
+include_once( '../draff/draff-functions.inc.php' );
+include_once( '../draff/draff-menu.inc.php' );
+include_once( '../draff/draff-page.inc.php' );
 
-include_once( '../kcm-kernel/kernel-emitter.inc.php');
 include_once( '../kcm-kernel/kernel-functions.inc.php');
 include_once( '../kcm-kernel/kernel-objects.inc.php');
 include_once( '../kcm-kernel/kernel-globals.inc.php');
@@ -31,9 +32,9 @@ include_once( 'admin-system-globals.inc.php' );
 //@  Step 1
 //@@@@@@@@@@@@@@@@@@@@
 
-class appForm_courseAuthorization_grid extends Draff_Form {  // specify winner
+class appForm_courseAuthorization_grid extends kcmKernel_Draff_Form {  // should be renamed to view??
 
-function drForm_processSubmit ( $appData, $appGlobals, $appChain ) {
+function drForm_process_submit ( $appData, $appGlobals, $appChain ) {
     kernel_processBannerSubmits( $appGlobals, $appChain );
     //$appChain->chn_form_savePostedData();
     $appData->apd_init_always ($appGlobals, $appChain);
@@ -79,9 +80,9 @@ function drForm_initData( $appData, $appGlobals, $appChain ) {
 }
 
 function drForm_initHtml( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->set_theme( 'theme-report' );
-    $appEmitter->set_title('Set Roster Security');
-    $appEmitter->set_menu_customize( $appChain, $appGlobals  );
+    $appEmitter->emit_options->set_theme( 'theme-report' );
+    $appEmitter->emit_options->set_title('Set Roster Security');
+    $appGlobals->gb_menu->drMenu_customize();
 }
 
 function drForm_initFields( $appData, $appGlobals, $appChain ) {
@@ -101,14 +102,8 @@ function drForm_initFields( $appData, $appGlobals, $appChain ) {
     //nn }
 }
 
-function drForm_outputPage ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->krnEmit_output_htmlHead  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyStart ( $appData, $appGlobals, $appChain, $this );
-    $appEmitter->krnEmit_output_ribbons  ( $appData, $appGlobals, $appChain, $this );
-    $this->drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputFooter  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyEnd  ( $appData, $appGlobals, $appChain, $this );
+function drForm_process_output ( $appData, $appGlobals, $appChain, $appEmitter ) {
+    $appGlobals->gb_output_form ( $appData, $appChain, $appEmitter, $this );
 }
 
 function drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter ) {
@@ -138,9 +133,9 @@ function drForm_outputFooter ( $appData, $appGlobals, $appChain, $appEmitter ) {
 //@  Step 2
 //@@@@@@@@@@@@@@@@@@@@
 
-class appForm_courseAuthorization_edit extends Draff_Form {
+class appForm_courseAuthorization_edit extends kcmKernel_Draff_Form {
 
-function drForm_processSubmit ( $appData, $appGlobals, $appChain ) {
+function drForm_process_submit ( $appData, $appGlobals, $appChain ) {
     kernel_processBannerSubmits( $appGlobals, $appChain );
     if ($appChain->chn_submit[0] == 'subCancel') {
         $appChain->chn_message_set( 'Cancelled');
@@ -177,10 +172,10 @@ function drForm_initData( $appData, $appGlobals, $appChain ) {
 }
 
 function drForm_initHtml( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->set_theme( 'theme-report' );
-    $appEmitter->set_title('Set Roster Security');
-    $appEmitter->set_menu_standard($appChain, $appGlobals);
-    $appEmitter->set_menu_customize( $appChain, $appGlobals  );
+    $appEmitter->emit_options->set_theme( 'theme-report' );
+    $appEmitter->emit_options->set_title('Set Roster Security');
+    $appGlobals->gb_ribbonMenu_Initialize($appChain, $appGlobals);
+    $appGlobals->gb_menu->drMenu_customize();
 }
 
 function drForm_initFields( $appData, $appGlobals, $appChain ) {
@@ -221,14 +216,8 @@ function drForm_initFields( $appData, $appGlobals, $appChain ) {
     $this->drForm_addField( new Draff_Button( 'subCancel' , 'Cancel') );
 }
 
-function drForm_outputPage ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->krnEmit_output_htmlHead  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyStart ( $appData, $appGlobals, $appChain, $this );
-    $appEmitter->krnEmit_output_ribbons  ( $appData, $appGlobals, $appChain, $this );
-    $this->drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputFooter  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyEnd  ( $appData, $appGlobals, $appChain, $this );
+function drForm_process_output ( $appData, $appGlobals, $appChain, $appEmitter ) {
+    $appGlobals->gb_output_form ( $appData, $appChain, $appEmitter, $this );
 }
 
 function drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter ) {
@@ -270,7 +259,7 @@ function rep_viewByStaff ($appEmitter,$appGlobals, $appData) {
     $tableLayout = new rsmp_emitter_table_layout('ase', array(32,18,16,14,14));
     $appEmitter->table_start('draff-report',$tableLayout);
     $appEmitter->table_head_start();
-    $appEmitter->krnEmit_reportTitleRow('Event Staff Authorization Report',5);
+    krnEmit_reportTitleRow($appEmitter,'Event Staff Authorization Report',5);
     $appEmitter->row_start();
     $appEmitter->cell_block($Column1Title,'');
     $appEmitter->cell_block($Column2Title,'');
@@ -293,7 +282,7 @@ function rep_viewByStaff ($appEmitter,$appGlobals, $appData) {
         $editId = 'editStaff_'.$staff->sSt_staffId; // '_' . $secItem->cPA_authorizationId  . '_' . $secItem->cPA_staffId . '_' .$secItem->cPA_schoolId . '_' . $secItem->cPA_programId. '_' . $secItem->cPA_programDow;
         $button = $appEmitter->getString_button( 'Edit', 'loc-short-button', $editId);
         // $Column1Data = $button . ' &nbsp;' . $staff->sSt_name; //  . ' ' . $button;
-        $Column1Data = $appEmitter->krnEmit_button_editSubmit($staff->sSt_name, $editId);
+        $Column1Data = krnEmit_button_editSubmit($staff->sSt_name, $editId);
         $Column2Data = 'school';
         $topStyle = '  border-group-top';
         $appEmitter->row_start('loc-subheader');
@@ -340,7 +329,7 @@ function rep_viewByCourse ($appEmitter,$appGlobals, $appData) {
     $tableLayout = new rsmp_emitter_table_layout('ase', array(32,18,16,14,14));
     $appEmitter->table_start('draff-report',$tableLayout);
     $appEmitter->table_head_start();
-    $appEmitter->krnEmit_reportTitleRow('Event Program Authorization Report',5);
+    krnEmit_reportTitleRow($appEmitter,'Event Program Authorization Report',5);
     $appEmitter->row_start();
     $appEmitter->cell_block('Program/Event','');
     $appEmitter->cell_block('Staff','');
@@ -366,7 +355,7 @@ function rep_viewByCourse ($appEmitter,$appGlobals, $appData) {
             // '_' . $secItem->cPA_authorizationId  . '_' . $secItem->cPA_staffId . '_' .$secItem->cPA_schoolId . '_' . $secItem->cPA_programId. '_' . $secItem->cPA_programDow;
         $button = $appEmitter->getString_button( 'Edit', 'loc-short-button', $editId);
         $Column1Data = $button . ' &nbsp;' . $program->prog_programName; //  . ' ' . $button;
-        $Column1Data = $appEmitter->krnEmit_button_editSubmit($program->prog_programName, $editId);
+        $Column1Data = krnEmit_button_editSubmit($program->prog_programName, $editId);
         $Column2Data = 'school';
         $appEmitter->row_start('loc-subheader');
         $topStyle = '  border-group-top';
@@ -958,11 +947,11 @@ function apd_load_authorizationJoin($appGlobals, $appChain) {
 rc_session_initialize();
 
 
-$appGlobals = new kcmAdmin_globals();
+$appChain = new Draff_Chain(  'kcmKernel_emitter' );
+$appChain->chn_register_appGlobals( $appGlobals = new kcmGateway_globals());
+$appChain->chn_register_appData( new application_data());
 $appGlobals->gb_forceLogin ();
-$appData = new application_data;
 
-$appChain = new Draff_Chain( $appData, $appGlobals, 'kcmKernel_emitter' );
 $appChain->chn_form_register(1,'appForm_courseAuthorization_grid');
 $appChain->chn_form_register(2,'appForm_courseAuthorization_edit');
 $appChain->chn_form_launch(); // proceed to current step

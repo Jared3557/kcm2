@@ -2,7 +2,7 @@
 
 // utilities-system-emitter.inc.php
 
-class kcmUtilities_emitter extends Draff_Emitter_Engine {
+class kcmUtilities_emitter extends Draff_Emitter_Html {
 
 function __construct($utlGlobals, $form, $bodyStyle='') {
     parent::__construct($utlGlobals, $form, $bodyStyle);

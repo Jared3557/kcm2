@@ -3,6 +3,7 @@
 // gateway-system-globals.inc.php
 
 class kcmGateway_globals extends kcmKernel_globals  {
+public $gb_menu;
 
 function __construct() {
     //--- Define Standard Kcm-Gateway standard strings
@@ -12,6 +13,7 @@ function __construct() {
     $this->gb_owner = new kcmKernel_security_user($this, NULL);
     $this->gb_user  = new kcmKernel_security_user($this, $this->gb_owner);
     $this->gb_banner_image_system = 'kcm-banner-gateway.gif';
+    $this->gb_menu = new Draff_Menu_Engine;
 }
 
 function gb_kernelOverride_getStandardUrlArgList() {
@@ -71,35 +73,31 @@ function gwy_getKcm1ProgramUrl( $appGlobals, $chain, $programId ) {
     return $url;
 }
 
-function gb_appMenu_init($chain, $emitter, $overrides = NULL) {   /* required function - called by kernel emitter*/
-    $menu = $emitter->emit_menu;
-    $menu->menu_addLevel_top_start();
-    $menu->menu_addItem($chain,'ls-sd','My<br>Schedule'  , 'gateway.php',NULL,FALSE);
-    $menu->menu_addItem($chain,'ls-me','My<br>Events'  , 'gateway-events.php',array('rsmMode'=>'1'),FALSE );
-    $menu->menu_addItem($chain,'ls-ae','All<br>Events'  , 'gateway-events.php',array('rsmMode'=>'2'),FALSE);
-    $menu->menu_addItem($chain,'ls_cl','Staff<br>List','gateway-staffList.php',NULL,FALSE);
-    $menu->menu_addItem($chain,'ls_sl','School<br>List','gateway-schoolList.php',NULL,FALSE);
-    $menu->menu_addItem($chain,'ls_ul','Useful<br>Links','gateway-links.php',NULL,FALSE);
-    $menu->menu_addItem($chain,'kcm_home','Original<br>KCM'  , '../../kcm.php',NULL,FALSE);
+function gb_ribbonMenu_Initialize($chain, $menu, ...$overrides ) {   /* required function - called by kernel emitter*/
+    //$menu = $emitter->emit_menu;
+    $this->gb_menu->drMenu_addLevel_top_start();
+    $this->gb_menu->drMenu_addItem($chain,'ls-sd','My<br>Schedule'  , 'gateway.php');
+    $this->gb_menu->drMenu_addItem($chain,'ls-me','My<br>Events'  , 'gateway-events.php',array('drfMode'=>'1'));
+    $this->gb_menu->drMenu_addItem($chain,'ls-ae','All<br>Events'  , 'gateway-events.php',array('drfMode'=>'2'));
+    $this->gb_menu->drMenu_addItem($chain,'ls_cl','Staff<br>List','gateway-staffList.php');
+    $this->gb_menu->drMenu_addItem($chain,'ls_sl','School<br>List','gateway-schoolList.php');
+    $this->gb_menu->drMenu_addItem($chain,'ls_ul','Useful<br>Links','gateway-links.php');
+    $this->gb_menu->drMenu_addItem($chain,'kcm_home','Original<br>KCM'  , '../../kcm.php');
     if ($this->gb_owner->krnUser_isSysAdmin) {
-        $menu->menu_addItem($chain,'kcm_home','Set<br>Proxy'  , 'gateway-setup-proxy.php');
+        $this->gb_menu->drMenu_addItem($chain,'kcm_home','Set<br>Proxy'  , 'gateway-setup-proxy.php');
     }
-    $menu->menu_addLevel_top_end();
-    $menu->menu_markTopLevelItem('kcm_home');
-    $menu->menu_markTopLevelItem('ls-sd');
-    $menu->menu_markTopLevelItem('ls-me');
-    $menu->menu_markTopLevelItem('ls-ae');
-    $menu->menu_markTopLevelItem('ls-sd');
-    $menu->menu_markTopLevelItem('ls_cl');
-    $menu->menu_markTopLevelItem('ls_sl');
-    $menu->menu_markTopLevelItem('ls_ul');
+    $this->gb_menu->drMenu_addLevel_top_end();
+    $this->gb_menu->drMenu_markTopLevelItem('kcm_home');
+    $this->gb_menu->drMenu_markTopLevelItem('ls-sd');
+    $this->gb_menu->drMenu_markTopLevelItem('ls-me');
+    $this->gb_menu->drMenu_markTopLevelItem('ls-ae');
+    $this->gb_menu->drMenu_markTopLevelItem('ls-sd');
+    $this->gb_menu->drMenu_markTopLevelItem('ls_cl');
+    $this->gb_menu->drMenu_markTopLevelItem('ls_sl');
+    $this->gb_menu->drMenu_markTopLevelItem('ls_ul');
 }
 
 }  // end class
-
-
-function get_joinMap_myEvents ($appGlobals, $staffId, $incudeCoworkers ) {
-}
 
 
 //- function myEvents_makeNamesUnique($programMap) {
@@ -272,84 +270,31 @@ function gwy_fetch_selectMap_mySchools($appGlobals , $query=NULL, $staffId=NULL,
     return $mySchoolsSelect;
 }
 
-function gwy_fetch_selectMap_myPrograms($appGlobals , $staffId=NULL, $whenStart=NULL, $whenEnd=NULL) {
-// just a list of programs without additional information
-// programs selected are a combination of scheduled and aurhorized programs
-//???????????????? how to make names unique when school has multiple semesters ??????????????????????
-    $query = new draff_database_query;
-    $query->rsmDbq_selectAddColumns('dbRecord_program');
-    $query->rsmDbq_selectAddColumns('dbRecord_school_base');
-    $query->rsmDbq_add( "FROM `pr:program`");
-    $query->rsmDbq_add( "JOIN `pr:school` ON `pSc:SchoolId` = `pPr:@SchoolId`");
-    $query->rsmDbq_add( "WHERE `pPr:ProgramId` IN (" );
-    gwy_fetch_subQuery_myScheduledPrograms($appGlobals , $query, $staffId, $whenStart, $whenEnd);
-    $query->rsmDbq_add( ")" );
-    $query->rsmDbq_add( "ORDER BY `pSc:NameShort`");
-    $result = $appGlobals->gb_pdo->rsmDbe_executeQuery($query);
-    $myProgramsRecords = array();
-    foreach ($result as $row) {
-        $program = new dbRecord_program($row);
-        $myProgramsRecords[$program->prog_programId] = $program;
-    }
-    // check for same school but different semesters
-    $myProgramsSelect = $array();
-    foreach ($myProgramsRecords as $programId => $program ) {
-        $myProgramsSelect[$programId] = $program->prog_programName ;
-    }
-    return $mySchoolsSelect;
-}
-
-function cSD_xxx( $appGlobals, $query, $staffId=NULL, $whenStart=NULL, $whenEnd=NULL) {
-    $this->cSD_filtered_array = array();
-    $today = rc_getNowDate();  // or tomorrow if after 8pm or last event?
-    //$today = '2019-04-22';
-    $fldList = array();  // ca:scheduledate   ca:scheduledate_staff
-    $fldList = kernel_array_concat(dbRecord_calStaff::cSS_addFieldList(array()),'cs1.`','`');
-    if ($this->cSd_filter_includeCoWorkers) {
-        $fldList = array_merge($fldList, kernel_array_concat(dbRecord_calStaff::cSS_addFieldList(array()),'cs2.`','`'));
-    }
-    $fldList = array_merge($fldList, kernel_array_concat(dbRecord_calDate::cSD_getColumnNames(array(),FALSE),'`','`'));
-    $fldList = array_merge($fldList, kernel_array_concat(dbRecord_staff::DB_SELECT_FIELDS,'`','`'));
-    $fldList = array_merge($fldList, kernel_array_concat(dbRecord_program::stdRec_addFieldList(array()),'`','`'));
-    $fields = implode($fldList,",");  // as is !!!!!
-    $sql[] = "SELECT $fields";
-    $sql[] = "FROM `ca:scheduledate`";
-    //-- get specified staff (or all staff for date range)
-    $sql[] = "JOIN `ca:scheduledate_staff` as `cs1` ON (`cs1`.`cSS:@ScheduleDateId` = `cSD:ScheduleDateId`)";
-    if ( !empty($this->cSd_filter_staffId) ) {
-        $sql[] = "   AND (`cs1`.`cSS:@StaffId` = '{$this->cSd_filter_staffId}')";
-    }
-    //-- and co-workers
-    if ($this->cSd_filter_includeCoWorkers) {
-        $sql[] = "JOIN `ca:scheduledate_staff` as `cs2` ON `cs2`.`cSS:@ScheduleDateId` = `cSD:ScheduleDateId`";
-    }
-    $sql[] = "JOIN `st:staff` ON (`sSt:StaffId`=`cs2`.`cSS:@StaffId`) AND (`sSt:StaffId`<>'{$this->cSd_filter_staffId}') ";
-    $sql[] = "JOIN `pr:program` ON `pPr:ProgramId`=`cSD:@ProgramId`";
-    $sql[] = "JOIN `pr:school` ON `pSc:SchoolId`=`pPr:@SchoolId`";
-    $sql[] = "WHERE (`cSD:Published?` = '1') AND (`cSD:ClassDate`>='{$this->cSd_filter_startDate}') AND (`cSD:ClassDate`<='{$this->cSd_filter_endDate}')";
-    if ($this->cSd_sortby_date) {
-        $sql[] = "ORDER BY `cSD:ClassDate`,`cSD:StartTime`,`cSD:@ProgramId`,`sSt:FirstName`,`sSt:LastName`";
-    }
-    if ($this->cSd_sortby_program) {
-        $sql[] = "ORDER BY `pSc:NameShort`,`pPr:DayOfWeek`,`cSD:ClassDate`,`cSD:StartTime`,``cSD:@ProgramId`,sSt:FirstName`,`sSt:LastName`";
-    }
-    if ($this->cSd_sortby_staff) {
-        $sql[] = "ORDER BY `sSt:FirstName`,`sSt:LastName`,`cSD:ClassDate`,`cSD:StartTime`,`cSD:@ProgramId`,`sSt:FirstName`,`sSt:LastName`";
-    }
-    $query = implode( $sql, ' ');
-    $curEventDateId = 0;
-    $curEvent = NULL;
-    $result = $appGlobals->gb_pdo->rsmDbe_execute( $query );
-    foreach($result as $row) {
-        $eventDateId = $row['cSD:ScheduleDateId'];
-        if ($eventDateId !== $curEventDateId) {
-            $newEventDate = new dbRecord_calDate;
-            $newEventDate->stdRec_loadRow($row);
-            $this->cSD_filtered_array[] = $newEventDate;
-            $curEventDateId = $eventDateId;
-        }
-        $newEventDate->cSD_addStaff($row);
-    }
-}
-
+//function gwy_fetch_selectMap_myPrograms($appGlobals , $staffId=NULL, $whenStart=NULL, $whenEnd=NULL) {
+//// just a list of programs without additional information
+//// programs selected are a combination of scheduled and aurhorized programs
+////???????????????? how to make names unique when school has multiple semesters ??????????????????????
+//    $query = new draff_database_query;
+//    $query->rsmDbq_selectAddColumns('dbRecord_program');
+//    $query->rsmDbq_selectAddColumns('dbRecord_school_base');
+//    $query->rsmDbq_add( "FROM `pr:program`");
+//    $query->rsmDbq_add( "JOIN `pr:school` ON `pSc:SchoolId` = `pPr:@SchoolId`");
+//    $query->rsmDbq_add( "WHERE `pPr:ProgramId` IN (" );
+//    gwy_fetch_subQuery_myScheduledPrograms($appGlobals , $query, $staffId, $whenStart, $whenEnd);
+//    $query->rsmDbq_add( ")" );
+//    $query->rsmDbq_add( "ORDER BY `pSc:NameShort`");
+//    $result = $appGlobals->gb_pdo->rsmDbe_executeQuery($query);
+//    $myProgramsRecords = array();
+//    foreach ($result as $row) {
+//        $program = new dbRecord_program($row);
+//        $myProgramsRecords[$program->prog_programId] = $program;
+//    }
+//    // check for same school but different semesters
+//    $myProgramsSelect = $array();
+//    foreach ($myProgramsRecords as $programId => $program ) {
+//        $myProgramsSelect[$programId] = $program->prog_programName ;
+//    }
+//    return $mySchoolsSelect;
+//}
+//
 ?>

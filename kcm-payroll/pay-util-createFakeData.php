@@ -11,12 +11,13 @@ include_once( '../../rc_messages.inc.php' );
 include_once( '../../rc_job-appData-functions.inc.php' );
 
 include_once( '../draff/draff-chain.inc.php' );
+include_once( '../draff/draff-database.inc.php');
 include_once( '../draff/draff-emitter.inc.php' );
 include_once( '../draff/draff-form.inc.php' );
 include_once( '../draff/draff-functions.inc.php' );
-include_once( '../draff/draff-objects.inc.php' );
+include_once( '../draff/draff-menu.inc.php' );
+include_once( '../draff/draff-page.inc.php' );
 
-include_once( '../kcm-kernel/kernel-emitter.inc.php');
 include_once( '../kcm-kernel/kernel-functions.inc.php');
 include_once( '../kcm-kernel/kernel-objects.inc.php');
 include_once( '../kcm-kernel/kernel-globals.inc.php');
@@ -25,7 +26,7 @@ include_once( 'pay-system-payData.inc.php' );
 include_once( 'pay-system-appEmitter.inc.php' );
 include_once( 'pay-system-globals.inc.php' );
 
-Class appForm_createFakeData extends Draff_Form {
+Class appForm_createFakeData extends kcmKernel_Draff_Form {
 public $staffRateBatch;
 
 //function step_init_submit_accept( $appData, $appGlobals, $appChain ) {
@@ -34,7 +35,7 @@ public $staffRateBatch;
 //function drForm_validate( $appData, $appGlobals, $appChain ) {
 //}
 
-function drForm_processSubmit ( $appData, $appGlobals, $appChain ) {
+function drForm_process_submit ( $appData, $appGlobals, $appChain ) {
     $appChain->chn_form_savePostedData();
     //$staffId = $this->step_init_submit_suffix;
     if ( $submit == '@create' ) {
@@ -50,16 +51,13 @@ function drForm_initData( $appData, $appGlobals, $appChain ) {
 }
 
 function drForm_initHtml( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->set_theme( 'theme-report' );
-    $appEmitter->set_title('Payroll - ???');
-    $appEmitter->set_menu_standard( $appChain, $appGlobals );
-    $appEmitter->set_menu_customize( $appChain, $appGlobals  );
-    $appEmitter->set_title('Create Fake Data');
-    $appGlobals->gb_appMenu_init($appChain, $appEmitter);
-    $appEmitter->set_menu_customize( $appChain, $appGlobals );
+    $appEmitter->emit_options->set_theme( 'theme-report' );
+    $appEmitter->emit_options->set_title('Create Fake Data');
+    $appGlobals->gb_ribbonMenu_Initialize($appChain, $appEmitter);
+    $appGlobals->gb_menu->drMenu_customize( );
     //$report = new report_staffRates_all;
     //$report->report_setStyles($appEmitter);
-     $appEmitter->addOption_styleTag('button.large', 'background-color:#ffcccc;border:6px solid red; margin:20pt; padding:20pt; font-size:20pt;');
+     $appEmitter->emit_options->addOption_styleTag('button.large', 'background-color:#ffcccc;border:6px solid red; margin:20pt; padding:20pt; font-size:20pt;');
 
 }
 
@@ -68,14 +66,8 @@ function drForm_initFields( $appData, $appGlobals, $appChain ) {
     // $this->drForm_addField( new Draff_Button( '@mutate','Mutate Staff Wages<br>(Staff-Rate Table)',array('class'=>'large')) );
 }
 
-function drForm_outputPage ( $appData, $appGlobals, $appChain, $appEmitter ) {
-    $appEmitter->krnEmit_output_htmlHead  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyStart ( $appData, $appGlobals, $appChain, $this );
-    $appEmitter->krnEmit_output_ribbons  ( $appData, $appGlobals, $appChain, $this );
-    $this->drForm_outputHeader ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputContent ( $appData, $appGlobals, $appChain, $appEmitter );
-    $this->drForm_outputFooter  ( $appData, $appGlobals, $appChain, $appEmitter );
-    $appEmitter->krnEmit_output_bodyEnd  ( $appData, $appGlobals, $appChain, $this );
+function drForm_process_output ( $appData, $appGlobals, $appChain, $appEmitter ) {
+    $appGlobals->gb_output_form ( $appData, $appChain, $appEmitter, $this );
 }
 
 function drForm_outputHeader ( $appGlobals, $appChain, $appEmitter, $form ) {
@@ -179,7 +171,7 @@ function createFakeData( $appGlobals ) {
 
 rc_session_initialize();
 
-$loginAuthorization = new kcmKernel_login_authorization;
+$loginAuthorization = new kcmKernel_security_authorizeLogin;
 $loginAuthorization->krnLogin_forceLogin ('Kcm-Payroll', 'kcmPay_emitter');
 
 $appChain        = new Draff_Chain();

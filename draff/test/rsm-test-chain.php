@@ -19,7 +19,7 @@ include_once( '../../../rc_defines.inc.php' );  // needed for initialization
 
 class chainStep_testChain_page1 extends rsm_form_object {  // specify winner
 
-function drForm_processSubmit ($chain, $scriptData, $appGlobals) {
+function drForm_process_submit ($chain, $scriptData, $appGlobals) {
 
     $chain->chn_data_posted_acceptSubmitted();
 
@@ -266,16 +266,16 @@ function krnEmit_webPageOutput( $chain, $scriptData, $form,  $appGlobals) {
     // declared abstract in rsm_emitter
 	// This function emits the entire web page for all the kcm-systems
 	//    so all kcm-systems should have a consistent look
-    $this->zone_htmlHead('rsm Test Chain','rsm Test Chain');
+    $this->zone_htmlHead();
     $this->zone_body_start($chain, $form);
         print PHP_EOL . PHP_EOL .'<div class="rsm-zone-banner">';
     print ' Test Chain Banner';
         print PHP_EOL . '</div>';
     print PHP_EOL ;
 
-    //$this->krnEmit_banner_output($appGlobals, 'rsm Test Chain', 'rsm Test Chain');
     $this->zone_messages($chain, $form);
-    $this->zone_menu();
+    //$this->zone_menu();
+    $this->emit_menu->drMenu_emit_menu($this);
 	$form->rsmForm_emit_headers  ($chain, $scriptData, $this,$appGlobals);
 	$form->rsmForm_emit_content ($chain, $scriptData, $this, $appGlobals);
 	$form->rsmForm_emit_footer ($chain, $scriptData, $this, $appGlobals);
@@ -295,9 +295,9 @@ function krnEmit_webPageInit_Menu($chain,$scriptData, $appGlobals) {   // sort-o
     $appGlobals->gb_initMenu($chain, $this->emit_menu, $flag);
     $argCount =  count($argList);
     if ( $argCount>=1) {
-        $this->emit_menu->menu_markCurrentItem($argList[0]);
+        $this->emit_menu->drMenu_markCurrentItem($argList[0]);
         for ( $i=1; $i<$argCount; ++$i) {
-           $this->emit_menu->menu_markTopLevelItem($argList[$i]);
+           $this->emit_menu->drMenu_markTopLevelItem($argList[$i]);
         }
     }
 }
@@ -317,11 +317,10 @@ function gb_forceLogin() {
 
 rc_session_initialize();
 
-$testGlobals = new testGlobals();
-$testGlobals->gb_forceLogin ();
-
-$scriptData = new local_script_data();
-$chain = new rsm_chain_engine('test_emitter',$testGlobals,$scriptData);
+$appChain = new Draff_Chain( 'kcmKernel_emitter' );
+$appChain->chn_register_appGlobals( $appGlobals = new kcmGateway_globals());
+$appChain->chn_register_appData( new application_data());
+$appGlobals->gb_forceLogin ();
 
 $chain->chn_createAndRegister_formStep(1,'chainStep_testChain_page1');
 $chain->chn_createAndRegister_formStep(2,'chainStep_testChain_page2');
